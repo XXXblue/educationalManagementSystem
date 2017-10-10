@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace就是mapper接口的地址
+-->
+<mapper namespace="othermapper.MyManagerMapper">
+    <!-- 这个value是固定写法的  然后百分号和美元符号别忘 返回值为user对象 会自动帮你封装成list的  自动帮你选择selectone还是selectlist -->
+    <resultMap type="po.Rolepermission" id="RolepermissionMap">
+    </resultMap>
+    <!--多参数-->
+    <select id="selPermissionByManagerNum"  resultMap="RolepermissionMap">
+       SELECT * FROM rolepermission WHERE role IN (SELECT ManagerRole FROM managerinfo WHERE ManagerNum=#{managerNum});
+    </select>
+</mapper>

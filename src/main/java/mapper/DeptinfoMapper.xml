@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.DeptinfoMapper" >
+  <resultMap id="BaseResultMap" type="po.Deptinfo" >
+    <id column="DeptNum" property="deptnum" jdbcType="CHAR" />
+    <result column="DeptName" property="deptname" jdbcType="VARCHAR" />
+    <result column="DeptChairman" property="deptchairman" jdbcType="VARCHAR" />
+    <result column="DeptTel" property="depttel" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="po.Deptinfo" extends="BaseResultMap" >
+    <result column="DeptDesc" property="deptdesc" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    DeptNum, DeptName, DeptChairman, DeptTel
+  </sql>
+  <sql id="Blob_Column_List" >
+    DeptDesc
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="po.DeptinfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from deptinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="po.DeptinfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from deptinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from deptinfo
+    where DeptNum = #{deptnum,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from deptinfo
+    where DeptNum = #{deptnum,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="po.DeptinfoExample" >
+    delete from deptinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="po.Deptinfo" >
+    insert into deptinfo (DeptNum, DeptName, DeptChairman, 
+      DeptTel, DeptDesc)
+    values (#{deptnum,jdbcType=CHAR}, #{deptname,jdbcType=VARCHAR}, #{deptchairman,jdbcType=VARCHAR}, 
+      #{depttel,jdbcType=VARCHAR}, #{deptdesc,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="po.Deptinfo" >
+    insert into deptinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="deptnum != null" >
+        DeptNum,
+      </if>
+      <if test="deptname != null" >
+        DeptName,
+      </if>
+      <if test="deptchairman != null" >
+        DeptChairman,
+      </if>
+      <if test="depttel != null" >
+        DeptTel,
+      </if>
+      <if test="deptdesc != null" >
+        DeptDesc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="deptnum != null" >
+        #{deptnum,jdbcType=CHAR},
+      </if>
+      <if test="deptname != null" >
+        #{deptname,jdbcType=VARCHAR},
+      </if>
+      <if test="deptchairman != null" >
+        #{deptchairman,jdbcType=VARCHAR},
+      </if>
+      <if test="depttel != null" >
+        #{depttel,jdbcType=VARCHAR},
+      </if>
+      <if test="deptdesc != null" >
+        #{deptdesc,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="po.DeptinfoExample" resultType="java.lang.Integer" >
+    select count(*) from deptinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update deptinfo
+    <set >
+      <if test="record.deptnum != null" >
+        DeptNum = #{record.deptnum,jdbcType=CHAR},
+      </if>
+      <if test="record.deptname != null" >
+        DeptName = #{record.deptname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deptchairman != null" >
+        DeptChairman = #{record.deptchairman,jdbcType=VARCHAR},
+      </if>
+      <if test="record.depttel != null" >
+        DeptTel = #{record.depttel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deptdesc != null" >
+        DeptDesc = #{record.deptdesc,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update deptinfo
+    set DeptNum = #{record.deptnum,jdbcType=CHAR},
+      DeptName = #{record.deptname,jdbcType=VARCHAR},
+      DeptChairman = #{record.deptchairman,jdbcType=VARCHAR},
+      DeptTel = #{record.depttel,jdbcType=VARCHAR},
+      DeptDesc = #{record.deptdesc,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update deptinfo
+    set DeptNum = #{record.deptnum,jdbcType=CHAR},
+      DeptName = #{record.deptname,jdbcType=VARCHAR},
+      DeptChairman = #{record.deptchairman,jdbcType=VARCHAR},
+      DeptTel = #{record.depttel,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="po.Deptinfo" >
+    update deptinfo
+    <set >
+      <if test="deptname != null" >
+        DeptName = #{deptname,jdbcType=VARCHAR},
+      </if>
+      <if test="deptchairman != null" >
+        DeptChairman = #{deptchairman,jdbcType=VARCHAR},
+      </if>
+      <if test="depttel != null" >
+        DeptTel = #{depttel,jdbcType=VARCHAR},
+      </if>
+      <if test="deptdesc != null" >
+        DeptDesc = #{deptdesc,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where DeptNum = #{deptnum,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="po.Deptinfo" >
+    update deptinfo
+    set DeptName = #{deptname,jdbcType=VARCHAR},
+      DeptChairman = #{deptchairman,jdbcType=VARCHAR},
+      DeptTel = #{depttel,jdbcType=VARCHAR},
+      DeptDesc = #{deptdesc,jdbcType=LONGVARCHAR}
+    where DeptNum = #{deptnum,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="po.Deptinfo" >
+    update deptinfo
+    set DeptName = #{deptname,jdbcType=VARCHAR},
+      DeptChairman = #{deptchairman,jdbcType=VARCHAR},
+      DeptTel = #{depttel,jdbcType=VARCHAR}
+    where DeptNum = #{deptnum,jdbcType=CHAR}
+  </update>
+</mapper>

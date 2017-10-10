@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.ClassinfoMapper" >
+  <resultMap id="BaseResultMap" type="po.Classinfo" >
+    <id column="ClassNum" property="classnum" jdbcType="VARCHAR" />
+    <result column="ClassMan" property="classman" jdbcType="CHAR" />
+    <result column="ClassManTel" property="classmantel" jdbcType="VARCHAR" />
+    <result column="LimitNum" property="limitnum" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ClassNum, ClassMan, ClassManTel, LimitNum
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="po.ClassinfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from classinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from classinfo
+    where ClassNum = #{classnum,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from classinfo
+    where ClassNum = #{classnum,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="po.ClassinfoExample" >
+    delete from classinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="po.Classinfo" >
+    insert into classinfo (ClassNum, ClassMan, ClassManTel, 
+      LimitNum)
+    values (#{classnum,jdbcType=VARCHAR}, #{classman,jdbcType=CHAR}, #{classmantel,jdbcType=VARCHAR}, 
+      #{limitnum,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="po.Classinfo" >
+    insert into classinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="classnum != null" >
+        ClassNum,
+      </if>
+      <if test="classman != null" >
+        ClassMan,
+      </if>
+      <if test="classmantel != null" >
+        ClassManTel,
+      </if>
+      <if test="limitnum != null" >
+        LimitNum,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="classnum != null" >
+        #{classnum,jdbcType=VARCHAR},
+      </if>
+      <if test="classman != null" >
+        #{classman,jdbcType=CHAR},
+      </if>
+      <if test="classmantel != null" >
+        #{classmantel,jdbcType=VARCHAR},
+      </if>
+      <if test="limitnum != null" >
+        #{limitnum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="po.ClassinfoExample" resultType="java.lang.Integer" >
+    select count(*) from classinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update classinfo
+    <set >
+      <if test="record.classnum != null" >
+        ClassNum = #{record.classnum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.classman != null" >
+        ClassMan = #{record.classman,jdbcType=CHAR},
+      </if>
+      <if test="record.classmantel != null" >
+        ClassManTel = #{record.classmantel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.limitnum != null" >
+        LimitNum = #{record.limitnum,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update classinfo
+    set ClassNum = #{record.classnum,jdbcType=VARCHAR},
+      ClassMan = #{record.classman,jdbcType=CHAR},
+      ClassManTel = #{record.classmantel,jdbcType=VARCHAR},
+      LimitNum = #{record.limitnum,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="po.Classinfo" >
+    update classinfo
+    <set >
+      <if test="classman != null" >
+        ClassMan = #{classman,jdbcType=CHAR},
+      </if>
+      <if test="classmantel != null" >
+        ClassManTel = #{classmantel,jdbcType=VARCHAR},
+      </if>
+      <if test="limitnum != null" >
+        LimitNum = #{limitnum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ClassNum = #{classnum,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="po.Classinfo" >
+    update classinfo
+    set ClassMan = #{classman,jdbcType=CHAR},
+      ClassManTel = #{classmantel,jdbcType=VARCHAR},
+      LimitNum = #{limitnum,jdbcType=INTEGER}
+    where ClassNum = #{classnum,jdbcType=VARCHAR}
+  </update>
+</mapper>

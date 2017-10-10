@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.StudentinfoMapper" >
+  <resultMap id="BaseResultMap" type="po.Studentinfo" >
+    <id column="StudentNum" property="studentnum" jdbcType="CHAR" />
+    <result column="MajorNum" property="majornum" jdbcType="CHAR" />
+    <result column="StudentName" property="studentname" jdbcType="VARCHAR" />
+    <result column="StudentSex" property="studentsex" jdbcType="CHAR" />
+    <result column="StudentBirthday" property="studentbirthday" jdbcType="DATE" />
+    <result column="StudentPassword" property="studentpassword" jdbcType="VARCHAR" />
+    <result column="StudentPhoneNum" property="studentphonenum" jdbcType="VARCHAR" />
+    <result column="StudentPic" property="studentpic" jdbcType="VARCHAR" />
+    <result column="StudentRole" property="studentrole" jdbcType="CHAR" />
+    <result column="StudentOrganization" property="studentorganization" jdbcType="CHAR" />
+    <result column="StudentComeYear" property="studentcomeyear" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    StudentNum, MajorNum, StudentName, StudentSex, StudentBirthday, StudentPassword, 
+    StudentPhoneNum, StudentPic, StudentRole, StudentOrganization, StudentComeYear
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="po.StudentinfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from studentinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from studentinfo
+    where StudentNum = #{studentnum,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from studentinfo
+    where StudentNum = #{studentnum,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="po.StudentinfoExample" >
+    delete from studentinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="po.Studentinfo" >
+    insert into studentinfo (StudentNum, MajorNum, StudentName, 
+      StudentSex, StudentBirthday, StudentPassword, 
+      StudentPhoneNum, StudentPic, StudentRole, 
+      StudentOrganization, StudentComeYear)
+    values (#{studentnum,jdbcType=CHAR}, #{majornum,jdbcType=CHAR}, #{studentname,jdbcType=VARCHAR}, 
+      #{studentsex,jdbcType=CHAR}, #{studentbirthday,jdbcType=DATE}, #{studentpassword,jdbcType=VARCHAR}, 
+      #{studentphonenum,jdbcType=VARCHAR}, #{studentpic,jdbcType=VARCHAR}, #{studentrole,jdbcType=CHAR}, 
+      #{studentorganization,jdbcType=CHAR}, #{studentcomeyear,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="po.Studentinfo" >
+    insert into studentinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="studentnum != null" >
+        StudentNum,
+      </if>
+      <if test="majornum != null" >
+        MajorNum,
+      </if>
+      <if test="studentname != null" >
+        StudentName,
+      </if>
+      <if test="studentsex != null" >
+        StudentSex,
+      </if>
+      <if test="studentbirthday != null" >
+        StudentBirthday,
+      </if>
+      <if test="studentpassword != null" >
+        StudentPassword,
+      </if>
+      <if test="studentphonenum != null" >
+        StudentPhoneNum,
+      </if>
+      <if test="studentpic != null" >
+        StudentPic,
+      </if>
+      <if test="studentrole != null" >
+        StudentRole,
+      </if>
+      <if test="studentorganization != null" >
+        StudentOrganization,
+      </if>
+      <if test="studentcomeyear != null" >
+        StudentComeYear,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="studentnum != null" >
+        #{studentnum,jdbcType=CHAR},
+      </if>
+      <if test="majornum != null" >
+        #{majornum,jdbcType=CHAR},
+      </if>
+      <if test="studentname != null" >
+        #{studentname,jdbcType=VARCHAR},
+      </if>
+      <if test="studentsex != null" >
+        #{studentsex,jdbcType=CHAR},
+      </if>
+      <if test="studentbirthday != null" >
+        #{studentbirthday,jdbcType=DATE},
+      </if>
+      <if test="studentpassword != null" >
+        #{studentpassword,jdbcType=VARCHAR},
+      </if>
+      <if test="studentphonenum != null" >
+        #{studentphonenum,jdbcType=VARCHAR},
+      </if>
+      <if test="studentpic != null" >
+        #{studentpic,jdbcType=VARCHAR},
+      </if>
+      <if test="studentrole != null" >
+        #{studentrole,jdbcType=CHAR},
+      </if>
+      <if test="studentorganization != null" >
+        #{studentorganization,jdbcType=CHAR},
+      </if>
+      <if test="studentcomeyear != null" >
+        #{studentcomeyear,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="po.StudentinfoExample" resultType="java.lang.Integer" >
+    select count(*) from studentinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update studentinfo
+    <set >
+      <if test="record.studentnum != null" >
+        StudentNum = #{record.studentnum,jdbcType=CHAR},
+      </if>
+      <if test="record.majornum != null" >
+        MajorNum = #{record.majornum,jdbcType=CHAR},
+      </if>
+      <if test="record.studentname != null" >
+        StudentName = #{record.studentname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.studentsex != null" >
+        StudentSex = #{record.studentsex,jdbcType=CHAR},
+      </if>
+      <if test="record.studentbirthday != null" >
+        StudentBirthday = #{record.studentbirthday,jdbcType=DATE},
+      </if>
+      <if test="record.studentpassword != null" >
+        StudentPassword = #{record.studentpassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.studentphonenum != null" >
+        StudentPhoneNum = #{record.studentphonenum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.studentpic != null" >
+        StudentPic = #{record.studentpic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.studentrole != null" >
+        StudentRole = #{record.studentrole,jdbcType=CHAR},
+      </if>
+      <if test="record.studentorganization != null" >
+        StudentOrganization = #{record.studentorganization,jdbcType=CHAR},
+      </if>
+      <if test="record.studentcomeyear != null" >
+        StudentComeYear = #{record.studentcomeyear,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update studentinfo
+    set StudentNum = #{record.studentnum,jdbcType=CHAR},
+      MajorNum = #{record.majornum,jdbcType=CHAR},
+      StudentName = #{record.studentname,jdbcType=VARCHAR},
+      StudentSex = #{record.studentsex,jdbcType=CHAR},
+      StudentBirthday = #{record.studentbirthday,jdbcType=DATE},
+      StudentPassword = #{record.studentpassword,jdbcType=VARCHAR},
+      StudentPhoneNum = #{record.studentphonenum,jdbcType=VARCHAR},
+      StudentPic = #{record.studentpic,jdbcType=VARCHAR},
+      StudentRole = #{record.studentrole,jdbcType=CHAR},
+      StudentOrganization = #{record.studentorganization,jdbcType=CHAR},
+      StudentComeYear = #{record.studentcomeyear,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="po.Studentinfo" >
+    update studentinfo
+    <set >
+      <if test="majornum != null" >
+        MajorNum = #{majornum,jdbcType=CHAR},
+      </if>
+      <if test="studentname != null" >
+        StudentName = #{studentname,jdbcType=VARCHAR},
+      </if>
+      <if test="studentsex != null" >
+        StudentSex = #{studentsex,jdbcType=CHAR},
+      </if>
+      <if test="studentbirthday != null" >
+        StudentBirthday = #{studentbirthday,jdbcType=DATE},
+      </if>
+      <if test="studentpassword != null" >
+        StudentPassword = #{studentpassword,jdbcType=VARCHAR},
+      </if>
+      <if test="studentphonenum != null" >
+        StudentPhoneNum = #{studentphonenum,jdbcType=VARCHAR},
+      </if>
+      <if test="studentpic != null" >
+        StudentPic = #{studentpic,jdbcType=VARCHAR},
+      </if>
+      <if test="studentrole != null" >
+        StudentRole = #{studentrole,jdbcType=CHAR},
+      </if>
+      <if test="studentorganization != null" >
+        StudentOrganization = #{studentorganization,jdbcType=CHAR},
+      </if>
+      <if test="studentcomeyear != null" >
+        StudentComeYear = #{studentcomeyear,jdbcType=CHAR},
+      </if>
+    </set>
+    where StudentNum = #{studentnum,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="po.Studentinfo" >
+    update studentinfo
+    set MajorNum = #{majornum,jdbcType=CHAR},
+      StudentName = #{studentname,jdbcType=VARCHAR},
+      StudentSex = #{studentsex,jdbcType=CHAR},
+      StudentBirthday = #{studentbirthday,jdbcType=DATE},
+      StudentPassword = #{studentpassword,jdbcType=VARCHAR},
+      StudentPhoneNum = #{studentphonenum,jdbcType=VARCHAR},
+      StudentPic = #{studentpic,jdbcType=VARCHAR},
+      StudentRole = #{studentrole,jdbcType=CHAR},
+      StudentOrganization = #{studentorganization,jdbcType=CHAR},
+      StudentComeYear = #{studentcomeyear,jdbcType=CHAR}
+    where StudentNum = #{studentnum,jdbcType=CHAR}
+  </update>
+</mapper>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace就是mapper接口的地址
+-->
+<mapper namespace="othermapper.MyStudentInfoMapper">
+
+    <resultMap type="po.Rolepermission" id="RolepermissionMap">
+    </resultMap>
+
+    <!--多参数-->
+    <select id="searchStudentInfoByCondition"  parameterType="QueryVo.StudentInfoQueryVo" resultType="poView.StudentInfoView">
+       SELECT * FROM studentinfo
+       <where>
+           <if test="studentInfoView.studentnum!=null and studentInfoView.studentnum!=''">
+               studentinfo.StudentNum=#{studentInfoView.studentnum}
+           </if>
+           <if test="studentInfoView.studentcomeyear!=null and studentInfoView.studentcomeyear!=''">
+               AND  studentinfo.StudentComeYear=#{studentInfoView.studentcomeyear}
+           </if>
+           <if test="studentInfoView.studentorganization!=null and studentInfoView.studentorganization!=''">
+               AND  studentinfo.StudentOrganization=#{studentInfoView.studentorganization}
+           </if>
+           <if test="studentInfoView.majornum!=null and studentInfoView.majornum!=''">
+               AND   studentinfo.MajorNum=#{studentInfoView.majornum}
+           </if>
+           limit #{studentInfoView.page},#{studentInfoView.limit};
+       </where>
+    </select>
+    <select id="searchStudentInfoCountByCondition"  parameterType="QueryVo.StudentInfoQueryVo" resultType="Integer">
+       SELECT count(*) FROM studentinfo
+       <where>
+           <if test="studentInfoView.studentnum!=null and studentInfoView.studentnum!=''">
+               studentinfo.StudentNum=#{studentInfoView.studentnum}
+           </if>
+           <if test="studentInfoView.studentcomeyear!=null and studentInfoView.studentcomeyear!=''">
+               AND  studentinfo.StudentComeYear=#{studentInfoView.studentcomeyear}
+           </if>
+           <if test="studentInfoView.studentorganization!=null and studentInfoView.studentorganization!=''">
+               AND  studentinfo.StudentOrganization=#{studentInfoView.studentorganization}
+           </if>
+           <if test="studentInfoView.majornum!=null and studentInfoView.majornum!=''">
+               AND   studentinfo.MajorNum=#{studentInfoView.majornum}
+           </if>
+       </where>
+    </select>
+
+    <select id="selPermissionByStudentNum"  resultMap="RolepermissionMap">
+        SELECT * FROM rolepermission WHERE role IN (SELECT StudentRole FROM studentinfo WHERE studentnum=#{studentNum});
+    </select>
+
+    <update id="updateStudentInfoForSelf" parameterType="po.Studentinfo">
+        UPDATE studentinfo SET studentinfo.StudentName=#{studentname},studentinfo.StudentBirthday=#{studentbirthday},studentinfo.StudentPhoneNum=#{studentphonenum}
+        <if test="studentpassword!=null and studentpassword!=''">
+            ,studentinfo.StudentPassword=#{studentpassword}
+        </if>
+        <if test="studentpic!=null and studentpic!=''">
+            ,studentinfo.StudentPic=#{studentpic}
+        </if>
+        WHERE studentinfo.StudentNum=#{studentnum};
+    </update>
+</mapper>

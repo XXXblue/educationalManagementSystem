@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.CourseinfoMapper" >
+  <resultMap id="BaseResultMap" type="po.Courseinfo" >
+    <id column="CourseNum" property="coursenum" jdbcType="CHAR" />
+    <result column="CourseName" property="coursename" jdbcType="VARCHAR" />
+    <result column="CourseCredit" property="coursecredit" jdbcType="INTEGER" />
+    <result column="ClassNum" property="classnum" jdbcType="VARCHAR" />
+    <result column="CourseTeacherNum" property="courseteachernum" jdbcType="CHAR" />
+    <result column="CourseNumLimit" property="coursenumlimit" jdbcType="INTEGER" />
+    <result column="CourseFree" property="coursefree" jdbcType="INTEGER" />
+    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="UpdateTime" property="updatetime" jdbcType="TIMESTAMP" />
+    <result column="TermYear" property="termyear" jdbcType="VARCHAR" />
+    <result column="CourseLong" property="courselong" jdbcType="INTEGER" />
+    <result column="CourseStartWeek" property="coursestartweek" jdbcType="INTEGER" />
+    <result column="CourseEndWeek" property="courseendweek" jdbcType="INTEGER" />
+    <result column="CourseDay" property="courseday" jdbcType="INTEGER" />
+    <result column="CourseDayTime" property="coursedaytime" jdbcType="INTEGER" />
+    <result column="MajorNum" property="majornum" jdbcType="CHAR" />
+    <result column="TermTime" property="termtime" jdbcType="CHAR" />
+    <result column="ifOpen" property="ifopen" jdbcType="CHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="po.Courseinfo" extends="BaseResultMap" >
+    <result column="CourseDesc" property="coursedesc" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    CourseNum, CourseName, CourseCredit, ClassNum, CourseTeacherNum, CourseNumLimit, 
+    CourseFree, CreateTime, UpdateTime, TermYear, CourseLong, CourseStartWeek, CourseEndWeek, 
+    CourseDay, CourseDayTime, MajorNum, TermTime, ifOpen
+  </sql>
+  <sql id="Blob_Column_List" >
+    CourseDesc
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="po.CourseinfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from courseinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="po.CourseinfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from courseinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from courseinfo
+    where CourseNum = #{coursenum,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from courseinfo
+    where CourseNum = #{coursenum,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="po.CourseinfoExample" >
+    delete from courseinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="po.Courseinfo" >
+    insert into courseinfo (CourseNum, CourseName, CourseCredit, 
+      ClassNum, CourseTeacherNum, CourseNumLimit, 
+      CourseFree, CreateTime, UpdateTime, 
+      TermYear, CourseLong, CourseStartWeek, 
+      CourseEndWeek, CourseDay, CourseDayTime, 
+      MajorNum, TermTime, ifOpen, 
+      CourseDesc)
+    values (#{coursenum,jdbcType=CHAR}, #{coursename,jdbcType=VARCHAR}, #{coursecredit,jdbcType=INTEGER}, 
+      #{classnum,jdbcType=VARCHAR}, #{courseteachernum,jdbcType=CHAR}, #{coursenumlimit,jdbcType=INTEGER}, 
+      #{coursefree,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}, 
+      #{termyear,jdbcType=VARCHAR}, #{courselong,jdbcType=INTEGER}, #{coursestartweek,jdbcType=INTEGER}, 
+      #{courseendweek,jdbcType=INTEGER}, #{courseday,jdbcType=INTEGER}, #{coursedaytime,jdbcType=INTEGER}, 
+      #{majornum,jdbcType=CHAR}, #{termtime,jdbcType=CHAR}, #{ifopen,jdbcType=CHAR}, 
+      #{coursedesc,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="po.Courseinfo" >
+    insert into courseinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="coursenum != null" >
+        CourseNum,
+      </if>
+      <if test="coursename != null" >
+        CourseName,
+      </if>
+      <if test="coursecredit != null" >
+        CourseCredit,
+      </if>
+      <if test="classnum != null" >
+        ClassNum,
+      </if>
+      <if test="courseteachernum != null" >
+        CourseTeacherNum,
+      </if>
+      <if test="coursenumlimit != null" >
+        CourseNumLimit,
+      </if>
+      <if test="coursefree != null" >
+        CourseFree,
+      </if>
+      <if test="createtime != null" >
+        CreateTime,
+      </if>
+      <if test="updatetime != null" >
+        UpdateTime,
+      </if>
+      <if test="termyear != null" >
+        TermYear,
+      </if>
+      <if test="courselong != null" >
+        CourseLong,
+      </if>
+      <if test="coursestartweek != null" >
+        CourseStartWeek,
+      </if>
+      <if test="courseendweek != null" >
+        CourseEndWeek,
+      </if>
+      <if test="courseday != null" >
+        CourseDay,
+      </if>
+      <if test="coursedaytime != null" >
+        CourseDayTime,
+      </if>
+      <if test="majornum != null" >
+        MajorNum,
+      </if>
+      <if test="termtime != null" >
+        TermTime,
+      </if>
+      <if test="ifopen != null" >
+        ifOpen,
+      </if>
+      <if test="coursedesc != null" >
+        CourseDesc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="coursenum != null" >
+        #{coursenum,jdbcType=CHAR},
+      </if>
+      <if test="coursename != null" >
+        #{coursename,jdbcType=VARCHAR},
+      </if>
+      <if test="coursecredit != null" >
+        #{coursecredit,jdbcType=INTEGER},
+      </if>
+      <if test="classnum != null" >
+        #{classnum,jdbcType=VARCHAR},
+      </if>
+      <if test="courseteachernum != null" >
+        #{courseteachernum,jdbcType=CHAR},
+      </if>
+      <if test="coursenumlimit != null" >
+        #{coursenumlimit,jdbcType=INTEGER},
+      </if>
+      <if test="coursefree != null" >
+        #{coursefree,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="termyear != null" >
+        #{termyear,jdbcType=VARCHAR},
+      </if>
+      <if test="courselong != null" >
+        #{courselong,jdbcType=INTEGER},
+      </if>
+      <if test="coursestartweek != null" >
+        #{coursestartweek,jdbcType=INTEGER},
+      </if>
+      <if test="courseendweek != null" >
+        #{courseendweek,jdbcType=INTEGER},
+      </if>
+      <if test="courseday != null" >
+        #{courseday,jdbcType=INTEGER},
+      </if>
+      <if test="coursedaytime != null" >
+        #{coursedaytime,jdbcType=INTEGER},
+      </if>
+      <if test="majornum != null" >
+        #{majornum,jdbcType=CHAR},
+      </if>
+      <if test="termtime != null" >
+        #{termtime,jdbcType=CHAR},
+      </if>
+      <if test="ifopen != null" >
+        #{ifopen,jdbcType=CHAR},
+      </if>
+      <if test="coursedesc != null" >
+        #{coursedesc,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="po.CourseinfoExample" resultType="java.lang.Integer" >
+    select count(*) from courseinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update courseinfo
+    <set >
+      <if test="record.coursenum != null" >
+        CourseNum = #{record.coursenum,jdbcType=CHAR},
+      </if>
+      <if test="record.coursename != null" >
+        CourseName = #{record.coursename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.coursecredit != null" >
+        CourseCredit = #{record.coursecredit,jdbcType=INTEGER},
+      </if>
+      <if test="record.classnum != null" >
+        ClassNum = #{record.classnum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.courseteachernum != null" >
+        CourseTeacherNum = #{record.courseteachernum,jdbcType=CHAR},
+      </if>
+      <if test="record.coursenumlimit != null" >
+        CourseNumLimit = #{record.coursenumlimit,jdbcType=INTEGER},
+      </if>
+      <if test="record.coursefree != null" >
+        CourseFree = #{record.coursefree,jdbcType=INTEGER},
+      </if>
+      <if test="record.createtime != null" >
+        CreateTime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatetime != null" >
+        UpdateTime = #{record.updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.termyear != null" >
+        TermYear = #{record.termyear,jdbcType=VARCHAR},
+      </if>
+      <if test="record.courselong != null" >
+        CourseLong = #{record.courselong,jdbcType=INTEGER},
+      </if>
+      <if test="record.coursestartweek != null" >
+        CourseStartWeek = #{record.coursestartweek,jdbcType=INTEGER},
+      </if>
+      <if test="record.courseendweek != null" >
+        CourseEndWeek = #{record.courseendweek,jdbcType=INTEGER},
+      </if>
+      <if test="record.courseday != null" >
+        CourseDay = #{record.courseday,jdbcType=INTEGER},
+      </if>
+      <if test="record.coursedaytime != null" >
+        CourseDayTime = #{record.coursedaytime,jdbcType=INTEGER},
+      </if>
+      <if test="record.majornum != null" >
+        MajorNum = #{record.majornum,jdbcType=CHAR},
+      </if>
+      <if test="record.termtime != null" >
+        TermTime = #{record.termtime,jdbcType=CHAR},
+      </if>
+      <if test="record.ifopen != null" >
+        ifOpen = #{record.ifopen,jdbcType=CHAR},
+      </if>
+      <if test="record.coursedesc != null" >
+        CourseDesc = #{record.coursedesc,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update courseinfo
+    set CourseNum = #{record.coursenum,jdbcType=CHAR},
+      CourseName = #{record.coursename,jdbcType=VARCHAR},
+      CourseCredit = #{record.coursecredit,jdbcType=INTEGER},
+      ClassNum = #{record.classnum,jdbcType=VARCHAR},
+      CourseTeacherNum = #{record.courseteachernum,jdbcType=CHAR},
+      CourseNumLimit = #{record.coursenumlimit,jdbcType=INTEGER},
+      CourseFree = #{record.coursefree,jdbcType=INTEGER},
+      CreateTime = #{record.createtime,jdbcType=TIMESTAMP},
+      UpdateTime = #{record.updatetime,jdbcType=TIMESTAMP},
+      TermYear = #{record.termyear,jdbcType=VARCHAR},
+      CourseLong = #{record.courselong,jdbcType=INTEGER},
+      CourseStartWeek = #{record.coursestartweek,jdbcType=INTEGER},
+      CourseEndWeek = #{record.courseendweek,jdbcType=INTEGER},
+      CourseDay = #{record.courseday,jdbcType=INTEGER},
+      CourseDayTime = #{record.coursedaytime,jdbcType=INTEGER},
+      MajorNum = #{record.majornum,jdbcType=CHAR},
+      TermTime = #{record.termtime,jdbcType=CHAR},
+      ifOpen = #{record.ifopen,jdbcType=CHAR},
+      CourseDesc = #{record.coursedesc,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update courseinfo
+    set CourseNum = #{record.coursenum,jdbcType=CHAR},
+      CourseName = #{record.coursename,jdbcType=VARCHAR},
+      CourseCredit = #{record.coursecredit,jdbcType=INTEGER},
+      ClassNum = #{record.classnum,jdbcType=VARCHAR},
+      CourseTeacherNum = #{record.courseteachernum,jdbcType=CHAR},
+      CourseNumLimit = #{record.coursenumlimit,jdbcType=INTEGER},
+      CourseFree = #{record.coursefree,jdbcType=INTEGER},
+      CreateTime = #{record.createtime,jdbcType=TIMESTAMP},
+      UpdateTime = #{record.updatetime,jdbcType=TIMESTAMP},
+      TermYear = #{record.termyear,jdbcType=VARCHAR},
+      CourseLong = #{record.courselong,jdbcType=INTEGER},
+      CourseStartWeek = #{record.coursestartweek,jdbcType=INTEGER},
+      CourseEndWeek = #{record.courseendweek,jdbcType=INTEGER},
+      CourseDay = #{record.courseday,jdbcType=INTEGER},
+      CourseDayTime = #{record.coursedaytime,jdbcType=INTEGER},
+      MajorNum = #{record.majornum,jdbcType=CHAR},
+      TermTime = #{record.termtime,jdbcType=CHAR},
+      ifOpen = #{record.ifopen,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="po.Courseinfo" >
+    update courseinfo
+    <set >
+      <if test="coursename != null" >
+        CourseName = #{coursename,jdbcType=VARCHAR},
+      </if>
+      <if test="coursecredit != null" >
+        CourseCredit = #{coursecredit,jdbcType=INTEGER},
+      </if>
+      <if test="classnum != null" >
+        ClassNum = #{classnum,jdbcType=VARCHAR},
+      </if>
+      <if test="courseteachernum != null" >
+        CourseTeacherNum = #{courseteachernum,jdbcType=CHAR},
+      </if>
+      <if test="coursenumlimit != null" >
+        CourseNumLimit = #{coursenumlimit,jdbcType=INTEGER},
+      </if>
+      <if test="coursefree != null" >
+        CourseFree = #{coursefree,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null" >
+        UpdateTime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="termyear != null" >
+        TermYear = #{termyear,jdbcType=VARCHAR},
+      </if>
+      <if test="courselong != null" >
+        CourseLong = #{courselong,jdbcType=INTEGER},
+      </if>
+      <if test="coursestartweek != null" >
+        CourseStartWeek = #{coursestartweek,jdbcType=INTEGER},
+      </if>
+      <if test="courseendweek != null" >
+        CourseEndWeek = #{courseendweek,jdbcType=INTEGER},
+      </if>
+      <if test="courseday != null" >
+        CourseDay = #{courseday,jdbcType=INTEGER},
+      </if>
+      <if test="coursedaytime != null" >
+        CourseDayTime = #{coursedaytime,jdbcType=INTEGER},
+      </if>
+      <if test="majornum != null" >
+        MajorNum = #{majornum,jdbcType=CHAR},
+      </if>
+      <if test="termtime != null" >
+        TermTime = #{termtime,jdbcType=CHAR},
+      </if>
+      <if test="ifopen != null" >
+        ifOpen = #{ifopen,jdbcType=CHAR},
+      </if>
+      <if test="coursedesc != null" >
+        CourseDesc = #{coursedesc,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where CourseNum = #{coursenum,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="po.Courseinfo" >
+    update courseinfo
+    set CourseName = #{coursename,jdbcType=VARCHAR},
+      CourseCredit = #{coursecredit,jdbcType=INTEGER},
+      ClassNum = #{classnum,jdbcType=VARCHAR},
+      CourseTeacherNum = #{courseteachernum,jdbcType=CHAR},
+      CourseNumLimit = #{coursenumlimit,jdbcType=INTEGER},
+      CourseFree = #{coursefree,jdbcType=INTEGER},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      UpdateTime = #{updatetime,jdbcType=TIMESTAMP},
+      TermYear = #{termyear,jdbcType=VARCHAR},
+      CourseLong = #{courselong,jdbcType=INTEGER},
+      CourseStartWeek = #{coursestartweek,jdbcType=INTEGER},
+      CourseEndWeek = #{courseendweek,jdbcType=INTEGER},
+      CourseDay = #{courseday,jdbcType=INTEGER},
+      CourseDayTime = #{coursedaytime,jdbcType=INTEGER},
+      MajorNum = #{majornum,jdbcType=CHAR},
+      TermTime = #{termtime,jdbcType=CHAR},
+      ifOpen = #{ifopen,jdbcType=CHAR},
+      CourseDesc = #{coursedesc,jdbcType=LONGVARCHAR}
+    where CourseNum = #{coursenum,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="po.Courseinfo" >
+    update courseinfo
+    set CourseName = #{coursename,jdbcType=VARCHAR},
+      CourseCredit = #{coursecredit,jdbcType=INTEGER},
+      ClassNum = #{classnum,jdbcType=VARCHAR},
+      CourseTeacherNum = #{courseteachernum,jdbcType=CHAR},
+      CourseNumLimit = #{coursenumlimit,jdbcType=INTEGER},
+      CourseFree = #{coursefree,jdbcType=INTEGER},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      UpdateTime = #{updatetime,jdbcType=TIMESTAMP},
+      TermYear = #{termyear,jdbcType=VARCHAR},
+      CourseLong = #{courselong,jdbcType=INTEGER},
+      CourseStartWeek = #{coursestartweek,jdbcType=INTEGER},
+      CourseEndWeek = #{courseendweek,jdbcType=INTEGER},
+      CourseDay = #{courseday,jdbcType=INTEGER},
+      CourseDayTime = #{coursedaytime,jdbcType=INTEGER},
+      MajorNum = #{majornum,jdbcType=CHAR},
+      TermTime = #{termtime,jdbcType=CHAR},
+      ifOpen = #{ifopen,jdbcType=CHAR}
+    where CourseNum = #{coursenum,jdbcType=CHAR}
+  </update>
+</mapper>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace就是mapper接口的地址
+-->
+<mapper namespace="othermapper.MyCourseMapper">
+    <!-- 这个value是固定写法的  然后百分号和美元符号别忘 返回值为user对象 会自动帮你封装成list的  自动帮你选择selectone还是selectlist -->
+    <resultMap type="po.Courseinfo" id="limitResultMap">
+    </resultMap>
+    <!--多参数-->
+    <select id="checkCourseInfo"  resultMap="limitResultMap">
+       SELECT * FRom courseinfo where courseinfo.CourseDay=#{0} and courseinfo.CourseDayTime=#{1} and courseinfo.ClassNum
+=  #{2} and courseinfo.TermTime=#{3} AND courseinfo.TermYear = #{4};
+    </select>
+
+    <select id="selTeacherTimetale"  resultMap="limitResultMap">
+        select * from courseinfo where	CourseTeacherNum=#{0}and TermYear=#{1}and TermTime=#{2}and CourseEndWeek >=#{3} and CourseStartWeek &lt;=#{3};
+    </select>
+
+    <select id="selcetByPrimaryKey"  resultMap="limitResultMap">
+        select * from courseinfo where courseinfo.CourseNum=#{0};
+    </select>
+
+
+    <select id="showCourseinfoToStudent"  resultType="poView.CourseInfoViewShowStudent">
+        select courseinfo.CourseDay,courseinfo.CourseDayTime,
+        courseinfo.CourseNum,courseinfo.CourseName,courseinfo.CourseCredit,courseinfo.ClassNum,teacherinfo.TeacherName,courseinfo.CourseFree,majorinfo.MajorName
+        from courseinfo,teacherinfo,majorinfo where courseinfo.CourseTeacherNum=Teacherinfo.TeacherNum and courseinfo.MajorNum=majorinfo.MajorNum
+        AND courseinfo.ifOpen="1" limit #{0},#{1};
+    </select>
+
+    <select id="showCourseinfoCount"  resultType="Integer">
+        SELECT COUNT(*) FROM courseinfo,teacherinfo,majorinfo WHERE courseinfo.CourseTeacherNum=Teacherinfo.TeacherNum AND courseinfo.MajorNum=majorinfo.MajorNum
+        and courseinfo.ifOpen="1";
+    </select>
+
+    <select id="selCourseByCondition"  parameterType="QueryVo.CourseinfoQueryVo" resultType="poView.CourseInfoView">
+        select * from courseinfo
+            <where>
+                <if test="courseInfoView.termyear!=null and courseInfoView.termyear!=''">
+                    courseinfo.TermYear=#{courseInfoView.termyear}
+                </if>
+                <if test="courseInfoView.termtime!=null and courseInfoView.termtime!=''">
+                     and courseinfo.TermTime=#{courseInfoView.termtime}
+                </if>
+                <if test="courseInfoView.ifopen!=null and courseInfoView.ifopen!=''">
+                    and courseinfo.ifOpen=#{courseInfoView.ifopen}
+                </if>
+                <if test="courseInfoView.majornum!=null and courseInfoView.majornum!=''">
+                    and courseinfo.MajorNum=#{courseInfoView.majornum}
+                </if>
+                <if test="courseInfoView.week!=null and courseInfoView.week!=''">
+                    and courseinfo.CourseStartWeek&lt;=#{courseInfoView.week}
+                    and courseinfo.CourseEndWeek &gt;=#{courseInfoView.week}
+                </if>
+            </where>
+          limit #{courseInfoView.page},#{courseInfoView.limit};
+    </select>
+
+    <select id="CountSelCourseByCondition"  parameterType="QueryVo.CourseinfoQueryVo" resultType="Integer">
+        select count(*) from courseinfo
+        <where>
+            <if test="courseInfoView.termyear!=null and courseInfoView.termyear!=''">
+                courseinfo.TermYear=#{courseInfoView.termyear}
+            </if>
+            <if test="courseInfoView.termtime!=null and courseInfoView.termtime!=''">
+                and courseinfo.TermTime=#{courseInfoView.termtime}
+            </if>
+            <if test="courseInfoView.ifopen!=null and courseInfoView.ifopen!=''">
+                and courseinfo.ifOpen=#{courseInfoView.ifopen}
+            </if>
+            <if test="courseInfoView.majornum!=null and courseInfoView.majornum!=''">
+                and courseinfo.MajorNum=#{courseInfoView.majornum}
+            </if>
+            <if test="courseInfoView.week!=null and courseInfoView.week!=''">
+                and courseinfo.CourseStartWeek&lt;=#{courseInfoView.week}
+                and courseinfo.CourseEndWeek &gt;=#{courseInfoView.week}
+            </if>
+        </where>
+    </select>
+
+    <select id="stuSelCourseCheckConflict"  resultType="poView.CourseinfoConflict" parameterType="string">
+        select  * from courseinfo  where courseinfo.CourseNum = #{0};
+    </select>
+
+    <select id="checkStuAllSelCourse"  resultType="po.Courseinfo" >
+       select * from courseinfo where courseinfo.CourseNum in
+        (SELECT studentcourseinfo.CourseNum FROM studentcourseinfo WHERE studentcourseinfo.StudentNum=#{0})
+        and courseinfo.CourseDay=#{1} and courseinfo.CourseDayTime=#{2} and courseinfo.TermYear=#{3} and courseinfo.TermTime=#{4};
+    </select>
+</mapper>

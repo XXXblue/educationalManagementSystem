@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace就是mapper接口的地址
+-->
+<mapper namespace="othermapper.MyStudentCourseInfoMapper">
+
+    <select id="checkIfSelCourse"  parameterType="QueryVo.StudentCourseInfoQueryVo" resultType="po.Studentcourseinfo">
+       select * from studentcourseinfo where CourseNum = #{studentcourseinfo.coursenum} and StudentNum = #{studentcourseinfo.studentnum};
+    </select>
+
+    <delete id="stuDelCourse" parameterType="QueryVo.StudentCourseInfoQueryVo">
+            delete from studentcourseinfo
+            <where>
+            <if test="studentcourseinfo.studentnum!=null and studentcourseinfo.studentnum!=''">
+            StudentNum=#{studentcourseinfo.studentnum}
+        </if>
+            and CourseNum=#{studentcourseinfo.coursenum};
+        </where>
+    </delete>
+
+
+    <select id="showStuCourseInfoTable"   resultType="poView.StuCourseTableView">
+
+
+       SELECT * FROM courseinfo,teacherinfo WHERE courseinfo.CourseNum IN
+        (SELECT studentcourseinfo.CourseNum FROM studentcourseinfo WHERE studentcourseinfo.StudentNum=#{0})and courseinfo.TermYear=#{1}
+        AND courseinfo.TermTime=#{2}AND courseinfo.CourseTeacherNum= Teacherinfo.TeacherNum and
+        <![CDATA[ courseinfo.CourseEndWeek >= #{3}and courseinfo.CourseStartWeek <= #{3};]]>
+    </select>
+</mapper>

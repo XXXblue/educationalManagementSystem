@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.StudentcourseinfoMapper" >
+  <resultMap id="BaseResultMap" type="po.Studentcourseinfo" >
+    <id column="StuCourseID" property="stucourseid" jdbcType="INTEGER" />
+    <result column="StudentNum" property="studentnum" jdbcType="CHAR" />
+    <result column="CourseNum" property="coursenum" jdbcType="CHAR" />
+    <result column="Grade" property="grade" jdbcType="INTEGER" />
+    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="UpdateTime" property="updatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    StuCourseID, StudentNum, CourseNum, Grade, CreateTime, UpdateTime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="po.StudentcourseinfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from studentcourseinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from studentcourseinfo
+    where StuCourseID = #{stucourseid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from studentcourseinfo
+    where StuCourseID = #{stucourseid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="po.StudentcourseinfoExample" >
+    delete from studentcourseinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="po.Studentcourseinfo" >
+    insert into studentcourseinfo (StuCourseID, StudentNum, CourseNum, 
+      Grade, CreateTime, UpdateTime
+      )
+    values (#{stucourseid,jdbcType=INTEGER}, #{studentnum,jdbcType=CHAR}, #{coursenum,jdbcType=CHAR}, 
+      #{grade,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="po.Studentcourseinfo" >
+    insert into studentcourseinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="stucourseid != null" >
+        StuCourseID,
+      </if>
+      <if test="studentnum != null" >
+        StudentNum,
+      </if>
+      <if test="coursenum != null" >
+        CourseNum,
+      </if>
+      <if test="grade != null" >
+        Grade,
+      </if>
+      <if test="createtime != null" >
+        CreateTime,
+      </if>
+      <if test="updatetime != null" >
+        UpdateTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="stucourseid != null" >
+        #{stucourseid,jdbcType=INTEGER},
+      </if>
+      <if test="studentnum != null" >
+        #{studentnum,jdbcType=CHAR},
+      </if>
+      <if test="coursenum != null" >
+        #{coursenum,jdbcType=CHAR},
+      </if>
+      <if test="grade != null" >
+        #{grade,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="po.StudentcourseinfoExample" resultType="java.lang.Integer" >
+    select count(*) from studentcourseinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update studentcourseinfo
+    <set >
+      <if test="record.stucourseid != null" >
+        StuCourseID = #{record.stucourseid,jdbcType=INTEGER},
+      </if>
+      <if test="record.studentnum != null" >
+        StudentNum = #{record.studentnum,jdbcType=CHAR},
+      </if>
+      <if test="record.coursenum != null" >
+        CourseNum = #{record.coursenum,jdbcType=CHAR},
+      </if>
+      <if test="record.grade != null" >
+        Grade = #{record.grade,jdbcType=INTEGER},
+      </if>
+      <if test="record.createtime != null" >
+        CreateTime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatetime != null" >
+        UpdateTime = #{record.updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update studentcourseinfo
+    set StuCourseID = #{record.stucourseid,jdbcType=INTEGER},
+      StudentNum = #{record.studentnum,jdbcType=CHAR},
+      CourseNum = #{record.coursenum,jdbcType=CHAR},
+      Grade = #{record.grade,jdbcType=INTEGER},
+      CreateTime = #{record.createtime,jdbcType=TIMESTAMP},
+      UpdateTime = #{record.updatetime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="po.Studentcourseinfo" >
+    update studentcourseinfo
+    <set >
+      <if test="studentnum != null" >
+        StudentNum = #{studentnum,jdbcType=CHAR},
+      </if>
+      <if test="coursenum != null" >
+        CourseNum = #{coursenum,jdbcType=CHAR},
+      </if>
+      <if test="grade != null" >
+        Grade = #{grade,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null" >
+        UpdateTime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where StuCourseID = #{stucourseid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="po.Studentcourseinfo" >
+    update studentcourseinfo
+    set StudentNum = #{studentnum,jdbcType=CHAR},
+      CourseNum = #{coursenum,jdbcType=CHAR},
+      Grade = #{grade,jdbcType=INTEGER},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      UpdateTime = #{updatetime,jdbcType=TIMESTAMP}
+    where StuCourseID = #{stucourseid,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.TeacherinfoMapper" >
+  <resultMap id="BaseResultMap" type="po.Teacherinfo" >
+    <id column="TeacherNum" property="teachernum" jdbcType="CHAR" />
+    <result column="DeptNum" property="deptnum" jdbcType="CHAR" />
+    <result column="TeacherName" property="teachername" jdbcType="VARCHAR" />
+    <result column="TeacherSex" property="teachersex" jdbcType="CHAR" />
+    <result column="TeacherBirthday" property="teacherbirthday" jdbcType="DATE" />
+    <result column="TeacherTitle" property="teachertitle" jdbcType="VARCHAR" />
+    <result column="TeacherPassword" property="teacherpassword" jdbcType="VARCHAR" />
+    <result column="TeacherPhone" property="teacherphone" jdbcType="VARCHAR" />
+    <result column="TeacherRole" property="teacherrole" jdbcType="VARCHAR" />
+    <result column="TeacherPic" property="teacherpic" jdbcType="VARCHAR" />
+    <result column="TeacherIdCardNum" property="teacheridcardnum" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    TeacherNum, DeptNum, TeacherName, TeacherSex, TeacherBirthday, TeacherTitle, TeacherPassword, 
+    TeacherPhone, TeacherRole, TeacherPic, TeacherIdCardNum
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="po.TeacherinfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from teacherinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from teacherinfo
+    where TeacherNum = #{teachernum,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from teacherinfo
+    where TeacherNum = #{teachernum,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="po.TeacherinfoExample" >
+    delete from teacherinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="po.Teacherinfo" >
+    insert into teacherinfo (TeacherNum, DeptNum, TeacherName, 
+      TeacherSex, TeacherBirthday, TeacherTitle, 
+      TeacherPassword, TeacherPhone, TeacherRole, 
+      TeacherPic, TeacherIdCardNum)
+    values (#{teachernum,jdbcType=CHAR}, #{deptnum,jdbcType=CHAR}, #{teachername,jdbcType=VARCHAR}, 
+      #{teachersex,jdbcType=CHAR}, #{teacherbirthday,jdbcType=DATE}, #{teachertitle,jdbcType=VARCHAR}, 
+      #{teacherpassword,jdbcType=VARCHAR}, #{teacherphone,jdbcType=VARCHAR}, #{teacherrole,jdbcType=VARCHAR}, 
+      #{teacherpic,jdbcType=VARCHAR}, #{teacheridcardnum,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="po.Teacherinfo" >
+    insert into teacherinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="teachernum != null" >
+        TeacherNum,
+      </if>
+      <if test="deptnum != null" >
+        DeptNum,
+      </if>
+      <if test="teachername != null" >
+        TeacherName,
+      </if>
+      <if test="teachersex != null" >
+        TeacherSex,
+      </if>
+      <if test="teacherbirthday != null" >
+        TeacherBirthday,
+      </if>
+      <if test="teachertitle != null" >
+        TeacherTitle,
+      </if>
+      <if test="teacherpassword != null" >
+        TeacherPassword,
+      </if>
+      <if test="teacherphone != null" >
+        TeacherPhone,
+      </if>
+      <if test="teacherrole != null" >
+        TeacherRole,
+      </if>
+      <if test="teacherpic != null" >
+        TeacherPic,
+      </if>
+      <if test="teacheridcardnum != null" >
+        TeacherIdCardNum,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="teachernum != null" >
+        #{teachernum,jdbcType=CHAR},
+      </if>
+      <if test="deptnum != null" >
+        #{deptnum,jdbcType=CHAR},
+      </if>
+      <if test="teachername != null" >
+        #{teachername,jdbcType=VARCHAR},
+      </if>
+      <if test="teachersex != null" >
+        #{teachersex,jdbcType=CHAR},
+      </if>
+      <if test="teacherbirthday != null" >
+        #{teacherbirthday,jdbcType=DATE},
+      </if>
+      <if test="teachertitle != null" >
+        #{teachertitle,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherpassword != null" >
+        #{teacherpassword,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherphone != null" >
+        #{teacherphone,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherrole != null" >
+        #{teacherrole,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherpic != null" >
+        #{teacherpic,jdbcType=VARCHAR},
+      </if>
+      <if test="teacheridcardnum != null" >
+        #{teacheridcardnum,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="po.TeacherinfoExample" resultType="java.lang.Integer" >
+    select count(*) from teacherinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update teacherinfo
+    <set >
+      <if test="record.teachernum != null" >
+        TeacherNum = #{record.teachernum,jdbcType=CHAR},
+      </if>
+      <if test="record.deptnum != null" >
+        DeptNum = #{record.deptnum,jdbcType=CHAR},
+      </if>
+      <if test="record.teachername != null" >
+        TeacherName = #{record.teachername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teachersex != null" >
+        TeacherSex = #{record.teachersex,jdbcType=CHAR},
+      </if>
+      <if test="record.teacherbirthday != null" >
+        TeacherBirthday = #{record.teacherbirthday,jdbcType=DATE},
+      </if>
+      <if test="record.teachertitle != null" >
+        TeacherTitle = #{record.teachertitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teacherpassword != null" >
+        TeacherPassword = #{record.teacherpassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teacherphone != null" >
+        TeacherPhone = #{record.teacherphone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teacherrole != null" >
+        TeacherRole = #{record.teacherrole,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teacherpic != null" >
+        TeacherPic = #{record.teacherpic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teacheridcardnum != null" >
+        TeacherIdCardNum = #{record.teacheridcardnum,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update teacherinfo
+    set TeacherNum = #{record.teachernum,jdbcType=CHAR},
+      DeptNum = #{record.deptnum,jdbcType=CHAR},
+      TeacherName = #{record.teachername,jdbcType=VARCHAR},
+      TeacherSex = #{record.teachersex,jdbcType=CHAR},
+      TeacherBirthday = #{record.teacherbirthday,jdbcType=DATE},
+      TeacherTitle = #{record.teachertitle,jdbcType=VARCHAR},
+      TeacherPassword = #{record.teacherpassword,jdbcType=VARCHAR},
+      TeacherPhone = #{record.teacherphone,jdbcType=VARCHAR},
+      TeacherRole = #{record.teacherrole,jdbcType=VARCHAR},
+      TeacherPic = #{record.teacherpic,jdbcType=VARCHAR},
+      TeacherIdCardNum = #{record.teacheridcardnum,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="po.Teacherinfo" >
+    update teacherinfo
+    <set >
+      <if test="deptnum != null" >
+        DeptNum = #{deptnum,jdbcType=CHAR},
+      </if>
+      <if test="teachername != null" >
+        TeacherName = #{teachername,jdbcType=VARCHAR},
+      </if>
+      <if test="teachersex != null" >
+        TeacherSex = #{teachersex,jdbcType=CHAR},
+      </if>
+      <if test="teacherbirthday != null" >
+        TeacherBirthday = #{teacherbirthday,jdbcType=DATE},
+      </if>
+      <if test="teachertitle != null" >
+        TeacherTitle = #{teachertitle,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherpassword != null" >
+        TeacherPassword = #{teacherpassword,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherphone != null" >
+        TeacherPhone = #{teacherphone,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherrole != null" >
+        TeacherRole = #{teacherrole,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherpic != null" >
+        TeacherPic = #{teacherpic,jdbcType=VARCHAR},
+      </if>
+      <if test="teacheridcardnum != null" >
+        TeacherIdCardNum = #{teacheridcardnum,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where TeacherNum = #{teachernum,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="po.Teacherinfo" >
+    update teacherinfo
+    set DeptNum = #{deptnum,jdbcType=CHAR},
+      TeacherName = #{teachername,jdbcType=VARCHAR},
+      TeacherSex = #{teachersex,jdbcType=CHAR},
+      TeacherBirthday = #{teacherbirthday,jdbcType=DATE},
+      TeacherTitle = #{teachertitle,jdbcType=VARCHAR},
+      TeacherPassword = #{teacherpassword,jdbcType=VARCHAR},
+      TeacherPhone = #{teacherphone,jdbcType=VARCHAR},
+      TeacherRole = #{teacherrole,jdbcType=VARCHAR},
+      TeacherPic = #{teacherpic,jdbcType=VARCHAR},
+      TeacherIdCardNum = #{teacheridcardnum,jdbcType=VARCHAR}
+    where TeacherNum = #{teachernum,jdbcType=CHAR}
+  </update>
+</mapper>
