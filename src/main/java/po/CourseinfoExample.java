@@ -1264,6 +1264,76 @@ public class CourseinfoExample {
             addCriterion("ifOpen not between", value1, value2, "ifopen");
             return (Criteria) this;
         }
+
+        public Criteria andIfgradeIsNull() {
+            addCriterion("ifGrade is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIfgradeIsNotNull() {
+            addCriterion("ifGrade is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIfgradeEqualTo(String value) {
+            addCriterion("ifGrade =", value, "ifgrade");
+            return (Criteria) this;
+        }
+
+        public Criteria andIfgradeNotEqualTo(String value) {
+            addCriterion("ifGrade <>", value, "ifgrade");
+            return (Criteria) this;
+        }
+
+        public Criteria andIfgradeGreaterThan(String value) {
+            addCriterion("ifGrade >", value, "ifgrade");
+            return (Criteria) this;
+        }
+
+        public Criteria andIfgradeGreaterThanOrEqualTo(String value) {
+            addCriterion("ifGrade >=", value, "ifgrade");
+            return (Criteria) this;
+        }
+
+        public Criteria andIfgradeLessThan(String value) {
+            addCriterion("ifGrade <", value, "ifgrade");
+            return (Criteria) this;
+        }
+
+        public Criteria andIfgradeLessThanOrEqualTo(String value) {
+            addCriterion("ifGrade <=", value, "ifgrade");
+            return (Criteria) this;
+        }
+
+        public Criteria andIfgradeLike(String value) {
+            addCriterion("ifGrade like", value, "ifgrade");
+            return (Criteria) this;
+        }
+
+        public Criteria andIfgradeNotLike(String value) {
+            addCriterion("ifGrade not like", value, "ifgrade");
+            return (Criteria) this;
+        }
+
+        public Criteria andIfgradeIn(List<String> values) {
+            addCriterion("ifGrade in", values, "ifgrade");
+            return (Criteria) this;
+        }
+
+        public Criteria andIfgradeNotIn(List<String> values) {
+            addCriterion("ifGrade not in", values, "ifgrade");
+            return (Criteria) this;
+        }
+
+        public Criteria andIfgradeBetween(String value1, String value2) {
+            addCriterion("ifGrade between", value1, value2, "ifgrade");
+            return (Criteria) this;
+        }
+
+        public Criteria andIfgradeNotBetween(String value1, String value2) {
+            addCriterion("ifGrade not between", value1, value2, "ifgrade");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

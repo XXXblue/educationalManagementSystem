@@ -26,8 +26,8 @@
            <if test="studentInfoView.majornum!=null and studentInfoView.majornum!=''">
                AND   studentinfo.MajorNum=#{studentInfoView.majornum}
            </if>
-           limit #{studentInfoView.page},#{studentInfoView.limit};
        </where>
+        limit #{studentInfoView.page},#{studentInfoView.limit};
     </select>
     <select id="searchStudentInfoCountByCondition"  parameterType="QueryVo.StudentInfoQueryVo" resultType="Integer">
        SELECT count(*) FROM studentinfo

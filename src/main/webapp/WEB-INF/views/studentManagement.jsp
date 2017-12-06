@@ -66,7 +66,7 @@
                 <div class="layui-form-item" style="width: 300px">
                     <label class="layui-form-label">专业</label>
                     <div class="layui-input-block">
-                        <select  id="selmajornum" name="majornum" lay-verify="required" lay-filter="select">
+                        <select  id="selmajornum" name="majornum"  lay-filter="select">
                         </select>
                     </div>
                 </div>
@@ -148,7 +148,7 @@
                 <input name="studentbirthday" id="studentbirthday" lay-verify="required" autocomplete="off" placeholder="请输入学生生日" class="layui-input">
             </div>
         </div>
-        <div class="layui-form-item" style="width: 400px">
+        <div id="denglumima" class="layui-form-item" style="width: 400px">
             <label class="layui-form-label">登录密码:</label>
             <div class="layui-input-block">
                 <input name="studentpassword" id="studentpassword" lay-verify="required" autocomplete="off" placeholder="请输入登录密码" class="layui-input">
@@ -212,7 +212,6 @@
             cols:  [[ //标题栏
                 {checkbox: true, LAY_CHECKED: false}
                 ,{field: 'studentnum', align:'center',title: '学生编号', width: 150}
-                ,{field: 'studentpassword', title: '登录密码', width: 300}
                 ,{field: 'studentorganization', align:'center',title: '所属班级', width: 150}
                 ,{field: 'majornum', align:'center',title: '专业名称', width: 150}
                 ,{field: 'studentname',align:'center', title: '学生姓名', width: 150}
@@ -237,6 +236,7 @@
                 dataType: 'json',
                 success: function (result) {
 //                alert(JSON.stringify(result));
+                    $('#selmajornum').append('<option value="">全部</option>');
                     for(var i=0;i<result.length;i++){
                         var majorname=result[i]['majorname'];
                         var majornum=result[i]['majornum'];

@@ -46,7 +46,7 @@
     <mvc:interceptors>
         <!-- 多个拦截器，顺序执行 记住一点一个拦截一旦拦截 后面拦截器都会拦截该页面  如果是登录拦截在第一个页面拦截 然后在拦截器里面进行url判断 -->
         <mvc:interceptor>
-            <!-- /** 表示所有的url，包括子url路径 -->
+            <!-- /** 表示所有的url，包括子url路径 认证拦截 -->
             <mvc:mapping path="/**"/>
             <mvc:exclude-mapping path="/static/**"/>
             <mvc:exclude-mapping path="/js/**"/>
@@ -54,7 +54,7 @@
             <bean class="interceptor.LoginInterceptor"></bean>
         </mvc:interceptor>
         <mvc:interceptor>
-            <!-- /** 表示所有的url，包括子url路径 -->
+            <!-- /** 表示所有的url，包括子url路径 权限拦截-->
             <mvc:mapping path="/**"/>
             <mvc:exclude-mapping path="/static/**"/>
             <mvc:exclude-mapping path="/js/**"/>

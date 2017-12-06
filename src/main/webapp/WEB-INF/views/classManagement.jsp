@@ -21,13 +21,13 @@
     <legend>操作管理</legend>
     <blockquote class="layui-elem-quote">
         <a href="javascript:;" class="layui-btn layui-btn-small" id="add">
-            <i class="layui-icon">&#xe608;</i>添加课室
+            <i class="layui-icon">&#xe608;</i>添加教室
         </a>
         <a href="#" class="layui-btn layui-btn-small" id="edit">
-            <i class="layui-icon">&#xe642;</i> 修改课室信息
+            <i class="layui-icon">&#xe642;</i> 修改教室信息
         </a>
         <a href="javascript:;" class="layui-btn layui-btn-small" id="delete" >
-            <i class="layui-icon">&#xe640;</i> 删除课室
+            <i class="layui-icon">&#xe640;</i> 删除教室
         </a>
     </blockquote>
 </fieldset>
@@ -37,7 +37,7 @@
 
 <%--表格start--%>
 <fieldset class="layui-elem-field site-demo-button"style="padding-left: 20px;margin-left: 20px;margin-right: 20px">
-    <legend>学生信息</legend>
+    <legend>教室信息</legend>
     <table id="classInfoTable" class="layui-table"  lay-filter="classInfoTable" ></table>
 </fieldset>
 <%--表格end--%>

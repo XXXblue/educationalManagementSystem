@@ -144,7 +144,7 @@ public class StudentServiceImpl implements StudentService{
         studentInfoView.setPage((studentInfoView.getPage()-1)*studentInfoView.getLimit());
         List<StudentInfoView>list=myStudentInfoMapper.searchStudentInfoByCondition(studentInfoQueryVo);
         for(StudentInfoView studentInfoView1:list){
-            studentInfoView1.setMajornum( majorinfoMapper.selectByPrimaryKey(studentInfoView.getMajornum()).getMajorname());
+            studentInfoView1.setMajornum( majorinfoMapper.selectByPrimaryKey(studentInfoView1.getMajornum()).getMajorname());
         }
         if(list==null||list.size()==0){
             formResult.setCode(0);

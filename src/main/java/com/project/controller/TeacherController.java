@@ -7,11 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import po.Courseinfo;
 import po.Teacherinfo;
 import service.TeacherService;
+import util.MyResult;
 
 import javax.servlet.http.HttpSession;
 
@@ -87,9 +90,9 @@ public class TeacherController {
     @RequestMapping("/editTeacherInfoForSelf")
     @ResponseBody
     public String editTeacherInfoForSelf(Teacherinfo teacherinfo,HttpSession session){
-        System.out.println(teacherinfo.getTeacherpassword());
         return JSON.toJSONString(teacherService.editTeacherInfoForSelf(session,teacherinfo));
     }
+
 
     @RequestMapping("/uploadTeacherPic")
     @ResponseBody
@@ -97,4 +100,9 @@ public class TeacherController {
         return JSON.toJSONString(teacherService.uploadTeacherPic(uploadFile));
     }
 
+    @RequestMapping("/submitGrade")
+    @ResponseBody
+    public String submitGrade(@RequestBody Courseinfo courseinfo){
+        return JSON.toJSONString(teacherService.submitGrade(courseinfo));
+    }
 }

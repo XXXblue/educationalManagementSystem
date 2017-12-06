@@ -89,6 +89,14 @@
                         </dd>
                     </dl>
                 </li>
+                <li class="layui-nav-item">
+                    <a class="" href="javascript:;"><i class="fa fa-cubes" aria-hidden="true"></i><span> 审批信息</span></a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a href="javascript:;" data-url="applyGrade" data-icon="fa fa-cubes" data-title="成绩提交审批" kit-target data-id='7'><i class="fa fa-cubes" aria-hidden="true"></i><span> 成绩提交审批</span></a>
+                        </dd>
+                    </dl>
+                </li>
             </ul>
         </div>
     </div>

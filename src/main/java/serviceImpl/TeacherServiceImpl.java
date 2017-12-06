@@ -5,9 +5,7 @@ import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.model.CannedAccessControlList;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import mapper.DeptinfoMapper;
-import mapper.StudentcourseinfoMapper;
-import mapper.TeacherinfoMapper;
+import mapper.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,6 +50,10 @@ String salt = "be5e0323a9195ade5f56695ed9f2eb6b036f3e6417115d0cbe2fb9d74d8740406
     private DeptinfoMapper deptinfoMapper;
     @Autowired
     private OSSClient ossClient;
+    @Autowired
+    private ApplygradeMapper applygradeMapper;
+    @Autowired
+    private CourseinfoMapper courseinfoMapper;
     public MyResult addTeacherInfo(Teacherinfo teacherinfo) {
         MyResult myResult=new MyResult();
         if(checkTeacherInfo(teacherinfo)){
@@ -272,5 +274,22 @@ String salt = "be5e0323a9195ade5f56695ed9f2eb6b036f3e6417115d0cbe2fb9d74d8740406
             myResult.setData(null);
             return myResult;
         }
+    }
+    public MyResult submitGrade(Courseinfo courseinfo){
+//        更新到审批表
+        Applygrade applygrade=new Applygrade();
+        applygrade.setCoursenum(courseinfo.getCoursenum());
+        applygrade.setCreatetime(new Date());
+        applygrade.setUpdatetime(new Date());
+        applygrade.setIfpass("0");
+        applygradeMapper.insert(applygrade);
+//        更新到课程表
+        Courseinfo courseinfo1=new Courseinfo();
+        courseinfo1.setIfgrade("1");
+        courseinfo1.setCoursenum(courseinfo.getCoursenum());
+        courseinfoMapper.updateByPrimaryKeySelective(courseinfo1);
+        MyResult myResult=new MyResult();
+        myResult.setStatus(1);
+        return myResult;
     }
 }

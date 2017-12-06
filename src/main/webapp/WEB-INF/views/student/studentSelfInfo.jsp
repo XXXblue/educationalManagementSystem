@@ -11,7 +11,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>教师个人信息修改</title>
+    <title>个人信息修改</title>
     <link rel="stylesheet" href="../static/plugins/layui/css/layui.css" media="all">
 </head>
 <body>

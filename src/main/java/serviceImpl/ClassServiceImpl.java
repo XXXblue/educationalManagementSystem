@@ -11,6 +11,7 @@ import po.ClassinfoExample;
 import service.ClassService;
 import util.FormResult;
 import util.MyResult;
+import util.PropertyUtil;
 
 import java.util.List;
 
@@ -24,6 +25,8 @@ import java.util.List;
 public class ClassServiceImpl implements ClassService {
     @Autowired
     private ClassinfoMapper classinfoMapper;
+
+    private static String result= PropertyUtil.getProperty("accessKeyId");
 
     public MyResult addNewClass(Classinfo classinfo) {
         MyResult myResult=new MyResult();
@@ -48,6 +51,7 @@ public class ClassServiceImpl implements ClassService {
     }
 
     public FormResult listClassinfoTable(int page,int limit) {
+        System.out.println(result);
         ClassinfoExample classinfoExample=new ClassinfoExample();
         ClassinfoExample.Criteria criteria=classinfoExample.createCriteria();
         PageHelper.startPage(page,limit);

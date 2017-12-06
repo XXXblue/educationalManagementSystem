@@ -90,4 +90,8 @@
         (SELECT studentcourseinfo.CourseNum FROM studentcourseinfo WHERE studentcourseinfo.StudentNum=#{0})
         and courseinfo.CourseDay=#{1} and courseinfo.CourseDayTime=#{2} and courseinfo.TermYear=#{3} and courseinfo.TermTime=#{4};
     </select>
+
+    <select id="selectByName"  resultType="po.Deptinfo" >
+       SELECT * FROM deptinfo WHERE deptinfo.DeptName LIKE '%${deptname}%'
+    </select>
 </mapper>

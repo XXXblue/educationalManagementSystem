@@ -3,6 +3,7 @@ package othermapper;
 import QueryVo.CourseinfoQueryVo;
 import po.Classinfo;
 import po.Courseinfo;
+import po.Deptinfo;
 import po.Studentcourseinfo;
 import poView.CourseInfoView;
 import poView.CourseInfoViewShowStudent;
@@ -26,4 +27,5 @@ public interface MyCourseMapper {
     public Integer CountSelCourseByCondition(CourseinfoQueryVo courseinfoQueryVo);
     public CourseinfoConflict stuSelCourseCheckConflict(String courseNum);
     public List<Courseinfo> checkStuAllSelCourse(String stuNum,String courseDay,String CourseDayTime,String TermTime,String TermYear);
+    public List<Deptinfo> selectByName(Deptinfo deptinfo);
 }

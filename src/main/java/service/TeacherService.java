@@ -1,6 +1,7 @@
 package service;
 
 import org.springframework.web.multipart.MultipartFile;
+import po.Courseinfo;
 import po.Teacherinfo;
 import util.FormResult;
 import util.MyResult;
@@ -38,4 +39,6 @@ public interface TeacherService {
     public MyResult editTeacherInfoForSelf(HttpSession session,Teacherinfo teacherinfo);
 //    教师修改头像上传
     public MyResult uploadTeacherPic(MultipartFile uploadFile);
+//  提交成绩
+    public MyResult submitGrade(Courseinfo courseinfo);
 }

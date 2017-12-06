@@ -224,6 +224,7 @@
                                             table.reload('majorInfoTable', {
                                             });
                                             layer.closeAll('page');
+                                            form.render();
                                         }
                                     }
                                 });

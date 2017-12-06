@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
  * @Date: 0:00 2017/8/1
  */
 @Controller
-public class PageController {
+public class    PageController {
 
 
     //页面时通过ajax静态加载其他页面的 不是通过修改url的 所以要定义一下页面跳转

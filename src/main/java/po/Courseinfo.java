@@ -41,6 +41,8 @@ public class Courseinfo {
 
     private String ifopen;
 
+    private String ifgrade;
+
     private String coursedesc;
 
     public String getCoursenum() {
@@ -185,6 +187,14 @@ public class Courseinfo {
 
     public void setIfopen(String ifopen) {
         this.ifopen = ifopen == null ? null : ifopen.trim();
+    }
+
+    public String getIfgrade() {
+        return ifgrade;
+    }
+
+    public void setIfgrade(String ifgrade) {
+        this.ifgrade = ifgrade == null ? null : ifgrade.trim();
     }
 
     public String getCoursedesc() {

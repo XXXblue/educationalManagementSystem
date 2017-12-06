@@ -179,7 +179,6 @@
                 ,{field: 'teachersex', align:'center',title: '教师性别', width: 150}
                 ,{field: 'teacherbirthday',align:'center', title: '教师生日', width: 150}
                 ,{field: 'teachertitle',align:'center', title: '教师教学领域', width: 150}
-                ,{field: 'teacherpassword',align:'center', title: '教师密码', width:300}
                 ,{field: 'teacherphone',align:'center', title: '教师联系手机', width: 150}
             ]],
             page:true,
