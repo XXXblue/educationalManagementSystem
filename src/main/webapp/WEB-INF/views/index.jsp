@@ -97,6 +97,14 @@
                         </dd>
                     </dl>
                 </li>
+                <li class="layui-nav-item">
+                    <a class="" href="javascript:;"><i class="fa fa-cubes" aria-hidden="true"></i><span> 征集意见</span></a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a href="javascript:;" data-url="voteManagement" data-icon="fa fa-cubes" data-title="投票管理" kit-target data-id='8'><i class="fa fa-cubes" aria-hidden="true"></i><span> 投票管理</span></a>
+                        </dd>
+                    </dl>
+                </li>
             </ul>
         </div>
     </div>

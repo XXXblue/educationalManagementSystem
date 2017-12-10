@@ -21,6 +21,8 @@
     <result column="TermTime" property="termtime" jdbcType="CHAR" />
     <result column="ifOpen" property="ifopen" jdbcType="CHAR" />
     <result column="ifGrade" property="ifgrade" jdbcType="CHAR" />
+    <result column="courseOpenNum" property="courseopennum" jdbcType="CHAR" />
+    <result column="courseStatus" property="coursestatus" jdbcType="CHAR" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="po.Courseinfo" extends="BaseResultMap" >
     <result column="CourseDesc" property="coursedesc" jdbcType="LONGVARCHAR" />
@@ -86,7 +88,7 @@
   <sql id="Base_Column_List" >
     CourseNum, CourseName, CourseCredit, ClassNum, CourseTeacherNum, CourseNumLimit, 
     CourseFree, CreateTime, UpdateTime, TermYear, CourseLong, CourseStartWeek, CourseEndWeek, 
-    CourseDay, CourseDayTime, MajorNum, TermTime, ifOpen, ifGrade
+    CourseDay, CourseDayTime, MajorNum, TermTime, ifOpen, ifGrade, courseOpenNum, courseStatus
   </sql>
   <sql id="Blob_Column_List" >
     CourseDesc
@@ -146,14 +148,16 @@
       TermYear, CourseLong, CourseStartWeek, 
       CourseEndWeek, CourseDay, CourseDayTime, 
       MajorNum, TermTime, ifOpen, 
-      ifGrade, CourseDesc)
+      ifGrade, courseOpenNum, courseStatus, 
+      CourseDesc)
     values (#{coursenum,jdbcType=CHAR}, #{coursename,jdbcType=VARCHAR}, #{coursecredit,jdbcType=INTEGER}, 
       #{classnum,jdbcType=VARCHAR}, #{courseteachernum,jdbcType=CHAR}, #{coursenumlimit,jdbcType=INTEGER}, 
       #{coursefree,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}, 
       #{termyear,jdbcType=VARCHAR}, #{courselong,jdbcType=INTEGER}, #{coursestartweek,jdbcType=INTEGER}, 
       #{courseendweek,jdbcType=INTEGER}, #{courseday,jdbcType=INTEGER}, #{coursedaytime,jdbcType=INTEGER}, 
       #{majornum,jdbcType=CHAR}, #{termtime,jdbcType=CHAR}, #{ifopen,jdbcType=CHAR}, 
-      #{ifgrade,jdbcType=CHAR}, #{coursedesc,jdbcType=LONGVARCHAR})
+      #{ifgrade,jdbcType=CHAR}, #{courseopennum,jdbcType=CHAR}, #{coursestatus,jdbcType=CHAR}, 
+      #{coursedesc,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="po.Courseinfo" >
     insert into courseinfo
@@ -214,6 +218,12 @@
       </if>
       <if test="ifgrade != null" >
         ifGrade,
+      </if>
+      <if test="courseopennum != null" >
+        courseOpenNum,
+      </if>
+      <if test="coursestatus != null" >
+        courseStatus,
       </if>
       <if test="coursedesc != null" >
         CourseDesc,
@@ -276,6 +286,12 @@
       </if>
       <if test="ifgrade != null" >
         #{ifgrade,jdbcType=CHAR},
+      </if>
+      <if test="courseopennum != null" >
+        #{courseopennum,jdbcType=CHAR},
+      </if>
+      <if test="coursestatus != null" >
+        #{coursestatus,jdbcType=CHAR},
       </if>
       <if test="coursedesc != null" >
         #{coursedesc,jdbcType=LONGVARCHAR},
@@ -348,6 +364,12 @@
       <if test="record.ifgrade != null" >
         ifGrade = #{record.ifgrade,jdbcType=CHAR},
       </if>
+      <if test="record.courseopennum != null" >
+        courseOpenNum = #{record.courseopennum,jdbcType=CHAR},
+      </if>
+      <if test="record.coursestatus != null" >
+        courseStatus = #{record.coursestatus,jdbcType=CHAR},
+      </if>
       <if test="record.coursedesc != null" >
         CourseDesc = #{record.coursedesc,jdbcType=LONGVARCHAR},
       </if>
@@ -377,6 +399,8 @@
       TermTime = #{record.termtime,jdbcType=CHAR},
       ifOpen = #{record.ifopen,jdbcType=CHAR},
       ifGrade = #{record.ifgrade,jdbcType=CHAR},
+      courseOpenNum = #{record.courseopennum,jdbcType=CHAR},
+      courseStatus = #{record.coursestatus,jdbcType=CHAR},
       CourseDesc = #{record.coursedesc,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -402,7 +426,9 @@
       MajorNum = #{record.majornum,jdbcType=CHAR},
       TermTime = #{record.termtime,jdbcType=CHAR},
       ifOpen = #{record.ifopen,jdbcType=CHAR},
-      ifGrade = #{record.ifgrade,jdbcType=CHAR}
+      ifGrade = #{record.ifgrade,jdbcType=CHAR},
+      courseOpenNum = #{record.courseopennum,jdbcType=CHAR},
+      courseStatus = #{record.coursestatus,jdbcType=CHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -464,6 +490,12 @@
       <if test="ifgrade != null" >
         ifGrade = #{ifgrade,jdbcType=CHAR},
       </if>
+      <if test="courseopennum != null" >
+        courseOpenNum = #{courseopennum,jdbcType=CHAR},
+      </if>
+      <if test="coursestatus != null" >
+        courseStatus = #{coursestatus,jdbcType=CHAR},
+      </if>
       <if test="coursedesc != null" >
         CourseDesc = #{coursedesc,jdbcType=LONGVARCHAR},
       </if>
@@ -490,6 +522,8 @@
       TermTime = #{termtime,jdbcType=CHAR},
       ifOpen = #{ifopen,jdbcType=CHAR},
       ifGrade = #{ifgrade,jdbcType=CHAR},
+      courseOpenNum = #{courseopennum,jdbcType=CHAR},
+      courseStatus = #{coursestatus,jdbcType=CHAR},
       CourseDesc = #{coursedesc,jdbcType=LONGVARCHAR}
     where CourseNum = #{coursenum,jdbcType=CHAR}
   </update>
@@ -512,7 +546,9 @@
       MajorNum = #{majornum,jdbcType=CHAR},
       TermTime = #{termtime,jdbcType=CHAR},
       ifOpen = #{ifopen,jdbcType=CHAR},
-      ifGrade = #{ifgrade,jdbcType=CHAR}
+      ifGrade = #{ifgrade,jdbcType=CHAR},
+      courseOpenNum = #{courseopennum,jdbcType=CHAR},
+      courseStatus = #{coursestatus,jdbcType=CHAR}
     where CourseNum = #{coursenum,jdbcType=CHAR}
   </update>
 </mapper>

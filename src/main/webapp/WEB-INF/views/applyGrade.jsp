@@ -80,7 +80,7 @@
                                 data:JSON.stringify(data),
                                 success: function (result) {
                                     if (result.status === 1) {
-                                        layer.msg(result.msg, {
+                                        layer.msg("未开课不能提交成绩", {
                                             time: 2000, //2s后自动关闭
                                         });
                                     }

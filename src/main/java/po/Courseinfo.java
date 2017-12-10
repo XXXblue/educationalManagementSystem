@@ -20,7 +20,7 @@ public class Courseinfo {
     private Integer coursefree;
     @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date createtime;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date updatetime;
 
     private String termyear;
@@ -42,6 +42,10 @@ public class Courseinfo {
     private String ifopen;
 
     private String ifgrade;
+
+    private String courseopennum;
+
+    private String coursestatus;
 
     private String coursedesc;
 
@@ -195,6 +199,22 @@ public class Courseinfo {
 
     public void setIfgrade(String ifgrade) {
         this.ifgrade = ifgrade == null ? null : ifgrade.trim();
+    }
+
+    public String getCourseopennum() {
+        return courseopennum;
+    }
+
+    public void setCourseopennum(String courseopennum) {
+        this.courseopennum = courseopennum == null ? null : courseopennum.trim();
+    }
+
+    public String getCoursestatus() {
+        return coursestatus;
+    }
+
+    public void setCoursestatus(String coursestatus) {
+        this.coursestatus = coursestatus == null ? null : coursestatus.trim();
     }
 
     public String getCoursedesc() {

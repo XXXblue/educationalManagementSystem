@@ -30,4 +30,6 @@ public interface CourseService {
     public MyResult stuRemoveCourse(String courseNum,HttpSession session);
     //管理员精准查询课程
     public FormResult searchCourseByCondition(CourseinfoQueryVo courseinfoQueryVo);
+    //管理员校验课程
+    public MyResult changeCourseStatus(String user,String coursenum);
 }

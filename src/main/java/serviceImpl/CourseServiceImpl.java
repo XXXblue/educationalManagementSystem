@@ -80,6 +80,8 @@ public class CourseServiceImpl implements CourseService {
             courseinfo.setCoursenum(UUID.randomUUID().toString());
             courseinfo.setCreatetime(new Date());
             courseinfo.setUpdatetime(new Date());
+            courseinfo.setCoursestatus("0");
+            courseinfo.setIfgrade("0");
             courseinfo.setCoursefree(courseinfo.getCoursenumlimit());
             courseinfoMapper.insert(courseinfo);
             myResult=new MyResult();
@@ -297,6 +299,33 @@ public class CourseServiceImpl implements CourseService {
         formResult.setData(null);
         formResult.setMsg("数据不存在或者出错");
         return formResult;
+    }
+
+    public MyResult changeCourseStatus(String user, String coursenum) {
+        MyResult myResult=new MyResult();
+        if(user.equals("manager")){
+            Courseinfo courseinfo=courseinfoMapper.selectByPrimaryKey(coursenum);
+            if((courseinfo.getCoursenumlimit()-courseinfo.getCoursefree())>=Integer.parseInt(courseinfo.getCourseopennum())){
+                    Courseinfo courseinfoU=new Courseinfo();
+                    courseinfoU.setCoursenum(coursenum);
+                    courseinfoU.setCoursestatus("1");
+                    courseinfoMapper.updateByPrimaryKeySelective(courseinfoU);
+                    myResult=new MyResult();
+                    myResult.setStatus(1);
+            }else{
+                    myResult=new MyResult();
+                    myResult.setStatus(2);
+            }
+        }
+        if(user.equals("teacher")){
+            Courseinfo courseinfo=new Courseinfo();
+            courseinfo.setCoursenum(coursenum);
+            courseinfo.setCoursestatus("2");
+            courseinfoMapper.updateByPrimaryKeySelective(courseinfo);
+            myResult=new MyResult();
+            myResult.setStatus(1);
+        }
+        return myResult;
     }
 
 

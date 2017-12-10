@@ -16,7 +16,7 @@
 
     <select id="teacherCourseInfoTable"  resultType="po.Courseinfo">
         SELECT courseinfo.CourseName,courseinfo.ClassNum,courseinfo.CourseFree,courseinfo.CourseNumLimit,
-        courseinfo.CourseDay,courseinfo.CourseDayTime,courseinfo.TermYear,courseinfo.TermTime,courseinfo.CourseNum,courseinfo.ifGrade
+        courseinfo.courseStatus,courseinfo.CourseDay,courseinfo.CourseDayTime,courseinfo.TermYear,courseinfo.TermTime,courseinfo.CourseNum,courseinfo.ifGrade
          FROM courseinfo WHERE CourseTeacherNum=#{0} limit #{1},#{2};
     </select>
 

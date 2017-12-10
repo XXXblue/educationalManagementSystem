@@ -276,6 +276,15 @@ String salt = "be5e0323a9195ade5f56695ed9f2eb6b036f3e6417115d0cbe2fb9d74d8740406
         }
     }
     public MyResult submitGrade(Courseinfo courseinfo){
+        MyResult myResult=new MyResult();
+        if(courseinfo.getCoursestatus().equals("0")){
+            myResult.setStatus(1);
+            return myResult;
+        }
+        if(courseinfo.getCoursestatus().equals("1")){
+            myResult.setStatus(3);
+            return myResult;
+        }
 //        更新到审批表
         Applygrade applygrade=new Applygrade();
         applygrade.setCoursenum(courseinfo.getCoursenum());
@@ -288,8 +297,7 @@ String salt = "be5e0323a9195ade5f56695ed9f2eb6b036f3e6417115d0cbe2fb9d74d8740406
         courseinfo1.setIfgrade("1");
         courseinfo1.setCoursenum(courseinfo.getCoursenum());
         courseinfoMapper.updateByPrimaryKeySelective(courseinfo1);
-        MyResult myResult=new MyResult();
-        myResult.setStatus(1);
+        myResult.setStatus(2);
         return myResult;
     }
 }

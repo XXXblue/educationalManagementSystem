@@ -94,6 +94,19 @@
             <a href="/detail/{{d.coursenum}}" class="layui-table-link">{{d.coursename}}</a>
         </script>
 
+        <script type="text/html" id="coursestatus" >
+            {{#  if(d.coursestatus==0){ }}
+            <a class="layui-btn layui-btn-danger layui-btn-mini">未开课</a>
+            {{#  } }}
+            {{#  if(d.coursestatus==1){ }}
+            <a class="layui-btn layui-btn-mini" lay-event="coursestatus">结课</a>
+            {{#  } }}
+            {{#  if(d.coursestatus==2){ }}
+            <a class="layui-btn layui-btn-normal layui-btn-mini">已结课</a>
+            {{#  } }}
+        </script>
+
+
         <script type="text/html" id="status">
             {{#  if(d.ifgrade==0){ }}
                 未审批
@@ -129,11 +142,12 @@
                         ,{field: 'courseday', align:'center',title: '上课周', width: 150,templet:'#courseDayTpl'}
                         ,{field: 'coursedaytime',align:'center', title: '上课时间段', width: 150,templet:'#courseDayTimeTpl'}
                         ,{field: 'coursefree', align:'center',title: '课程剩余量', width: 150}
-                        ,{field: 'coursenumlimit', align:'center',title: '课程人数上限', width: 150}
+                        ,{field: 'coursenumlimit', align:'center',title: '课程人数上限', width: 100}
                         ,{field: 'termyear', align:'center',title: '学年', width: 150}
                         ,{field: 'ifgrade', align:'center',title: '状态', width: 150,templet: '#status'}
                         ,{field: 'termtime', align:'center',title: '学期', width: 150,templet: '#termTimeTpl'}
-                        ,{field: 'ifgrade', align:'center',title: '是否提交', width: 150,templet: '#selbar'}
+                        ,{field: 'ifgrade', align:'center',title: '是否提交', width: 100,templet: '#selbar'}
+                        ,{field: 'coursestatus', align:'center',title: '课程状态', width: 100,templet: '#coursestatus'}
                     ]],
                     page:true,
                     limits: [10,20,30],
@@ -156,17 +170,41 @@
                                     data:JSON.stringify(data),
                                     success: function (result) {
                                         if (result.status === 1) {
-                                            layer.msg(result.msg, {
-                                                time: 2000, //2s后自动关闭
-                                            });
-                                        }
-                                        if (result.status === 2) {
-                                            layer.msg(result.msg, {
+                                            layer.msg("未开课不能提交成绩", {
                                                 time: 2000, //2s后自动关闭
                                             });
                                         }
                                         if (result.status === 3) {
-                                            layer.msg(result.msg, {
+                                            layer.msg("未结课不能提交成绩", {
+                                                time: 2000, //2s后自动关闭
+                                            });
+                                        }
+                                        if (result.status === 2) {
+                                            layer.msg("成功提交成绩待审批", {
+                                                time: 2000, //2s后自动关闭
+                                            });
+                                        }
+                                        table.reload('teacherCourseInfoTable', {});
+                                    }
+                                });
+                            }
+                            layer.close(index);
+                        });
+                    }
+
+                    if (layEvent === 'coursestatus') {
+                        layer.confirm('确定结课', {icon: 3, title: '提示'}, function (index) {
+                            if (index) {
+                                $.ajax({
+                                    traditional: true,//传输组专用
+                                    url: '/changeCourseStatus' + '/teacher/'+data['coursenum'],
+                                    type: 'POST',
+                                    dataType: 'json',
+                                    contentType: 'application/json',
+                                    data: JSON.stringify(data),
+                                    success: function (result) {
+                                        if (result.status === 1) {
+                                            layer.msg("成功结课", {
                                                 time: 2000, //2s后自动关闭
                                             });
                                         }

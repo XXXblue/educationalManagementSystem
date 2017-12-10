@@ -246,6 +246,34 @@
             </div>
         </div>
 
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">人数限制:</label>
+                <div class="layui-input-block">
+                    <input name="courseopennum" id="courseopennum" lay-verify="required" autocomplete="off" placeholder="请输入人限" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item" hidden>
+            <div class="layui-inline" >
+                <label class="layui-form-label">人数限制:</label>
+                <div class="layui-input-block">
+                    <input name="coursestatus" id="cs" autocomplete="off" placeholder="请输入人限" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item" hidden>
+            <div class="layui-inline" >
+                <label class="layui-form-label">人数限制:</label>
+                <div class="layui-input-block">
+                    <input name="ifgrade" id="ifgrade" autocomplete="off" placeholder="请输入人限" class="layui-input">
+                </div>
+            </div>
+        </div>
+
         <div class="layui-form-item" >
             <div class="layui-input-block" style="margin:0 250px;">
                 <button class="layui-btn" lay-submit="" lay-filter="submit">提交</button>
@@ -320,6 +348,28 @@
     <a href="detail/{{d.coursenum}}" class="layui-table-link">{{d.courseteachernum
         }}</a>
 </script>
+<script type="text/html" id="coursestatus">
+    {{#  if(d.coursestatus==0){ }}
+    未开课
+    {{#  } }}
+    {{#  if(d.coursestatus==1){ }}
+    已开课
+    {{#  } }}
+    {{#  if(d.coursestatus==2){ }}
+    已结课
+    {{#  } }}
+</script>
+<script type="text/html" id="coursestatusbutton">
+    {{#  if(d.coursestatus==0){ }}
+    <a class="layui-btn layui-btn-warm layui-btn-mini" lay-event="openCourse">开课</a>
+    {{#  } }}
+    {{#  if(d.coursestatus==1){ }}
+    <a class="layui-btn layui-btn-danger layui-btn-mini" >开课中</a>
+    {{#  } }}
+    {{#  if(d.coursestatus==2){ }}
+    <a class="layui-btn layui-btn-danger layui-btn-mini" >已结课</a>
+    {{#  } }}
+</script>
 <script>
     layui.use(['jquery','layer','form','table','laydate','laytpl'], function(){
         var $ = layui.$;
@@ -351,6 +401,8 @@
         form.render();
 //        动态生成select end
 
+
+
 //        初始化参数表单 start
         function init() {
             $("#coursenum").val("");
@@ -377,15 +429,18 @@
                 {checkbox: true, LAY_CHECKED: false}
                 ,{field: 'coursenum', align:'center',title: '课程编号', width: 150}
                 ,{field: 'coursename', align:'center',title: '课程名称', width: 150}
-                ,{field: 'classnum', align:'center',title: '课室编号', width: 150}
+                ,{field: 'classnum', align:'center',title: '课室编号', width: 100}
                 ,{field:'courseteachernum', align:'center', title: '教师工号', width: 100, templet: '#titleTpl'}
-                ,{field: 'coursenumlimit',align:'center', title: '人数限制', width: 150}
-                ,{field: 'termyear',align:'center', title: '学年', width: 150}
-                ,{field: 'coursefree',align:'center', title: '人数剩余', width: 150}
-                ,{field: 'scourseDay',align:'center', title: '上课日期', width: 150}
+                ,{field: 'coursenumlimit',align:'center', title: '人数限制', width: 100}
+                ,{field: 'termyear',align:'center', title: '学年', width: 100}
+                ,{field: 'coursefree',align:'center', title: '人数剩余', width: 100}
+                ,{field: 'scourseDay',align:'center', title: '上课日期', width: 100}
                 ,{field: 'scourseDayTime',align:'center', title: '上课时段', width: 150}
+                ,{field: 'courseopennum',align:'center', title: '开课人数下限', width: 120}
                 ,{field: 'ifopen',align:'center', title: '是否公布', width: 100}
-                ,{fixed: 'right',title: '查看更多', width:150, align:'center', toolbar: '#barDemo'}
+                ,{field: 'coursestatus',align:'center', title: '开课状态', width: 100,templet:'#coursestatus'}
+                ,{fixed: 'right',title: '查看更多', width:100, align:'center', toolbar: '#barDemo'}
+                ,{field: 'coursestatus',align:'center', title: '是否开课', width: 120,templet:'#coursestatusbutton'}
             ]],
             page:true,
             limits: [10,20,30],
@@ -416,6 +471,36 @@
                     }
                 });
             } ;
+
+
+            if (layEvent === 'openCourse') {
+                layer.confirm('确定开课', {icon: 3, title: '提示'}, function (index) {
+                    if (index) {
+                        $.ajax({
+                            traditional: true,//传输组专用
+                            url: '/changeCourseStatus' + '/manager/'+data['coursenum'],
+                            type: 'POST',
+                            dataType: 'json',
+                            contentType: 'application/json',
+                            data: JSON.stringify(data),
+                            success: function (result) {
+                                if (result.status === 1) {
+                                    layer.msg("成功开课", {
+                                        time: 2000, //2s后自动关闭
+                                    });
+                                }
+                                if (result.status === 2) {
+                                    layer.msg("人数不足，开课失败", {
+                                        time: 2000, //2s后自动关闭
+                                    });
+                                }
+                                table.reload('courseInfoTable', {});
+                            }
+                        });
+                    }
+                    layer.close(index);
+                });
+            }
         });
 //            表格end
 
@@ -426,7 +511,7 @@
             $('#coursenum').attr("disabled", false);
             layer.open({
                 title: "新增课程",
-                area: ['800px', '600px'],
+                area: ['800px', '700px'],
                 skin: 'layui-anim-upbit',
                 type: 1,
                 content: $('#form'),
@@ -483,7 +568,7 @@
             if(checkStatus.data.length===1){
                 layer.open({
                     title: "修改课程",
-                    area: ['800px', '600px'],
+                    area: ['800px', '700px'],
                     skin: 'layui-anim-upbit',
                     type: 1,
                     content: $('#form'),
@@ -503,8 +588,9 @@
                         $('#courseendweek').val((checkStatus.data)[0]['courseendweek']);
                         $('#courselong').val((checkStatus.data)[0]['courselong']);
                         $('#coursenumlimit').val((checkStatus.data)[0]['coursenumlimit']);
-
-
+                        $('#courseopennum').val((checkStatus.data)[0]['courseopennum']);
+                        $('#cs').val((checkStatus.data)[0]['coursestatus']);
+                        $('#ifgrade').val((checkStatus.data)[0]['ifgrade']);
 //                        radio的渲染start
                         if(typeof ((checkStatus.data)[0].ifopen)!='undefined'){
                             if(((checkStatus.data)[0].ifopen).replace(/["“”]/g,"")==='是'){
