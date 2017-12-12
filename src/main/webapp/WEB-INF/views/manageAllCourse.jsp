@@ -59,11 +59,12 @@
                         <input type="text" name="week"  placeholder="请输入周数" autocomplete="off" class="layui-input">
                     </div>
                 </div>
-                <div class="layui-form-item" style="width: 300px">
+                <div class="layui-form-item" style="width: 400px">
                     <label class="layui-form-label">是否公布</label>
                     <div class="layui-input-block">
                         <input  type="radio" name="ifopen" value="1" title="是" checked>
                         <input  type="radio" name="ifopen" value="0" title="否" >
+                        <input  type="radio" name="ifopen" value="" title="全部" >
                     </div>
                 </div>
             </div>
@@ -518,27 +519,31 @@
                 success:function () {
                     form.on('submit(submit)', function(data){
 //                        layer.msg(JSON.stringify(data.field));
-                        $.ajax({
-                            url: '/addCourseInfo',
-                            type: 'post',
-                            data: data.field,
-                            dataType: 'json',
-                            //                async: false,这个能把ajax变同步
-                            success: function (result) {
-                                if(result.status===400){
-                                    layer.msg(result.msg, {
-                                        time: 2000, //2s后自动关闭
-                                    });
-                                }
-                                if(result.status===200){
-                                    layer.msg(result.msg, {
-                                        time: 2000, //2s后自动关闭
-                                    });
-                                    init();
-                                    table.reload('courseInfoTable', {
-                                    });
-                                    layer.closeAll('page');
-                                }
+                        layer.confirm('确认新建课程', {icon: 3, title:'提示'}, function(index){
+                            if(index){
+                                $.ajax({
+                                    url: '/addCourseInfo',
+                                    type: 'post',
+                                    data: data.field,
+                                    dataType: 'json',
+                                    //                async: false,这个能把ajax变同步
+                                    success: function (result) {
+                                        if(result.status===400){
+                                            layer.msg(result.msg, {
+                                                time: 2000, //2s后自动关闭
+                                            });
+                                        }
+                                        if(result.status===200){
+                                            layer.msg(result.msg, {
+                                                time: 2000, //2s后自动关闭
+                                            });
+                                            init();
+                                            table.reload('courseInfoTable', {
+                                            });
+                                            layer.closeAll('page');
+                                        }
+                                    }
+                                });
                             }
                         });
                         return false;
@@ -635,27 +640,31 @@
 //                        数据回显end
                         form.on('submit(submit)', function(data){
 //                        layer.msg(JSON.stringify(data.field));
-                            $.ajax({
-                                url: '/editCourseInfo',
-                                type: 'post',
-                                data: data.field,
-                                dataType: 'json',
-                                //                async: false,这个能把ajax变同步
-                                success: function (result) {
-                                    if(result.status===400){
-                                        layer.msg(result.msg, {
-                                            time: 2000, //2s后自动关闭
-                                        });
-                                    }
-                                    if(result.status===200){
-                                        layer.msg(result.msg, {
-                                            time: 2000, //2s后自动关闭
-                                        });
-                                        init();
-                                        table.reload('courseInfoTable', {
-                                        });
-                                        layer.closeAll('page');
-                                    }
+                            layer.confirm('确认修改课程', {icon: 3, title:'提示'}, function(index) {
+                                if (index) {
+                                    $.ajax({
+                                        url: '/editCourseInfo',
+                                        type: 'post',
+                                        data: data.field,
+                                        dataType: 'json',
+                                        //                async: false,这个能把ajax变同步
+                                        success: function (result) {
+                                            if(result.status===400){
+                                                layer.msg(result.msg, {
+                                                    time: 2000, //2s后自动关闭
+                                                });
+                                            }
+                                            if(result.status===200){
+                                                layer.msg(result.msg, {
+                                                    time: 2000, //2s后自动关闭
+                                                });
+                                                init();
+                                                table.reload('courseInfoTable', {
+                                                });
+                                                layer.closeAll('page');
+                                            }
+                                        }
+                                    });
                                 }
                             });
                             return false;
@@ -679,26 +688,30 @@
                 for(var i=0;i<checkStatus.data.length;i++){
                     nums.push((checkStatus.data)[i]['coursenum']);
                 }
-                $.ajax({
-                    traditional: true,//传输组专用
-                    url: '/delCourseInfo',
-                    type: 'post',
-                    data: {"nums":nums},
-                    dataType: 'json',
-                    //                async: false,这个能把ajax变同步
-                    success: function (result) {
-                        if (result.status === 400) {
-                            layer.msg(result.msg, {
-                                time: 2000, //2s后自动关闭
-                            });
-                        }
-                        if (result.status === 200) {
-                            layer.msg(result.msg, {
-                                time: 2000, //2s后自动关闭
-                            });
-                            layer.closeAll('page');
-                        }
-                        table.reload('courseInfoTable', {
+                layer.confirm('确认删除所选课程', {icon: 3, title:'提示'}, function(index){
+                    if(index){
+                        $.ajax({
+                            traditional: true,//传输组专用
+                            url: '/delCourseInfo',
+                            type: 'post',
+                            data: {"nums":nums},
+                            dataType: 'json',
+                            //                async: false,这个能把ajax变同步
+                            success: function (result) {
+                                if (result.status === 400) {
+                                    layer.msg(result.msg, {
+                                        time: 2000, //2s后自动关闭
+                                    });
+                                }
+                                if (result.status === 200) {
+                                    layer.msg(result.msg, {
+                                        time: 2000, //2s后自动关闭
+                                    });
+                                    layer.closeAll('page');
+                                }
+                                table.reload('courseInfoTable', {
+                                });
+                            }
                         });
                     }
                 });

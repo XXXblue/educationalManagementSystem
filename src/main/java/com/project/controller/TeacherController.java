@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import po.Courseinfo;
 import po.Teacherinfo;
 import service.TeacherService;
+import service.TeacherTimetableService;
 import util.MyResult;
 
 import javax.servlet.http.HttpSession;
@@ -28,7 +29,8 @@ import javax.servlet.http.HttpSession;
 public class TeacherController {
     //添加一个日志器
     private static final Logger logger = LoggerFactory.getLogger(TeacherController.class);
-
+    @Autowired
+    private TeacherTimetableService teacherTimetableService;
     @Autowired
     private TeacherService teacherService;
     @RequestMapping("/addteacherinfo")
@@ -104,5 +106,11 @@ public class TeacherController {
     @ResponseBody
     public String submitGrade(@RequestBody Courseinfo courseinfo){
         return JSON.toJSONString(teacherService.submitGrade(courseinfo));
+    }
+
+    @RequestMapping("/searchteachercourseinfo")
+    @ResponseBody
+    public String search(String termyear,String termtime,String week,HttpSession session){
+        return JSON.toJSONString(teacherTimetableService.searchTeacherTimetable(termyear,termtime,week,session));
     }
 }
