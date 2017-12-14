@@ -6,6 +6,7 @@
     <result column="ClassMan" property="classman" jdbcType="CHAR" />
     <result column="ClassManTel" property="classmantel" jdbcType="VARCHAR" />
     <result column="LimitNum" property="limitnum" jdbcType="INTEGER" />
+    <result column="ClassType" property="classtype" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -66,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    ClassNum, ClassMan, ClassManTel, LimitNum
+    ClassNum, ClassMan, ClassManTel, LimitNum, ClassType
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="po.ClassinfoExample" >
     select
@@ -100,9 +101,9 @@
   </delete>
   <insert id="insert" parameterType="po.Classinfo" >
     insert into classinfo (ClassNum, ClassMan, ClassManTel, 
-      LimitNum)
+      LimitNum, ClassType)
     values (#{classnum,jdbcType=VARCHAR}, #{classman,jdbcType=CHAR}, #{classmantel,jdbcType=VARCHAR}, 
-      #{limitnum,jdbcType=INTEGER})
+      #{limitnum,jdbcType=INTEGER}, #{classtype,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="po.Classinfo" >
     insert into classinfo
@@ -119,6 +120,9 @@
       <if test="limitnum != null" >
         LimitNum,
       </if>
+      <if test="classtype != null" >
+        ClassType,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="classnum != null" >
@@ -132,6 +136,9 @@
       </if>
       <if test="limitnum != null" >
         #{limitnum,jdbcType=INTEGER},
+      </if>
+      <if test="classtype != null" >
+        #{classtype,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -156,6 +163,9 @@
       <if test="record.limitnum != null" >
         LimitNum = #{record.limitnum,jdbcType=INTEGER},
       </if>
+      <if test="record.classtype != null" >
+        ClassType = #{record.classtype,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -166,7 +176,8 @@
     set ClassNum = #{record.classnum,jdbcType=VARCHAR},
       ClassMan = #{record.classman,jdbcType=CHAR},
       ClassManTel = #{record.classmantel,jdbcType=VARCHAR},
-      LimitNum = #{record.limitnum,jdbcType=INTEGER}
+      LimitNum = #{record.limitnum,jdbcType=INTEGER},
+      ClassType = #{record.classtype,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -183,6 +194,9 @@
       <if test="limitnum != null" >
         LimitNum = #{limitnum,jdbcType=INTEGER},
       </if>
+      <if test="classtype != null" >
+        ClassType = #{classtype,jdbcType=VARCHAR},
+      </if>
     </set>
     where ClassNum = #{classnum,jdbcType=VARCHAR}
   </update>
@@ -190,7 +204,8 @@
     update classinfo
     set ClassMan = #{classman,jdbcType=CHAR},
       ClassManTel = #{classmantel,jdbcType=VARCHAR},
-      LimitNum = #{limitnum,jdbcType=INTEGER}
+      LimitNum = #{limitnum,jdbcType=INTEGER},
+      ClassType = #{classtype,jdbcType=VARCHAR}
     where ClassNum = #{classnum,jdbcType=VARCHAR}
   </update>
 </mapper>

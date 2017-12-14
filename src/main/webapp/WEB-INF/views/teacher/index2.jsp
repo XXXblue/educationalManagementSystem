@@ -27,7 +27,7 @@
         <ul class="layui-nav layui-layout-right kit-nav">
             <li class="layui-nav-item">
                 <a href="javascript:;">
-                    <img src="${activerole.pic}" class="layui-nav-img">${activerole.username}
+                    <img id =pic src="${activerole.pic}" class="layui-nav-img">${activerole.username}
                 </a>
                 <dl class="layui-nav-child">
                     <dd><a id="a1" href="javascript:;">基本资料</a></dd>

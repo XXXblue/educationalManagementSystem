@@ -22,10 +22,7 @@ import poView.ActiveRole;
 import poView.StuCourseTableView;
 import poView.StudentInfoView;
 import service.StudentService;
-import util.FormResult;
-import util.MyResult;
-import util.PasswordEncoder;
-import util.SubStringUtils;
+import util.*;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
@@ -54,8 +51,9 @@ public class StudentServiceImpl implements StudentService{
     private MyStudentInfoMapper myStudentInfoMapper;
     @Autowired
     private MyStudentCourseInfoMapper myStudentCourseInfoMapper;
-    @Autowired
-    private OSSClient ossClient;
+    private static String accessKeyId= PropertyUtil.getProperty("accessKeyId");
+    private static String endpoint= PropertyUtil.getProperty("endpoint");
+    private static String accessKeySecret= PropertyUtil.getProperty("accessKeySecret");
 
     public MyResult addStudentInfo(Studentinfo studentinfo) {
         MyResult myResult=new MyResult();
@@ -210,6 +208,7 @@ public class StudentServiceImpl implements StudentService{
     public MyResult editStudentInfoForSelf(Studentinfo studentinfo,HttpSession session) {
         ActiveRole activeRole= (ActiveRole) session.getAttribute("activerole");
         studentinfo.setStudentnum(activeRole.getUsernum());
+        OSSClient ossClient=new OSSClient(endpoint,accessKeyId,accessKeySecret);
         MyResult myResult=new MyResult();
 //        密码处理
         if(studentinfo.getStudentpassword()!=""){
@@ -229,15 +228,15 @@ public class StudentServiceImpl implements StudentService{
             }
 //            新增图片
             ossClient.setObjectAcl("xiaojianyu-file-server", fileName, CannedAccessControlList.PublicRead);
+            ossClient.shutdown();
         }
         try{
             myStudentInfoMapper.updateStudentInfoForSelf(studentinfo);
             myResult.setStatus(1);
-            myResult.setMsg("修改成功");
+            myResult.setData(studentinfo.getStudentpic());
             return myResult;
         }catch(Exception e){
             myResult.setStatus(2);
-            myResult.setMsg("修改出错");
             return myResult;
         }
 
@@ -249,6 +248,7 @@ public class StudentServiceImpl implements StudentService{
         String type=uploadFile.getContentType();
         String prefix=oldName.substring(oldName.lastIndexOf(".")+1);
         String newName= UUID.randomUUID().toString();
+        OSSClient ossClient=new OSSClient(endpoint,accessKeyId,accessKeySecret);
         try {
             InputStream inputStream=uploadFile.getInputStream();
             ossClient.putObject("xiaojianyu-file-server", "student/"+ newName+"."+prefix, inputStream);
@@ -258,6 +258,7 @@ public class StudentServiceImpl implements StudentService{
             myResult.setMsg("上传到服务器成功");
             myResult.setStatus(1);
             myResult.setData(path);
+            ossClient.shutdown();
             return myResult;
         } catch (IOException e) {
             e.printStackTrace();

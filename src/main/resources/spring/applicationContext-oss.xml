@@ -10,9 +10,4 @@
 
 
 
-    <bean id="ossClient" class="com.aliyun.oss.OSSClient">
-        <constructor-arg index="0" type="java.lang.String" value="${endpoint}"/>
-        <constructor-arg index="1" type="java.lang.String" value="${accessKeyId}"/>
-        <constructor-arg index="2" type="java.lang.String" value="${accessKeySecret}"/>
-    </bean>
 </beans>

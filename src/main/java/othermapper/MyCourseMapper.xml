@@ -11,9 +11,9 @@
     </resultMap>
     <!--多参数-->
     <select id="checkCourseInfo"  resultMap="limitResultMap">
-       SELECT * FRom courseinfo where courseinfo.CourseDay=#{0} and courseinfo.CourseDayTime=#{1} and courseinfo.ClassNum
-=  #{2} and courseinfo.TermTime=#{3} AND courseinfo.TermYear = #{4};
-    </select>
+    SELECT * FRom courseinfo where courseinfo.CourseDay=#{0} and courseinfo.CourseDayTime=#{1} and courseinfo.ClassNum
+    =  #{2} and courseinfo.TermTime=#{3} AND courseinfo.TermYear = #{4};
+</select>
 
     <select id="selTeacherTimetale"  resultMap="limitResultMap">
         select * from courseinfo where	CourseTeacherNum=#{0}and TermYear=#{1}and TermTime=#{2}and CourseEndWeek >=#{3} and CourseStartWeek &lt;=#{3};

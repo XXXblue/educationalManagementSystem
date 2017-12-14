@@ -16,17 +16,17 @@ import java.util.List;
  */
 public interface DeptService {
 //    管理员添加新学院
-    public MyResult addDept(Deptinfo deptinfo);
+    public MyResult addDept(Deptinfo deptinfo)throws Exception;
 //    管理员校验学院是否存在
-    public boolean checkDept(String deptinfonum);
+    public boolean checkDept(String deptinfonum)throws Exception;
 //    管理员展示学院信息
-    public FormResult ListAllDeptInfo(int page,int limit);
+    public FormResult ListAllDeptInfo(int page,int limit)throws Exception;
 //    管理员展示学院详细介绍
-    public MyResult wihtblobsDeptInfo(String deptinfonum);
+    public MyResult wihtblobsDeptInfo(String deptinfonum)throws Exception;
 //    管理员修改学院信息
-    public MyResult editdeptInfo(Deptinfo deptinfo);
+    public MyResult editdeptInfo(Deptinfo deptinfo)throws Exception;
 //    管理员删除学院
-    public MyResult delDeptInfo(String[] nums);
+    public MyResult delDeptInfo(String[] nums)throws Exception;
 //    下拉ajax加载学院信息
-    public List<DeptInfoSel> listDeptInfo();
+    public List<DeptInfoSel> listDeptInfo()throws Exception;
 }

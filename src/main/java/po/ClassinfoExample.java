@@ -373,6 +373,76 @@ public class ClassinfoExample {
             addCriterion("LimitNum not between", value1, value2, "limitnum");
             return (Criteria) this;
         }
+
+        public Criteria andClasstypeIsNull() {
+            addCriterion("ClassType is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andClasstypeIsNotNull() {
+            addCriterion("ClassType is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andClasstypeEqualTo(String value) {
+            addCriterion("ClassType =", value, "classtype");
+            return (Criteria) this;
+        }
+
+        public Criteria andClasstypeNotEqualTo(String value) {
+            addCriterion("ClassType <>", value, "classtype");
+            return (Criteria) this;
+        }
+
+        public Criteria andClasstypeGreaterThan(String value) {
+            addCriterion("ClassType >", value, "classtype");
+            return (Criteria) this;
+        }
+
+        public Criteria andClasstypeGreaterThanOrEqualTo(String value) {
+            addCriterion("ClassType >=", value, "classtype");
+            return (Criteria) this;
+        }
+
+        public Criteria andClasstypeLessThan(String value) {
+            addCriterion("ClassType <", value, "classtype");
+            return (Criteria) this;
+        }
+
+        public Criteria andClasstypeLessThanOrEqualTo(String value) {
+            addCriterion("ClassType <=", value, "classtype");
+            return (Criteria) this;
+        }
+
+        public Criteria andClasstypeLike(String value) {
+            addCriterion("ClassType like", value, "classtype");
+            return (Criteria) this;
+        }
+
+        public Criteria andClasstypeNotLike(String value) {
+            addCriterion("ClassType not like", value, "classtype");
+            return (Criteria) this;
+        }
+
+        public Criteria andClasstypeIn(List<String> values) {
+            addCriterion("ClassType in", values, "classtype");
+            return (Criteria) this;
+        }
+
+        public Criteria andClasstypeNotIn(List<String> values) {
+            addCriterion("ClassType not in", values, "classtype");
+            return (Criteria) this;
+        }
+
+        public Criteria andClasstypeBetween(String value1, String value2) {
+            addCriterion("ClassType between", value1, value2, "classtype");
+            return (Criteria) this;
+        }
+
+        public Criteria andClasstypeNotBetween(String value1, String value2) {
+            addCriterion("ClassType not between", value1, value2, "classtype");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

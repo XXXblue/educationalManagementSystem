@@ -18,7 +18,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String resourceurl=request.getRequestURI();
         HttpSession session=request.getSession();
-        if(resourceurl.equals("/login")||resourceurl.equals("/loginsubmit")||resourceurl.equals("/loginteachersubmit")||resourceurl.equals("/loginstudentsubmit")){
+        if(resourceurl.equals("/error")||resourceurl.equals("/login")||resourceurl.equals("/loginsubmit")||resourceurl.equals("/loginteachersubmit")||resourceurl.equals("/loginstudentsubmit")){
             return true;
         }
         if(session.getAttribute("activerole")!=null){

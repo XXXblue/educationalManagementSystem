@@ -18,13 +18,13 @@
 <fieldset class="layui-elem-field site-demo-button"style="padding-left: 20px;margin-left: 20px;margin-right: 20px">
     <legend>操作管理</legend>
     <blockquote class="layui-elem-quote">
-        <a href="javascript:;" class="layui-btn layui-btn-small" id="add">
+        <a href="javascript:;" class="layui-btn layui-btn-sm" id="add">
             <i class="layui-icon">&#xe608;</i> 添加学院信息
         </a>
-        <a href="#" class="layui-btn layui-btn-small" id="edit">
+        <a href="#" class="layui-btn layui-btn-sm" id="edit">
             <i class="layui-icon">&#xe642;</i> 修改学院信息
         </a>
-        <a href="javascript:;" class="layui-btn layui-btn-small" id="delete" >
+        <a href="javascript:;" class="layui-btn layui-btn-sm" id="delete" >
             <i class="layui-icon">&#xe640;</i> 删除学院信息
         </a>
     </blockquote>
@@ -44,31 +44,31 @@
         <div  class="layui-form-item" style="width: 400px">
             <label class="layui-form-label">学院编号:</label>
             <div class="layui-input-block">
-                <input name="deptnum" id="deptnum" lay-verify="required" autocomplete="off" placeholder="请输入专业编号" class="layui-input">
+                <input name="deptCustom.deptnum" id="deptnum" lay-verify="required" autocomplete="off" placeholder="请输入专业编号" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item" style="width: 400px">
             <label class="layui-form-label">学院名称:</label>
             <div class="layui-input-block">
-                <input name="deptname" id="deptname" lay-verify="required" autocomplete="off" placeholder="请输入系院编号" class="layui-input">
+                <input name="deptCustom.deptname" id="deptname" lay-verify="required" autocomplete="off" placeholder="请输入系院编号" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item" style="width: 400px">
             <label class="layui-form-label">学院主任:</label>
             <div class="layui-input-block">
-                <input name="deptchairman" id="deptchairman" lay-verify="required" autocomplete="off" placeholder="请输入专业名称" class="layui-input">
+                <input name="deptCustom.deptchairman" id="deptchairman" lay-verify="required" autocomplete="off" placeholder="请输入专业名称" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item" style="width: 400px">
             <label class="layui-form-label">学院主任联系方式:</label>
             <div class="layui-input-block">
-                <input name="depttel" id="depttel" lay-verify="required" autocomplete="off" placeholder="请输入辅导员名称" class="layui-input">
+                <input name="deptCustom.depttel" id="depttel" lay-verify="required" autocomplete="off" placeholder="请输入辅导员名称" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item" style="width: 400px">
             <label class="layui-form-label">学院描述:</label>
             <div class="layui-input-block">
-                <textarea  name="deptdesc" id="deptdesc" lay-verify="required" autocomplete="off" placeholder="请输入内容" class="layui-textarea"></textarea>
+                <textarea  name="deptCustom.deptdesc" id="deptdesc" lay-verify="required" autocomplete="off" placeholder="请输入内容" class="layui-textarea"></textarea>
             </div>
         </div>
         <div class="layui-form-item">
@@ -97,7 +97,7 @@
 
 <script src="../static/plugins/layui/layui.js"></script>
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-mini" lay-event="detail">查看</a>
+    <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
 </script>
 <script>
     layui.use(['jquery','layer','form','table','laydate'], function(){

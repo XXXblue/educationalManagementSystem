@@ -20,13 +20,13 @@
 <fieldset class="layui-elem-field site-demo-button"style="padding-left: 20px;margin-left: 20px;margin-right: 20px">
     <legend>操作管理</legend>
     <blockquote class="layui-elem-quote">
-        <a href="javascript:;" class="layui-btn layui-btn-small" id="add">
+        <a href="javascript:;" class="layui-btn layui-btn-sm" id="add">
             <i class="layui-icon">&#xe608;</i>添加教室
         </a>
-        <a href="#" class="layui-btn layui-btn-small" id="edit">
+        <a href="#" class="layui-btn layui-btn-sm" id="edit">
             <i class="layui-icon">&#xe642;</i> 修改教室信息
         </a>
-        <a href="javascript:;" class="layui-btn layui-btn-small" id="delete" >
+        <a href="javascript:;" class="layui-btn layui-btn-sm" id="delete" >
             <i class="layui-icon">&#xe640;</i> 删除教室
         </a>
     </blockquote>
@@ -49,25 +49,32 @@
         <div  class="layui-form-item" style="width: 400px">
             <label class="layui-form-label">教室编号:</label>
             <div class="layui-input-block">
-                <input name="classnum" id="classnum" lay-verify="required" autocomplete="off" placeholder="请输入教室编号" class="layui-input">
+                <input name="classinfoCustom.classnum" id="classnum" lay-verify="required" autocomplete="off" placeholder="请输入教室编号" class="layui-input">
+            </div>
+        </div>
+        <div  class="layui-form-item" style="width: 400px">
+            <label class="layui-form-label">教室类型:</label>
+            <div class="layui-input-block">
+                <select  id="classtype" name="classinfoCustom.classtype" lay-verify="required" lay-filter="select">
+                </select>
             </div>
         </div>
         <div class="layui-form-item" style="width: 400px">
             <label class="layui-form-label">教室负责人:</label>
             <div class="layui-input-block">
-                <input name="classman" id="classman" lay-verify="required" autocomplete="off" placeholder="请输入教室负责人姓名" class="layui-input">
+                <input name="classinfoCustom.classman" id="classman" lay-verify="required" autocomplete="off" placeholder="请输入教室负责人姓名" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item" style="width: 400px">
             <label class="layui-form-label">教室负责人联系方式:</label>
             <div class="layui-input-block">
-                <input name="classmantel" id="classmantel" lay-verify="required" autocomplete="off" placeholder="请输入联系方式" class="layui-input">
+                <input name="classinfoCustom.classmantel" id="classmantel" lay-verify="required" autocomplete="off" placeholder="请输入联系方式" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item" style="width: 400px">
             <label class="layui-form-label">教室人数限制:</label>
             <div class="layui-input-block">
-                <input name="limitnum" id="limitnum" lay-verify="required" autocomplete="off" placeholder="请输入教室人数限制" class="layui-input">
+                <input name="classinfoCustom.limitnum" id="limitnum" lay-verify="required" autocomplete="off" placeholder="请输入教室人数限制" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
@@ -90,6 +97,26 @@
         var laydate = layui.laydate;
 
 
+        //        动态生成select start
+        function selajax() {
+            $.ajax({
+                url: '/querykslxsjzd',
+                type: 'post',
+                dataType: 'json',
+                success: function (result) {
+                    console.log(JSON.stringify(result));
+                    for(var i=0;i<result.length;i++){
+                        var id=result[i]['id'];
+                        var kslxmc=result[i]['kslxmc'];
+                        $('#classtype').append('<option value='+ id+'>'+kslxmc+'</option>');
+                        form.render();
+                    }
+                } });
+        }
+        selajax();
+        form.render();
+//        动态生成select end
+
         function init() {
             $('#classnum').val("");
             $('#classman').val("");
@@ -110,6 +137,7 @@
                 content: $('#form'),
                 success:function () {
                     form.on('submit(submit)', function(data){
+                        console.log(JSON.stringify(data.field));
                         $.ajax({
                             url: '/addClassInfo',
                             type: 'post',
@@ -117,20 +145,20 @@
                             dataType: 'json',
                             //                async: false,这个能把ajax变同步
                             success: function (result) {
-                                if(result.status===400){
-                                    layer.msg(result.msg, {
+                                if(result.status===2){
+                                    layer.msg("课室编号重复", {
                                         time: 2000, //2s后自动关闭
                                     });
                                 }
-                                if(result.status===200){
-                                    layer.msg(result.msg, {
+                                if(result.status==1){
+                                    layer.msg("新增课室成功", {
                                         time: 2000, //2s后自动关闭
                                     });
-                                    init();
                                     table.reload('classInfoTable', {
                                     });
-                                    layer.closeAll('page');
                                 }
+                                init();
+                                layer.closeAll('page');
                             }
                         });
                         return false;
@@ -152,6 +180,7 @@
                 ,{field: 'classman', align:'center',title: '教室负责人', width: 150}
                 ,{field: 'classmantel',align:'center', title: '教室负责人联系方式', width: 250}
                 ,{field: 'limitnum', align:'center',title: '教室人数限制', width: 150}
+                ,{field: 'kslxmc', align:'center',title: '课室类型', width: 150}
             ]],
             page:true,
             limits: [10,20,30],
@@ -181,6 +210,19 @@
                 $('#classman').val((checkStatus.data)[0]['classman']);
                 $('#classmantel').val((checkStatus.data)[0]['classmantel']);
                 $('#limitnum').val((checkStatus.data)[0]['limitnum']);
+
+ //                        select的渲染start
+                var optionsel=(checkStatus.data)[0]['kslxmc'];
+                $("#classtype").find('option').each(function(){
+                    if($(this).html()===optionsel){
+                        $(this).prop("selected",true);
+                    }else {
+                        $(this).prop("selected",false);
+                    }
+                });
+//                        select的渲染end
+
+                form.render();
                 layer.open({
                     title:"修改课室",
                     area:['600px','500px'],

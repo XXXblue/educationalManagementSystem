@@ -9,6 +9,8 @@ public class Classinfo {
 
     private Integer limitnum;
 
+    private String classtype;
+
     public String getClassnum() {
         return classnum;
     }
@@ -39,5 +41,13 @@ public class Classinfo {
 
     public void setLimitnum(Integer limitnum) {
         this.limitnum = limitnum;
+    }
+
+    public String getClasstype() {
+        return classtype;
+    }
+
+    public void setClasstype(String classtype) {
+        this.classtype = classtype == null ? null : classtype.trim();
     }
 }

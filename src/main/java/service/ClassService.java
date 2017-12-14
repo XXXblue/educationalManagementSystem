@@ -12,13 +12,13 @@ import util.MyResult;
  */
 public interface ClassService {
 //    管理员添加新课室
-    public MyResult addNewClass(Classinfo classinfo);
+    public MyResult addNewClass(Classinfo classinfo)throws Exception;
 //    管理员校验课室是否存在
-    public boolean checkClass(Classinfo classInfo);
+    public boolean checkClass(Classinfo classInfo)throws Exception;
 //    管理员展示课室信息
-    public FormResult listClassinfoTable(int page,int limit);
+    public FormResult listClassinfoTable(int page,int limit)throws Exception;
 //    管理员修改课室信息
-    public  MyResult editClassInfo(Classinfo classinfo);
+    public  MyResult editClassInfo(Classinfo classinfo)throws Exception;
 //    管理员删除已有课室
-    public MyResult delClassInfo(String[] nums);
+    public MyResult delClassInfo(String[] nums)throws Exception;
 }

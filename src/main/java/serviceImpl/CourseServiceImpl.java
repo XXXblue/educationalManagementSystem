@@ -51,7 +51,7 @@ public class CourseServiceImpl implements CourseService {
     private MyStudentCourseInfoMapper myStudentCourseInfoMapper;
 
     public MyResult addNewCourse(Courseinfo courseinfo) {
-        MyResult myResult=null;
+        MyResult myResult;
         Classinfo classinfo= classinfoMapper.selectByPrimaryKey(courseinfo.getClassnum());
         if(classinfo==null){
             myResult=new MyResult();
@@ -68,7 +68,7 @@ public class CourseServiceImpl implements CourseService {
             myResult.setStatus(400);
             return  myResult;
         }
-      List<Courseinfo>list=
+        List<Courseinfo>list=
                myCourseMapper.checkCourseInfo(courseinfo.getCourseday(),courseinfo.getCoursedaytime(),courseinfo.getClassnum(),courseinfo.getTermtime(),courseinfo.getTermyear());
 
         if(list.size()>0&&list.get(0)!=null){

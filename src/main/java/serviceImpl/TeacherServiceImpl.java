@@ -49,11 +49,12 @@ String salt = "be5e0323a9195ade5f56695ed9f2eb6b036f3e6417115d0cbe2fb9d74d8740406
     @Autowired
     private DeptinfoMapper deptinfoMapper;
     @Autowired
-    private OSSClient ossClient;
-    @Autowired
     private ApplygradeMapper applygradeMapper;
     @Autowired
     private CourseinfoMapper courseinfoMapper;
+    private static String accessKeyId= PropertyUtil.getProperty("accessKeyId");
+    private static String endpoint= PropertyUtil.getProperty("endpoint");
+    private static String accessKeySecret= PropertyUtil.getProperty("accessKeySecret");
     public MyResult addTeacherInfo(Teacherinfo teacherinfo) {
         MyResult myResult=new MyResult();
         if(checkTeacherInfo(teacherinfo)){
@@ -219,6 +220,7 @@ String salt = "be5e0323a9195ade5f56695ed9f2eb6b036f3e6417115d0cbe2fb9d74d8740406
     }
 
     public MyResult editTeacherInfoForSelf(HttpSession session,Teacherinfo teacherinfo) {
+        OSSClient ossClient=new OSSClient(endpoint,accessKeyId,accessKeySecret);
         MyResult myResult=new MyResult();
         ActiveRole activeRole= (ActiveRole) session.getAttribute("activerole");
         teacherinfo.setTeachernum(activeRole.getUsernum());
@@ -230,19 +232,21 @@ String salt = "be5e0323a9195ade5f56695ed9f2eb6b036f3e6417115d0cbe2fb9d74d8740406
         if(teacherinfo.getTeacherpic()!=""){
             teacherinfo.setTeacherpic("http://"+teacherinfo.getTeacherpic());
             String fileName=SubStringUtils.getSubStr(teacherinfo.getTeacherpic(),2);
+            //            新增图片
+            ossClient.setObjectAcl("xiaojianyu-file-server", fileName, CannedAccessControlList.PublicRead);
 //            删除原有的图片
             Teacherinfo teacherinfodelete=teacherinfoMapper.selectByPrimaryKey(teacherinfo.getTeachernum());
             if(teacherinfodelete.getTeacherpic()!=""&&teacherinfodelete.getTeacherpic()!=null){
                 String delFileName=SubStringUtils.getSubStr(teacherinfodelete.getTeacherpic(),2);
                 ossClient.deleteObject("xiaojianyu-file-server", delFileName);
             }
-//            新增图片
-            ossClient.setObjectAcl("xiaojianyu-file-server", fileName, CannedAccessControlList.PublicRead);
         }
+        ossClient.shutdown();
         try{
             myTeacherMapper.updateTeacherInfoForSelf(teacherinfo);
             myResult.setStatus(1);
             myResult.setMsg("修改成功");
+            myResult.setData(teacherinfo.getTeacherpic());
             return myResult;
         }catch(Exception e){
             myResult.setStatus(2);
@@ -252,6 +256,7 @@ String salt = "be5e0323a9195ade5f56695ed9f2eb6b036f3e6417115d0cbe2fb9d74d8740406
     }
 
     public MyResult uploadTeacherPic(MultipartFile uploadFile) {
+        OSSClient ossClient=new OSSClient(endpoint,accessKeyId,accessKeySecret);
         String oldName=uploadFile.getOriginalFilename();
         String type=uploadFile.getContentType();
         String prefix=oldName.substring(oldName.lastIndexOf(".")+1);
@@ -273,6 +278,8 @@ String salt = "be5e0323a9195ade5f56695ed9f2eb6b036f3e6417115d0cbe2fb9d74d8740406
             myResult.setStatus(2);
             myResult.setData(null);
             return myResult;
+        }finally {
+            ossClient.shutdown();
         }
     }
     public MyResult submitGrade(Courseinfo courseinfo){

@@ -19,13 +19,13 @@
 <fieldset class="layui-elem-field site-demo-button"style="padding-left: 20px;margin-left: 20px;margin-right: 20px">
     <legend>操作管理</legend>
     <blockquote class="layui-elem-quote">
-        <a href="javascript:;" class="layui-btn layui-btn-small" id="add">
+        <a href="javascript:;" class="layui-btn layui-btn-sm" id="add">
             <i class="layui-icon">&#xe608;</i>发布课程
         </a>
-        <a href="#" class="layui-btn layui-btn-small" id="edit">
+        <a href="#" class="layui-btn layui-btn-sm" id="edit">
             <i class="layui-icon">&#xe642;</i> 修改课程信息
         </a>
-        <a href="javascript:;" class="layui-btn layui-btn-small" id="delete" >
+        <a href="javascript:;" class="layui-btn layui-btn-sm" id="delete" >
             <i class="layui-icon">&#xe640;</i> 删除课程
         </a>
     </blockquote>
@@ -42,7 +42,11 @@
                 <div class="layui-form-item" style="width: 300px">
                     <label class="layui-form-label">学年</label>
                     <div class="layui-input-block">
-                        <input type="text" name="termyear"   placeholder="请输入学年" autocomplete="off" class="layui-input">
+                        <select name="termyear"  lay-verify="" placeholder="请输入学年">
+                            <option value="2008">2008</option>
+                            <option value="2017">2017</option>
+                            <option value="2015">2015</option>
+                        </select>
                     </div>
                 </div>
                 <div class="layui-form-item" style="width: 300px">
@@ -79,7 +83,7 @@
                 </div>
                 <div class="layui-form-item " style="width: 300px">
                     <div class="layui-input-block">
-                        <button id="search" class="layui-btn" style="width: 200px"  lay-submit lay-filter="search"><i class="layui-icon">&#xe615;</i>查询</button>
+                        <button id="search" class="layui-btn" style="width: 190px"  lay-submit lay-filter="search"><i class="layui-icon">&#xe615;</i>查询</button>
                     </div>
                 </div>
             </div>
@@ -103,10 +107,14 @@
 
 
         <%--不显示但必须带的模块start，解决修改数据填充的问题--%>
-        <div class="layui-form-item" hidden>
-            <label class="layui-form-label">课程编号:</label>
+        <div class="layui-form-item"  style="width: 300px">
+            <label class="layui-form-label">请选课程:</label>
             <div class="layui-input-block">
-                <input name="coursenum" id="coursenum" utocomplete="off" placeholder="请输入课程编号" class="layui-input">
+                <select name="city" lay-verify="" lay-search>
+                    <option value="010">物理</option>
+                    <option value="021">form</option>
+                    <option value="0571">layim</option>
+                </select>
             </div>
         </div>
         <div class="layui-form-item" hidden>
@@ -343,7 +351,7 @@
 
 <script src="../static/plugins/layui/layui.js"></script>
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-mini" lay-event="detail">查看更多</a>
+    <a class="layui-btn layui-btn-xs" lay-event="detail">查看更多</a>
 </script>
 <script type="text/html" id="titleTpl">
     <a href="detail/{{d.coursenum}}" class="layui-table-link">{{d.courseteachernum
@@ -362,13 +370,13 @@
 </script>
 <script type="text/html" id="coursestatusbutton">
     {{#  if(d.coursestatus==0){ }}
-    <a class="layui-btn layui-btn-warm layui-btn-mini" lay-event="openCourse">开课</a>
+    <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="openCourse">开课</a>
     {{#  } }}
     {{#  if(d.coursestatus==1){ }}
-    <a class="layui-btn layui-btn-danger layui-btn-mini" >开课中</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" >开课中</a>
     {{#  } }}
     {{#  if(d.coursestatus==2){ }}
-    <a class="layui-btn layui-btn-danger layui-btn-mini" >已结课</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" >已结课</a>
     {{#  } }}
 </script>
 <script>

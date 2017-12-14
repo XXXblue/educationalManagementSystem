@@ -22,7 +22,7 @@ public class PermissionInterceptor implements HandlerInterceptor {
         HttpSession session=request.getSession();
         ActiveRole activeRole= (ActiveRole) session.getAttribute("activerole");
 //        放行公页
-        if(url.equals("/login")||url.equals("/loginsubmit")||url.equals("/logout")||url.equals("/loginteachersubmit")||url.equals("/loginstudentsubmit")){
+        if(url.equals("/error")||url.equals("/login")||url.equals("/loginsubmit")||url.equals("/logout")||url.equals("/loginteachersubmit")||url.equals("/loginstudentsubmit")){
             return true;
         }
         for(Rolepermission rolepermission:activeRole.getList()){

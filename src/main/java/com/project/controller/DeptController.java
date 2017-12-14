@@ -1,5 +1,6 @@
 package com.project.controller;
 
+import QueryVo.DeptQueryVo;
 import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,49 +26,38 @@ public class DeptController {
 
     @RequestMapping("/addDeptInfo")
     @ResponseBody
-    public String addDeptInfo(Deptinfo deptinfo){
-
-        return JSON.toJSONString(deptService.addDept(deptinfo));
+    public String addDeptInfo(DeptQueryVo deptQueryVo)throws Exception{
+        return JSON.toJSONString(deptService.addDept(deptQueryVo.getDeptCustom()));
     }
 
     @RequestMapping("/deptInfoListAll")
     @ResponseBody
-    public String listDeptInfo(int page,int limit){
+    public String listDeptInfo(int page,int limit)throws Exception{
         return JSON.toJSONString(deptService.ListAllDeptInfo(page,limit));
     }
 
     @RequestMapping(value="/editDeptInfo/{deptnum}",method= RequestMethod.GET)
     @ResponseBody
-    public String deptinfowithblobs(@PathVariable("deptnum") String deptnum){
-
+    public String deptinfowithblobs(@PathVariable("deptnum") String deptnum)throws Exception{
         return JSON.toJSONString(deptService.wihtblobsDeptInfo(deptnum));
     }
 
     @RequestMapping("/editDeptInfo")
     @ResponseBody
-    public String deptEdit(Deptinfo deptinfo){
-        /**
-         * @Author: xiaojianyu
-         * @Method: deptEdit
-         * @Description: 更新信息
-         * @Date: 13:44 2017/9/16
-         * @Return: java.lang.String
-         * @Param: [deptinfo]
-         */
-
-        return JSON.toJSONString(deptService.editdeptInfo(deptinfo));
+    public String deptEdit(DeptQueryVo deptQueryVo)throws Exception{
+        return JSON.toJSONString(deptService.editdeptInfo(deptQueryVo.getDeptCustom()));
     }
 
     @RequestMapping("/delDeptInfo")
     @ResponseBody
-    public String delDeptInfo(String[] nums){
+    public String delDeptInfo(String[] nums)throws Exception{
         return JSON.toJSONString(deptService.delDeptInfo(nums));
     }
 
+
     @RequestMapping("/listDeptinfoselect")
     @ResponseBody
-    public String listDeptinfoselect(){
-
+    public String listDeptinfoselect()throws Exception{
         return JSON.toJSONString(deptService.listDeptInfo());
     }
 }

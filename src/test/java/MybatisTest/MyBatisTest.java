@@ -1,20 +1,12 @@
 package MybatisTest;
-import QueryVo.CourseinfoQueryVo;
-import QueryVo.StudentCourseInfoQueryVo;
-import QueryVo.StudentInfoQueryVo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import othermapper.MyCourseMapper;
-import othermapper.MyStudentCourseInfoMapper;
-import othermapper.MyStudentInfoMapper;
-import othermapper.MyTeacherMapper;
-import po.*;
-import poView.*;
+import othermapper.*;
+import pojoCustom.ClassinfoCustom;
 
-import java.util.Date;
 import java.util.List;
 
 
@@ -79,8 +71,15 @@ public class MyBatisTest {
     private MyTeacherMapper myTeacherMapper;
     @Autowired
     private MyStudentInfoMapper studentInfoMapper;
+    @Autowired
+    private ClassinfoCustomMapper kslxsjzdCustomMapper;
     @Test
     public void test(){
+        List<ClassinfoCustom> list=kslxsjzdCustomMapper.queryClassinfo(2,2);
+        int a=kslxsjzdCustomMapper.queryClassinfoNum();
+        if(list!=null){
+
+        }
 //       List<StuCourseTableView> list=myStudentCourseInfoMapper.showStuCourseInfoTable("04150822","2017","1","5");
 //       List<Rolepermission>list2=myStudentInfoMapper.selPermissionByStudentNum("04150822");
 //       if(list.size()>0){
@@ -101,15 +100,15 @@ public class MyBatisTest {
 //        teacherinfo.setTeacherphone("123");
 //        teacherinfo.setTeacherpassword("");
 //        myTeacherMapper.updateTeacherInfoForSelf(teacherinfo);
-        Studentinfo studentinfo=new Studentinfo();
-        studentinfo.setStudentnum("04150802");
-        studentinfo.setStudentname("上午");
-        studentinfo.setStudentbirthday(new Date());
-        studentinfo.setStudentphonenum("123456");
-        studentinfo.setStudentpassword("");
-        studentinfo.setStudentpic("");
-        myStudentInfoMapper.updateStudentInfoForSelf(studentinfo);
-        System.out.println(1);
+//        Studentinfo studentinfo=new Studentinfo();
+//        studentinfo.setStudentnum("04150802");
+//        studentinfo.setStudentname("上午");
+//        studentinfo.setStudentbirthday(new Date());
+//        studentinfo.setStudentphonenum("123456");
+//        studentinfo.setStudentpassword("");
+//        studentinfo.setStudentpic("");
+//        myStudentInfoMapper.updateStudentInfoForSelf(studentinfo);
+//        System.out.println(1);
     }
 
 //    @Autowired
