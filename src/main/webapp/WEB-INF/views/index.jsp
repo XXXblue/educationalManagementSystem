@@ -82,10 +82,18 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a class="" href="javascript:;"><i class="fa fa-book" aria-hidden="true"></i><span> 课程信息</span></a>
+                    <a class="" href="javascript:;"><i class="fa fa-cubes" aria-hidden="true"></i><span> 课程库管理</span></a>
                     <dl class="layui-nav-child">
                         <dd>
-                            <a href="javascript:;" data-url="manageAllCourse" data-icon="fa fa-book" data-title="课程信息管理" kit-target data-id='6'><i class="fa fa-book" aria-hidden="true"></i><span> 课程信息管理</span></a>
+                            <a href="javascript:;" data-url="kcManagement" data-icon="fa fa-user-circle" data-title="投票管理" kit-target data-id='9'><i class="fa fa-cubes" aria-hidden="true"></i><span> 课程库管理</span></a>
+                        </dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a class="" href="javascript:;"><i class="fa fa-book" aria-hidden="true"></i><span> 排课管理</span></a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a href="javascript:;" data-url="manageAllCourse" data-icon="fa fa-book" data-title="课程信息管理" kit-target data-id='6'><i class="fa fa-book" aria-hidden="true"></i><span>  排课管理</span></a>
                         </dd>
                     </dl>
                 </li>

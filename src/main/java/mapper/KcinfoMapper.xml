@@ -5,7 +5,9 @@
     <id column="kcnum" property="kcnum" jdbcType="VARCHAR" />
     <result column="kcxf" property="kcxf" jdbcType="VARCHAR" />
     <result column="kcxs" property="kcxs" jdbcType="VARCHAR" />
-    <result column="majornum" property="majornum" jdbcType="VARCHAR" />
+    <result column="deptnum" property="deptnum" jdbcType="VARCHAR" />
+    <result column="kclx" property="kclx" jdbcType="VARCHAR" />
+    <result column="kcmc" property="kcmc" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="po.Kcinfo" extends="BaseResultMap" >
     <result column="kcjj" property="kcjj" jdbcType="LONGVARCHAR" />
@@ -69,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    kcnum, kcxf, kcxs, majornum
+    kcnum, kcxf, kcxs, deptnum, kclx, kcmc
   </sql>
   <sql id="Blob_Column_List" >
     kcjj
@@ -124,9 +126,11 @@
   </delete>
   <insert id="insert" parameterType="po.Kcinfo" >
     insert into kcinfo (kcnum, kcxf, kcxs, 
-      majornum, kcjj)
+      deptnum, kclx, kcmc, 
+      kcjj)
     values (#{kcnum,jdbcType=VARCHAR}, #{kcxf,jdbcType=VARCHAR}, #{kcxs,jdbcType=VARCHAR}, 
-      #{majornum,jdbcType=VARCHAR}, #{kcjj,jdbcType=LONGVARCHAR})
+      #{deptnum,jdbcType=VARCHAR}, #{kclx,jdbcType=VARCHAR}, #{kcmc,jdbcType=VARCHAR}, 
+      #{kcjj,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="po.Kcinfo" >
     insert into kcinfo
@@ -140,8 +144,14 @@
       <if test="kcxs != null" >
         kcxs,
       </if>
-      <if test="majornum != null" >
-        majornum,
+      <if test="deptnum != null" >
+        deptnum,
+      </if>
+      <if test="kclx != null" >
+        kclx,
+      </if>
+      <if test="kcmc != null" >
+        kcmc,
       </if>
       <if test="kcjj != null" >
         kcjj,
@@ -157,8 +167,14 @@
       <if test="kcxs != null" >
         #{kcxs,jdbcType=VARCHAR},
       </if>
-      <if test="majornum != null" >
-        #{majornum,jdbcType=VARCHAR},
+      <if test="deptnum != null" >
+        #{deptnum,jdbcType=VARCHAR},
+      </if>
+      <if test="kclx != null" >
+        #{kclx,jdbcType=VARCHAR},
+      </if>
+      <if test="kcmc != null" >
+        #{kcmc,jdbcType=VARCHAR},
       </if>
       <if test="kcjj != null" >
         #{kcjj,jdbcType=LONGVARCHAR},
@@ -183,8 +199,14 @@
       <if test="record.kcxs != null" >
         kcxs = #{record.kcxs,jdbcType=VARCHAR},
       </if>
-      <if test="record.majornum != null" >
-        majornum = #{record.majornum,jdbcType=VARCHAR},
+      <if test="record.deptnum != null" >
+        deptnum = #{record.deptnum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.kclx != null" >
+        kclx = #{record.kclx,jdbcType=VARCHAR},
+      </if>
+      <if test="record.kcmc != null" >
+        kcmc = #{record.kcmc,jdbcType=VARCHAR},
       </if>
       <if test="record.kcjj != null" >
         kcjj = #{record.kcjj,jdbcType=LONGVARCHAR},
@@ -199,7 +221,9 @@
     set kcnum = #{record.kcnum,jdbcType=VARCHAR},
       kcxf = #{record.kcxf,jdbcType=VARCHAR},
       kcxs = #{record.kcxs,jdbcType=VARCHAR},
-      majornum = #{record.majornum,jdbcType=VARCHAR},
+      deptnum = #{record.deptnum,jdbcType=VARCHAR},
+      kclx = #{record.kclx,jdbcType=VARCHAR},
+      kcmc = #{record.kcmc,jdbcType=VARCHAR},
       kcjj = #{record.kcjj,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -210,7 +234,9 @@
     set kcnum = #{record.kcnum,jdbcType=VARCHAR},
       kcxf = #{record.kcxf,jdbcType=VARCHAR},
       kcxs = #{record.kcxs,jdbcType=VARCHAR},
-      majornum = #{record.majornum,jdbcType=VARCHAR}
+      deptnum = #{record.deptnum,jdbcType=VARCHAR},
+      kclx = #{record.kclx,jdbcType=VARCHAR},
+      kcmc = #{record.kcmc,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -224,8 +250,14 @@
       <if test="kcxs != null" >
         kcxs = #{kcxs,jdbcType=VARCHAR},
       </if>
-      <if test="majornum != null" >
-        majornum = #{majornum,jdbcType=VARCHAR},
+      <if test="deptnum != null" >
+        deptnum = #{deptnum,jdbcType=VARCHAR},
+      </if>
+      <if test="kclx != null" >
+        kclx = #{kclx,jdbcType=VARCHAR},
+      </if>
+      <if test="kcmc != null" >
+        kcmc = #{kcmc,jdbcType=VARCHAR},
       </if>
       <if test="kcjj != null" >
         kcjj = #{kcjj,jdbcType=LONGVARCHAR},
@@ -237,7 +269,9 @@
     update kcinfo
     set kcxf = #{kcxf,jdbcType=VARCHAR},
       kcxs = #{kcxs,jdbcType=VARCHAR},
-      majornum = #{majornum,jdbcType=VARCHAR},
+      deptnum = #{deptnum,jdbcType=VARCHAR},
+      kclx = #{kclx,jdbcType=VARCHAR},
+      kcmc = #{kcmc,jdbcType=VARCHAR},
       kcjj = #{kcjj,jdbcType=LONGVARCHAR}
     where kcnum = #{kcnum,jdbcType=VARCHAR}
   </update>
@@ -245,7 +279,9 @@
     update kcinfo
     set kcxf = #{kcxf,jdbcType=VARCHAR},
       kcxs = #{kcxs,jdbcType=VARCHAR},
-      majornum = #{majornum,jdbcType=VARCHAR}
+      deptnum = #{deptnum,jdbcType=VARCHAR},
+      kclx = #{kclx,jdbcType=VARCHAR},
+      kcmc = #{kcmc,jdbcType=VARCHAR}
     where kcnum = #{kcnum,jdbcType=VARCHAR}
   </update>
 </mapper>

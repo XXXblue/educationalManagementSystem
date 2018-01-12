@@ -1,13 +1,24 @@
 package MybatisTest;
+import mapper.KcinfoMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import othermapper.*;
+import po.Courseinfo;
+import po.CourseinfoExample;
+import po.Kcinfo;
+import po.KcinfoExample;
+import poView.CourseInfoView;
+import poView.StuCourseTableView;
 import pojoCustom.ClassinfoCustom;
+import pojoCustom.CourseinfoCustom;
+import pojoCustom.KcCustom;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)// 添加spring,mybatis测试方案
@@ -73,10 +84,40 @@ public class MyBatisTest {
     private MyStudentInfoMapper studentInfoMapper;
     @Autowired
     private ClassinfoCustomMapper kslxsjzdCustomMapper;
+    @Autowired
+    private KcinfoMapper kcinfoMapper;
+    @Autowired
+    private KcCustomMapper kcCustomMapper;
+    @Autowired
+    private CourseinfoCustomMapper courseinfoCustomMapper;
+
     @Test
     public void test(){
-        List<ClassinfoCustom> list=kslxsjzdCustomMapper.queryClassinfo(2,2);
-        int a=kslxsjzdCustomMapper.queryClassinfoNum();
+//        List<ClassinfoCustom> list=kslxsjzdCustomMapper.queryClassinfo(2,2);
+//        int a=kslxsjzdCustomMapper.queryClassinfoNum();
+//        if(list!=null){
+//
+//        }
+//      List<KcCustom>list=kcCustomMapper.queryKcinfo(0,1);
+//      if(list!=null){
+//
+//      }
+//        List<ClassinfoCustom>list=kslxsjzdCustomMapper.searchFreeClass("2","2017","1","3","3","05");
+//        if(list!=null){
+//
+//        }
+
+//        Map map=new HashMap<String ,Object>();
+//        CourseinfoCustom courseinfoCustom=new CourseinfoCustom();
+//        courseinfoCustom.setKclx("学院选修课");
+//        courseinfoCustom.setIfopen("1");
+//        courseinfoCustom.setDeptnum("06");
+//        map.put("page",0);
+//        map.put("limit",1);
+//        map.put("courseinfoCustom", courseinfoCustom);
+//        List<CourseinfoCustom>list=courseinfoCustomMapper.selCourseinfoTable2(map);
+//        int a=courseinfoCustomMapper.selCourseinfoTableNum2(map);
+        List<CourseinfoCustom> list=courseinfoCustomMapper.showStuCourseInfoTable("04150822","2008","1",Integer.parseInt("5"));
         if(list!=null){
 
         }

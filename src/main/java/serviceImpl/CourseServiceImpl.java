@@ -4,13 +4,14 @@ import QueryVo.CourseinfoQueryVo;
 import QueryVo.StudentCourseInfoQueryVo;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import mapper.ClassinfoMapper;
-import mapper.CourseinfoMapper;
-import mapper.MajorinfoMapper;
-import mapper.StudentcourseinfoMapper;
+import exception.CustomException;
+import mapper.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import othermapper.CourseinfoCustomMapper;
 import othermapper.MyCourseMapper;
 import othermapper.MyStudentCourseInfoMapper;
 import po.*;
@@ -18,16 +19,14 @@ import poView.ActiveRole;
 import poView.CourseInfoView;
 import poView.CourseInfoViewShowStudent;
 import poView.CourseinfoConflict;
+import pojoCustom.CourseinfoCustom;
 import service.CourseService;
 import util.FormResult;
 import util.MyResult;
 import util.CourseInfoViewTurn;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @Author: XBlue
@@ -44,79 +43,54 @@ public class CourseServiceImpl implements CourseService {
     @Autowired
     private MyCourseMapper myCourseMapper;
     @Autowired
-    private MajorinfoMapper majorinfoMapper;
+    private MyStudentCourseInfoMapper myStudentCourseInfoMapper;
+    @Autowired
+    private CourseinfoCustomMapper courseinfoCustomMapper;
     @Autowired
     private StudentcourseinfoMapper studentcourseinfoMapper;
     @Autowired
-    private MyStudentCourseInfoMapper myStudentCourseInfoMapper;
+    private StudentinfoMapper studentinfoMapper;
+    @Autowired
+    private MajorinfoMapper majorinfoMapper;
+    private static Logger logger = LoggerFactory.getLogger(CourseServiceImpl.class);
+    public MyResult addNewCourse(Courseinfo courseinfo) throws Exception{
+           try{
+               MyResult myResult=new MyResult();
+               courseinfo.setCoursenum(UUID.randomUUID().toString());
+               courseinfo.setCreatetime(new Date());
+               courseinfo.setUpdatetime(new Date());
+               courseinfo.setCoursestatus("0");
+               courseinfo.setIfgrade("0");
+               courseinfo.setCoursefree(courseinfo.getCoursenumlimit());
+               courseinfoMapper.insert(courseinfo);
+               myResult.setMsg("提交成功");
+               myResult.setStatus(200);
+               return  myResult;
+           }catch(Exception e){
+                logger.error("错误信息："+e);
+                throw new CustomException("新增课程异常");
+           }
 
-    public MyResult addNewCourse(Courseinfo courseinfo) {
-        MyResult myResult;
-        Classinfo classinfo= classinfoMapper.selectByPrimaryKey(courseinfo.getClassnum());
-        if(classinfo==null){
-            myResult=new MyResult();
-            myResult.setMsg("不存在该教室");
-            myResult.setStatus(400);
-            return  myResult;
-        }
-        if(courseinfo.getCoursenumlimit()==null){
-            courseinfo.setCoursenumlimit(classinfo.getLimitnum());
-        }
-        if(courseinfo.getCoursenumlimit()>classinfo.getLimitnum()){
-            myResult=new MyResult();
-            myResult.setMsg("数量超过课室座位，错误");
-            myResult.setStatus(400);
-            return  myResult;
-        }
-        List<Courseinfo>list=
-               myCourseMapper.checkCourseInfo(courseinfo.getCourseday(),courseinfo.getCoursedaytime(),courseinfo.getClassnum(),courseinfo.getTermtime(),courseinfo.getTermyear());
-
-        if(list.size()>0&&list.get(0)!=null){
-            myResult=new MyResult();
-            myResult.setMsg("课程与其他课程冲突");
-            myResult.setStatus(400);
-            return  myResult;
-        }
-            courseinfo.setCoursenum(UUID.randomUUID().toString());
-            courseinfo.setCreatetime(new Date());
-            courseinfo.setUpdatetime(new Date());
-            courseinfo.setCoursestatus("0");
-            courseinfo.setIfgrade("0");
-            courseinfo.setCoursefree(courseinfo.getCoursenumlimit());
-            courseinfoMapper.insert(courseinfo);
-            myResult=new MyResult();
-            myResult.setMsg("提交成功");
-            myResult.setStatus(200);
-
-        return  myResult;
     }
 
-    public FormResult listAllCourseInfoTable(int page, int limit) {
-        CourseinfoExample courseinfoExample=new CourseinfoExample();
-        CourseinfoExample.Criteria criteria=courseinfoExample.createCriteria();
-        PageHelper.startPage(page,limit);
-        List<Courseinfo>list=courseinfoMapper.selectByExample(courseinfoExample);
-        List<CourseInfoView>listView=new ArrayList<CourseInfoView>();
-        PageInfo<Courseinfo> pageInfo = new PageInfo<Courseinfo>(list);
-        for (int i = 0; i < list.size(); i++) {
-            CourseInfoView courseInfoView=new CourseInfoView();
-            BeanUtils.copyProperties(list.get(i),courseInfoView);
-            //前端拦截不到数据，用这个方法处理一下日期和时段的显示
-           CourseInfoViewTurn.changeDateView(courseInfoView);
-            // 再次查询某些字段出来，这里设计的不好当初没有用自定义的mapper，暂时先这么解决
-            changeCourinfoView(courseInfoView);
-            listView.add(courseInfoView);
+    public FormResult listAllCourseInfoTable(int page, int limit) throws Exception {
+        try{
+            List<CourseinfoCustom>list=courseinfoCustomMapper.queryCourseinfo((page-1)*limit,limit);
+            long total=courseinfoCustomMapper.queryCourseinfoNum();
+            FormResult formResult=new FormResult();
+            formResult.setCode(0);
+            formResult.setCount(total);
+            formResult.setData(list);
+            formResult.setMsg("");
+            return formResult;
+        }catch(Exception e){
+            logger.error("错误信息："+e);
+            throw new CustomException("排课展示列表错误");
         }
-        FormResult formResult=new FormResult();
-        formResult.setCode(0);
-        formResult.setCount(pageInfo.getTotal());
-        formResult.setData(listView);
-        formResult.setMsg("");
-        return formResult;
     }
 
 
-    public MyResult delCourseInfo(String[] nums) {
+    public MyResult delCourseInfo(String[] nums) throws Exception{
         MyResult myResult=new MyResult();
         try{
             StudentCourseInfoQueryVo studentCourseInfoQueryVo=new StudentCourseInfoQueryVo();
@@ -127,90 +101,136 @@ public class CourseServiceImpl implements CourseService {
                 studentCourseInfoQueryVo.setStudentcourseinfo(studentcourseinfo);
                 myStudentCourseInfoMapper.stuDelCourse(studentCourseInfoQueryVo);
             }
-            myResult.setMsg("删除成功");
             myResult.setStatus(200);
             return myResult;
         }catch(Exception e){
-            myResult.setStatus(400);
-            myResult.setMsg("删除出错");
-            return  myResult;
+            logger.error("错误信息："+e);
+            throw new CustomException("删除列表错误");
         }
     }
 
-    public MyResult editCourseInfo(Courseinfo courseinfo) {
-        MyResult myResult=null;
-        Classinfo classinfo= classinfoMapper.selectByPrimaryKey(courseinfo.getClassnum());
-        if(classinfo==null){
-            myResult=new MyResult();
-            myResult.setMsg("不存在该教室");
-            myResult.setStatus(400);
-            return  myResult;
-        }
-        if(courseinfo.getCoursenumlimit()==null){
-            courseinfo.setCoursenumlimit(classinfo.getLimitnum());
-        }
-        if(courseinfo.getCoursenumlimit()>classinfo.getLimitnum()){
-            myResult=new MyResult();
-            myResult.setMsg("数量超过课室座位，错误");
-            myResult.setStatus(400);
-            return  myResult;
-        }
-        List<Courseinfo>list=
-                myCourseMapper.checkCourseInfo(courseinfo.getCourseday(),courseinfo.getCoursedaytime(),courseinfo.getClassnum(),courseinfo.getTermtime(),courseinfo.getTermyear());
-
-        if(list.size()>0&&list.get(0)!=null) {
-            if(!list.get(0).getCoursenum().equals(courseinfo.getCoursenum())){
-                myResult = new MyResult();
-                myResult.setMsg("课程与其他课程冲突");
-                myResult.setStatus(400);
-                return myResult;
+    public MyResult editCourseInfo(Courseinfo courseinfo) throws Exception {
+        try{
+            MyResult myResult=new MyResult();
+            CourseinfoExample courseinfoExample=new CourseinfoExample();
+            CourseinfoExample.Criteria criteria= courseinfoExample.createCriteria();
+            if(courseinfo.getClassnum()==null||courseinfo.getClassnum().equals("")){
+                Courseinfo courseinfoS=courseinfoMapper.selectByPrimaryKey(courseinfo.getCoursenum());
+                courseinfo.setClassnum(courseinfoS.getClassnum());
             }
-        }
-        courseinfo.setUpdatetime(new Date());
-        courseinfoMapper.updateByPrimaryKey(courseinfo);
-        myResult=new MyResult();
-        myResult.setStatus(200);
-        myResult.setMsg("修改成功");
-        return myResult;
-    }
-
-    public FormResult selCourseInfoTable(int page, int limit,HttpSession session) {
-
-//        检查课程是否被该学生选了
-        List<CourseInfoViewShowStudent> list= myCourseMapper.showCourseinfoToStudent((page-1)*limit,limit);
-//        先模拟学生已经登录
-        StudentcourseinfoExample studentcourseinfoExample=new StudentcourseinfoExample();
-        StudentcourseinfoExample.Criteria criteria=studentcourseinfoExample.createCriteria();
-        StudentCourseInfoQueryVo studentCourseInfoQueryVo=new StudentCourseInfoQueryVo();
-        Studentcourseinfo studentcourseinfo=new Studentcourseinfo();
-        ActiveRole activeRole= (ActiveRole) session.getAttribute("activerole");
-        FormResult formResult=new FormResult();
-        if(list!=null&&list.size()>0){
-            for(CourseInfoViewShowStudent courseInfoView:list){
-                CourseInfoViewTurn.changeDateView2(courseInfoView);
-                studentcourseinfo.setCoursenum(courseInfoView.getCourseNum());
-                studentcourseinfo.setStudentnum(activeRole.getUsernum());
-                studentCourseInfoQueryVo.setStudentcourseinfo(studentcourseinfo);
-                List<Studentcourseinfo>list2=myStudentCourseInfoMapper.checkIfSelCourse(studentCourseInfoQueryVo);
-                if(list2.size()>0){
-                    courseInfoView.setFlag("1");
+            criteria.andClassnumEqualTo(courseinfo.getClassnum());
+            criteria.andCoursedayEqualTo(courseinfo.getCourseday());
+            criteria.andCoursedaytimeEqualTo(courseinfo.getCoursedaytime());
+            criteria.andCourseteachernumEqualTo(courseinfo.getCourseteachernum());
+            criteria.andTermyearEqualTo(courseinfo.getTermyear());
+            criteria.andTermtimeEqualTo(courseinfo.getTermtime());
+            List<Courseinfo>list=courseinfoMapper.selectByExample(courseinfoExample);
+            if(list!=null&&list.size()>0){
+                if(list.size()==1&&list.get(0).getCoursenum().equals(courseinfo.getCoursenum())){
+                    courseinfoMapper.updateByPrimaryKeySelective(courseinfo);
+                    myResult.setStatus(200);
+                    return myResult;
                 }else{
-                    courseInfoView.setFlag("2");
+                    myResult.setStatus(400);
+                    return myResult;
                 }
             }
-            int total=myCourseMapper.showCourseinfoCount();
-//        课程名 学分 课室 任课老师名字 剩余量 课程所属的系
+            courseinfoMapper.updateByPrimaryKeySelective(courseinfo);
+            myResult.setStatus(200);
+            return myResult;
+        }catch(Exception e){
+            logger.error("错误信息："+e);
+            throw new CustomException("排课修改错误");
+        }
+    }
+
+    public FormResult selCourseInfoTable(int page, int limit,HttpSession session)throws Exception {
+        try{
+            ActiveRole activeRole= (ActiveRole) session.getAttribute("activerole");
+            StudentcourseinfoExample studentcourseinfoExample=new StudentcourseinfoExample();
+            StudentcourseinfoExample.Criteria criteria=studentcourseinfoExample.createCriteria();
+            criteria.andStudentnumEqualTo(activeRole.getUsernum());
+            List<Studentcourseinfo> clist=studentcourseinfoMapper.selectByExample(studentcourseinfoExample);
+            Set<String> set=new HashSet<String>();
+            if(clist!=null&& clist.size()>0){
+                for(Studentcourseinfo studentcourseinfo: clist){
+                    set.add(studentcourseinfo.getCoursenum());
+                }
+            }
+            Map map=new HashMap<String ,Object>();
+            CourseinfoCustom courseinfoCustom=new CourseinfoCustom();
+            courseinfoCustom.setKclx("校级公选课");
+            courseinfoCustom.setIfopen("1");
+            map.put("page",(page-1)*limit);
+            map.put("limit",limit);
+            map.put("courseinfoCustom", courseinfoCustom);
+            List<CourseinfoCustom>list=courseinfoCustomMapper.selCourseinfoTable(map);
+            List<CourseinfoCustom>rlist=new ArrayList<CourseinfoCustom>();
+            for(CourseinfoCustom courseinfoCustomS:list){
+                if(clist!=null&& clist.size()>0&&set.contains(courseinfoCustomS.getCoursenum())){
+                    courseinfoCustomS.setStatus("1");
+                }else{
+                    courseinfoCustomS.setStatus("0");
+                }
+                rlist.add(courseinfoCustomS);
+            }
+            long total=courseinfoCustomMapper.selCourseinfoTableNum(map);
+            FormResult formResult=new FormResult();
             formResult.setCode(0);
             formResult.setCount((long) total);
-            formResult.setData(list);
+            formResult.setData(rlist);
             formResult.setMsg("");
             return formResult;
+        }catch(Exception e){
+            logger.error("错误信息："+e);
+            throw new CustomException("排课修改错误");
         }
-        formResult.setCode(0);
-        formResult.setCount((long) 0);
-        formResult.setData(null);
-        formResult.setMsg("");
-        return formResult;
+    }
+
+    public FormResult selCourseInfoTable2(int page, int limit, HttpSession session) throws Exception {
+        try{
+            ActiveRole activeRole= (ActiveRole) session.getAttribute("activerole");
+            StudentcourseinfoExample studentcourseinfoExample=new StudentcourseinfoExample();
+            StudentcourseinfoExample.Criteria criteria=studentcourseinfoExample.createCriteria();
+            criteria.andStudentnumEqualTo(activeRole.getUsernum());
+            List<Studentcourseinfo> clist=studentcourseinfoMapper.selectByExample(studentcourseinfoExample);
+            Set<String> set=new HashSet<String>();
+            if(clist!=null&& clist.size()>0){
+                for(Studentcourseinfo studentcourseinfo: clist){
+                    set.add(studentcourseinfo.getCoursenum());
+                }
+            }
+            Studentinfo studentinfo=studentinfoMapper.selectByPrimaryKey(activeRole.getUsernum());
+            Map map=new HashMap<String ,Object>();
+            CourseinfoCustom courseinfoCustom=new CourseinfoCustom();
+            courseinfoCustom.setKclx("学院选修课");
+            courseinfoCustom.setIfopen("1");
+            Majorinfo majorinfo=majorinfoMapper.selectByPrimaryKey(studentinfo.getMajornum());
+            courseinfoCustom.setDeptnum(majorinfo.getDeptnum());
+            map.put("page",(page-1)*limit);
+            map.put("limit",limit);
+            map.put("courseinfoCustom", courseinfoCustom);
+            List<CourseinfoCustom>list=courseinfoCustomMapper.selCourseinfoTable2(map);
+            List<CourseinfoCustom>rlist=new ArrayList<CourseinfoCustom>();
+            for(CourseinfoCustom courseinfoCustomS:list){
+                if(clist!=null&& clist.size()>0&&set.contains(courseinfoCustomS.getCoursenum())){
+                    courseinfoCustomS.setStatus("1");
+                }else{
+                    courseinfoCustomS.setStatus("0");
+                }
+                rlist.add(courseinfoCustomS);
+            }
+            long total=courseinfoCustomMapper.selCourseinfoTableNum2(map);
+            FormResult formResult=new FormResult();
+            formResult.setCode(0);
+            formResult.setCount((long) total);
+            formResult.setData(rlist);
+            formResult.setMsg("");
+            return formResult;
+        }catch(Exception e){
+            logger.error("错误信息："+e);
+            throw new CustomException("排课修改错误");
+        }
     }
 
     public MyResult stuAddNewCourse(String courseNum, HttpSession session) {
@@ -276,30 +296,26 @@ public class CourseServiceImpl implements CourseService {
         return myResult;
     }
 
-    public FormResult searchCourseByCondition(CourseinfoQueryVo courseinfoQueryVo) {
-        courseinfoQueryVo.getCourseInfoView().setPage((courseinfoQueryVo.getCourseInfoView().getPage()-1)*courseinfoQueryVo.getCourseInfoView().getLimit());
-        List<CourseInfoView>list=myCourseMapper.selCourseByCondition(courseinfoQueryVo);
-        for (CourseInfoView courseInfoView:list) {
-            //前端拦截不到数据，用这个方法处理一下日期和时段的显示
-            CourseInfoViewTurn.changeDateView(courseInfoView);
-            //            再次查询某些字段出来，这里设计的不好当初没有用自定义的mapper，暂时先这么解决
-            changeCourinfoView(courseInfoView);
+
+    public FormResult searchCourseByCondition(CourseinfoCustom courseinfoCustom, int page, int limit) throws Exception {
+        try{
+            Map map=new HashMap<String,Object>();
+            map.put("courseinfoCustom",courseinfoCustom);
+            map.put("page",(page-1)*limit);
+            map.put("limit",limit);
+           List<CourseinfoCustom> list= courseinfoCustomMapper.searchByCondition(map);
+           Integer total=courseinfoCustomMapper.searchByConditionNum(map);
+           FormResult formResult=new FormResult();
+           formResult.setCode(0);
+           formResult.setCount((long) total);
+           formResult.setData(list);
+           return formResult;
+        }catch(Exception e){
+            logger.error("错误信息："+e);
+            throw new CustomException("查询排课信息错误");
         }
-        FormResult formResult=new FormResult();
-        if(list!=null&&list.size()>0){
-            Integer total=myCourseMapper.CountSelCourseByCondition(courseinfoQueryVo);
-            formResult.setCode(0);
-            formResult.setCount((long) total);
-            formResult.setData(list);
-            formResult.setMsg("成功");
-            return formResult;
-        }
-        formResult.setCode(0);
-        formResult.setCount((long) 0);
-        formResult.setData(null);
-        formResult.setMsg("数据不存在或者出错");
-        return formResult;
     }
+
 
     public MyResult changeCourseStatus(String user, String coursenum) {
         MyResult myResult=new MyResult();
@@ -337,15 +353,6 @@ public class CourseServiceImpl implements CourseService {
         return false;
     }
 
-//    处理回显数据
-    public void changeCourinfoView(CourseInfoView courseInfoView) {
-        if((courseInfoView.getMajornum())!=null&&(courseInfoView.getMajornum())!=""){
-            Majorinfo majorinfo= majorinfoMapper.selectByPrimaryKey(courseInfoView.getMajornum());
-            if(majorinfo!=null){
-                courseInfoView.setMajornum(majorinfo.getMajorname());
-            }
-        }
-    }
 
 
 }

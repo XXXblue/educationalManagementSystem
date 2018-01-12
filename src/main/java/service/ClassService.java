@@ -1,8 +1,11 @@
 package service;
 
 import po.Classinfo;
+import pojoCustom.ClassinfoCustom;
 import util.FormResult;
 import util.MyResult;
+
+import java.util.List;
 
 /**
  * @Author: XBlue
@@ -21,4 +24,6 @@ public interface ClassService {
     public  MyResult editClassInfo(Classinfo classinfo)throws Exception;
 //    管理员删除已有课室
     public MyResult delClassInfo(String[] nums)throws Exception;
+
+    public List<ClassinfoCustom> searchFreeClass(String ct,String ty,String tt,String cd,String cdt,String th)throws Exception;
 }

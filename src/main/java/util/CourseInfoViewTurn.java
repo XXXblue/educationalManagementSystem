@@ -14,7 +14,7 @@ import poView.CourseInfoViewShowStudent;
  */
 public class CourseInfoViewTurn {
     public  static void changeDateView(CourseInfoView courseInfoView) {
-        switch (courseInfoView.getCourseday()){
+        switch (Integer.parseInt(courseInfoView.getCourseday())){
             case 1:
                 courseInfoView.setScourseDay("星期一");
                 break;
@@ -37,7 +37,7 @@ public class CourseInfoViewTurn {
                 courseInfoView.setScourseDay("星期日");
                 break;
         }
-        switch (courseInfoView.getCoursedaytime()){
+        switch (Integer.parseInt(courseInfoView.getCoursedaytime())){
             case 1:
                 courseInfoView.setScourseDayTime("上午第一节课");
                 break;

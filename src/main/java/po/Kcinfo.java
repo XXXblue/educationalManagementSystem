@@ -7,7 +7,11 @@ public class Kcinfo {
 
     private String kcxs;
 
-    private String majornum;
+    private String deptnum;
+
+    private String kclx;
+
+    private String kcmc;
 
     private String kcjj;
 
@@ -35,12 +39,28 @@ public class Kcinfo {
         this.kcxs = kcxs == null ? null : kcxs.trim();
     }
 
-    public String getMajornum() {
-        return majornum;
+    public String getDeptnum() {
+        return deptnum;
     }
 
-    public void setMajornum(String majornum) {
-        this.majornum = majornum == null ? null : majornum.trim();
+    public void setDeptnum(String deptnum) {
+        this.deptnum = deptnum == null ? null : deptnum.trim();
+    }
+
+    public String getKclx() {
+        return kclx;
+    }
+
+    public void setKclx(String kclx) {
+        this.kclx = kclx == null ? null : kclx.trim();
+    }
+
+    public String getKcmc() {
+        return kcmc;
+    }
+
+    public void setKcmc(String kcmc) {
+        this.kcmc = kcmc == null ? null : kcmc.trim();
     }
 
     public String getKcjj() {

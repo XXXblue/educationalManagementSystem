@@ -139,7 +139,7 @@
                                     });
                                 }
                                 if(result.status===200){
-                                    layer.msg(result.msg, {
+                                    layer.msg('添加成功', {
                                         time: 2000, //2s后自动关闭
                                     });
                                      init();
@@ -248,7 +248,7 @@
                                                 });
                                             }
                                             if(result.status===200){
-                                                layer.msg(result.msg, {
+                                                layer.msg('修改成功', {
                                                     time: 2000, //2s后自动关闭
                                                 });
                                                 init();
@@ -298,7 +298,7 @@
                             });
                         }
                         if (result.status === 200) {
-                            layer.msg(result.msg, {
+                            layer.msg('删除成功', {
                                 time: 2000, //2s后自动关闭
                             });
                             layer.closeAll('page');

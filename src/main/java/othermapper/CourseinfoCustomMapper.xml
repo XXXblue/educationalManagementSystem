@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="othermapper.CourseinfoCustomMapper">
+        <select id="queryCourseinfo" resultType="pojoCustom.CourseinfoCustom">
+             SELECT courseinfo.CreateTime,courseinfo.UpdateTime,courseinfo.CourseNum,kcinfo.kcmc,courseinfo.ClassNum,courseinfo.CourseTeacherNum
+            ,courseinfo.CourseNumLimit,courseinfo.TermYear,courseinfo.TermTime
+            ,courseinfo.CourseStartWeek,courseinfo.CourseEndWeek,courseinfo.CourseFree
+            ,courseinfo.CourseDay,courseinfo.CourseDayTime,courseinfo.courseOpenNum
+            ,courseinfo.ifOpen,courseinfo.ifGrade,courseinfo.courseStatus FROM courseinfo,kcinfo WHERE courseinfo.kcnum=kcinfo.kcnum
+            limit #{0},#{1};
+        </select>
+
+        <select id="queryCourseinfoNum" resultType="Integer">
+            SELECT COUNT(*) FROM courseinfo LEFT JOIN kcinfo ON courseinfo.kcnum=kcinfo.kcnum ;
+        </select>
+
+        <select id="searchByCondition" parameterType="java.util.Map" resultType="pojoCustom.CourseinfoCustom">
+          SELECT * FROM  courseinfo,kcinfo
+          WHERE kcinfo.kcnum=courseinfo.kcnum
+            <if test="courseinfoCustom.termyear!=null and courseinfoCustom.termyear!=''">
+               AND TermYear =#{courseinfoCustom.termyear}
+            </if>
+            <if test="courseinfoCustom.termtime!=null and courseinfoCustom.termtime!=''">
+                AND TermTime =#{courseinfoCustom.termtime}
+            </if>
+            <if test="courseinfoCustom.ifopen!=null and courseinfoCustom.ifopen!=''">
+                AND IfOpen =#{courseinfoCustom.ifopen}
+            </if>
+            <if test="courseinfoCustom.kcmc!=null and courseinfoCustom.kcmc!=''">
+                AND kcmc like CONCAT(CONCAT('%',#{courseinfoCustom.kcmc}),'%')
+            </if>
+            LIMIT #{page},#{limit};
+        </select>
+
+    <select id="searchByConditionNum" parameterType="java.util.Map" resultType="Integer">
+        SELECT count(*) FROM  courseinfo,kcinfo
+        WHERE kcinfo.kcnum=courseinfo.kcnum
+        <if test="courseinfoCustom.termyear!=null and courseinfoCustom.termyear!=''">
+            AND TermYear =#{courseinfoCustom.termyear}
+        </if>
+        <if test="courseinfoCustom.termtime!=null and courseinfoCustom.termtime!=''">
+            AND TermTime =#{courseinfoCustom.termtime}
+        </if>
+        <if test="courseinfoCustom.ifopen!=null and courseinfoCustom.ifopen!=''">
+            AND IfOpen =#{courseinfoCustom.ifopen}
+        </if>
+        <if test="courseinfoCustom.kcmc!=null and courseinfoCustom.kcmc!=''">
+            AND kcmc like CONCAT(CONCAT('%',#{courseinfoCustom.kcmc}),'%')
+        </if>
+    </select>
+
+    <select id="courseSelTableToStudent" resultType="pojoCustom.CourseinfoCustom">
+        SELECT kcinfo.kclx,kcinfo.kcmc,kcinfo.kcxf,kcinfo.kcxs,teacherinfo.TeacherName,courseinfo.ClassNum,courseinfo.CourseNumLimit,courseinfo.CourseFree
+        FROM courseinfo,kcinfo,teacherinfo WHERE NOT EXISTS (SELECT * FROM studentcourseinfo WHERE  studentcourseinfo.StudentNum=#{0}
+        AND courseinfo.CourseNum=studentcourseinfo.CourseNum) AND courseinfo.ifOpen="1" AND courseinfo.kcnum=kcinfo.kcnum AND
+        courseinfo.CourseTeacherNum=teacherinfo.TeacherNum;
+    </select>
+
+    <select id="selCourseinfoTable" resultType="pojoCustom.CourseinfoCustom">
+       SELECT
+        courseinfo.CourseNum,kcinfo.kclx,kcinfo.kcmc,kcinfo.kcxf,kcinfo.kcxs,courseinfo.CourseDay,courseinfo.CourseDayTime,
+        courseinfo.TermYear,teacherinfo.TeacherName,courseinfo.ClassNum,courseinfo.CourseNumLimit,courseinfo.CourseFree
+         FROM courseinfo INNER JOIN kcinfo ON courseinfo.kcnum=kcinfo.kcnum INNER JOIN
+        teacherinfo ON courseinfo.CourseTeacherNum=teacherinfo.TeacherNum AND courseinfo.ifOpen=#{courseinfoCustom.ifopen} AND kcinfo.kclx=#{courseinfoCustom.kclx}
+         LIMIT #{page},#{limit};
+    </select>
+    <select id="selCourseinfoTableNum"  resultType="Integer">
+        SELECT count(*)
+        FROM courseinfo INNER JOIN kcinfo ON courseinfo.kcnum=kcinfo.kcnum INNER JOIN
+        teacherinfo ON courseinfo.CourseTeacherNum=teacherinfo.TeacherNum AND courseinfo.ifOpen=#{courseinfoCustom.ifopen} AND kcinfo.kclx=#{courseinfoCustom.kclx};
+    </select>
+
+    <select id="selCourseinfoTable2" resultType="pojoCustom.CourseinfoCustom">
+        SELECT
+        courseinfo.CourseNum,kcinfo.kclx,kcinfo.kcmc,kcinfo.kcxf,kcinfo.kcxs,courseinfo.CourseDay,courseinfo.CourseDayTime,
+        courseinfo.TermYear,teacherinfo.TeacherName,courseinfo.ClassNum,courseinfo.CourseNumLimit,courseinfo.CourseFree
+        FROM courseinfo INNER JOIN kcinfo ON courseinfo.kcnum=kcinfo.kcnum INNER JOIN
+        teacherinfo ON courseinfo.CourseTeacherNum=teacherinfo.TeacherNum AND courseinfo.ifOpen=#{courseinfoCustom.ifopen} AND kcinfo.kclx=#{courseinfoCustom.kclx}
+        AND kcinfo.deptnum=#{courseinfoCustom.deptnum}
+        LIMIT #{page},#{limit};
+    </select>
+    <select id="selCourseinfoTableNum2"  resultType="Integer">
+        SELECT count(*)
+        FROM courseinfo INNER JOIN kcinfo ON courseinfo.kcnum=kcinfo.kcnum INNER JOIN
+        teacherinfo ON courseinfo.CourseTeacherNum=teacherinfo.TeacherNum AND courseinfo.ifOpen=#{courseinfoCustom.ifopen} AND kcinfo.kclx=#{courseinfoCustom.kclx}
+        AND kcinfo.deptnum=#{courseinfoCustom.deptnum};
+    </select>
+
+    <select id="showStuCourseInfoTable" resultType="pojoCustom.CourseinfoCustom">
+        SELECT * FROM studentcourseinfo INNER JOIN courseinfo ON studentcourseinfo.CourseNum=courseinfo.CourseNum INNER JOIN kcinfo ON
+        courseinfo.kcnum=kcinfo.kcnum  INNER JOIN  teacherinfo ON courseinfo.CourseTeacherNum =teacherinfo.TeacherNum
+        AND studentcourseinfo.StudentNum=#{0} AND courseinfo.TermYear=#{1} AND courseinfo.TermTime=
+        #{2} and <![CDATA[courseinfo.CourseEndWeek >= #{3} and courseinfo.CourseStartWeek <= #{3}]]>;
+    </select>
+</mapper>

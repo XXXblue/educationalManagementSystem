@@ -25,34 +25,39 @@ public class CourseController {
 
     @RequestMapping("/addCourseInfo")
     @ResponseBody
-    public String addNewCourse(Courseinfo courseinfo){
-
-        return JSON.toJSONString(courseService.addNewCourse(courseinfo));
+    public String addNewCourse(CourseinfoQueryVo courseinfoQueryVo)throws Exception{
+        return JSON.toJSONString(courseService.addNewCourse(courseinfoQueryVo.getCourseinfoCustom()));
     }
 
     @RequestMapping("/editCourseInfo")
     @ResponseBody
-    public String editCourse(Courseinfo courseinfo){
+    public String editCourse(CourseinfoQueryVo courseinfoQueryVo) throws  Exception{
 
-        return JSON.toJSONString(courseService.editCourseInfo(courseinfo));
+        return JSON.toJSONString(courseService.editCourseInfo(courseinfoQueryVo.getCourseinfoCustom()));
     }
 
     @RequestMapping("/courseInfoTable")
     @ResponseBody
-    public String listCourseInfoTable(int page,int limit){
+    public String listCourseInfoTable(int page,int limit)throws Exception{
         return JSON.toJSONStringWithDateFormat(courseService.listAllCourseInfoTable(page,limit),"yyyy-MM-dd hh:mm:ss");
     }
 
     @RequestMapping("/delCourseInfo")
     @ResponseBody
-    public String  delCourseInfo(String[] nums){
+    public String  delCourseInfo(String[] nums)throws Exception{
         return JSON.toJSONString(courseService.delCourseInfo(nums));
     }
 
     @RequestMapping("/stuselcourseInfoTable")
     @ResponseBody
-    public String selCourseInfoTable(int page,int limit,HttpSession session){
+    public String selCourseInfoTable(int page,int limit,HttpSession session)throws Exception{
         return JSON.toJSONString(courseService.selCourseInfoTable(page,limit,session));
+    }
+
+    @RequestMapping("/stuselcourseInfoTable2")
+    @ResponseBody
+    public String stuselcourseInfoTable2(int page,int limit,HttpSession session)throws Exception{
+        return JSON.toJSONString(courseService.selCourseInfoTable2(page,limit,session));
     }
 
     @RequestMapping(value="/stuselcourse/{courseNum}",method= RequestMethod.GET)
@@ -69,10 +74,9 @@ public class CourseController {
 
     @RequestMapping("/searchCourseByCondition")
     @ResponseBody
-    public String searchCourseByCondition(CourseInfoView courseInfoView){
-        CourseinfoQueryVo courseinfoQueryVo=new CourseinfoQueryVo();
-        courseinfoQueryVo.setCourseInfoView(courseInfoView);
-        return JSON.toJSONStringWithDateFormat(courseService.searchCourseByCondition(courseinfoQueryVo),"yyyy-MM-dd hh:mm:ss");
+    public String searchCourseByCondition(CourseinfoQueryVo courseinfoQueryVo,int page,int limit)throws Exception{
+        courseinfoQueryVo.getCourseinfoCustom().setKcmc(new String(courseinfoQueryVo.getCourseinfoCustom().getKcmc().getBytes("ISO-8859-1"),"UTF-8"));
+        return JSON.toJSONString(courseService.searchCourseByCondition(courseinfoQueryVo.getCourseinfoCustom(),page,limit));
     }
 
     @RequestMapping("/changeCourseStatus/{user}/{coursenum}")

@@ -78,31 +78,31 @@
         </script>
         <script type="text/html" id="selbar">
             {{#  if(d.ifgrade==0){ }}
-            <a class="layui-btn layui-btn-mini" lay-event="submitgrade">提交成绩</a>
+            <a class="layui-btn layui-btn-xs" lay-event="submitgrade">提交成绩</a>
             {{#  } }}
             {{#  if(d.ifgrade==1){ }}
-            <a class="layui-btn layui-btn-mini" >待审核</a>
+            <a class="layui-btn layui-btn-xs" >待审核</a>
             {{#  } }}
             {{#  if(d.ifgrade==2){ }}
-            <a class="layui-btn layui-btn-mini" >已通过</a>
+            <a class="layui-btn layui-btn-xs" >已通过</a>
             {{#  } }}
             {{#  if(d.ifgrade==3){ }}
-            <a class="layui-btn layui-btn-mini" lay-event="submitgrade">重新提交</a>
+            <a class="layui-btn layui-btn-xs" lay-event="submitgrade">重新提交</a>
             {{#  } }}
         </script>
         <script type="text/html" id="courseNameTpl">
-            <a href="/detail/{{d.coursenum}}" class="layui-table-link">{{d.coursename}}</a>
+            <a href="/detail/{{d.coursenum}}" class="layui-table-link">{{d.kcmc}}</a>
         </script>
 
         <script type="text/html" id="coursestatus" >
             {{#  if(d.coursestatus==0){ }}
-            <a class="layui-btn layui-btn-danger layui-btn-mini">未开课</a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs">未开课</a>
             {{#  } }}
             {{#  if(d.coursestatus==1){ }}
-            <a class="layui-btn layui-btn-mini" lay-event="coursestatus">结课</a>
+            <a class="layui-btn layui-btn-xs" lay-event="coursestatus">结课</a>
             {{#  } }}
             {{#  if(d.coursestatus==2){ }}
-            <a class="layui-btn layui-btn-normal layui-btn-mini">已结课</a>
+            <a class="layui-btn layui-btn-normal layui-btn-xs">已结课</a>
             {{#  } }}
         </script>
 
@@ -137,12 +137,12 @@
                     url: '/teacherCourseInfoTable',
                     cols:  [[ //标题栏
                         {checkbox: true, LAY_CHECKED: false}
-                        ,{field: 'coursename', align:'center',title: '课程名', width: 150,templet:'#courseNameTpl'}
-                        ,{field: 'classnum', align:'center',title: '教室', width: 150}
+                        ,{field: 'kcmc', align:'center',title: '课程名', width: 150,templet:'#courseNameTpl'}
+                        ,{field: 'classNum', align:'center',title: '教室', width: 150}
                         ,{field: 'courseday', align:'center',title: '上课周', width: 150,templet:'#courseDayTpl'}
                         ,{field: 'coursedaytime',align:'center', title: '上课时间段', width: 150,templet:'#courseDayTimeTpl'}
                         ,{field: 'coursefree', align:'center',title: '课程剩余量', width: 150}
-                        ,{field: 'coursenumlimit', align:'center',title: '课程人数上限', width: 100}
+                        ,{field: 'coursenumlimit', align:'center',title: '课程人数上限', width: 150}
                         ,{field: 'termyear', align:'center',title: '学年', width: 150}
                         ,{field: 'ifgrade', align:'center',title: '状态', width: 150,templet: '#status'}
                         ,{field: 'termtime', align:'center',title: '学期', width: 150,templet: '#termTimeTpl'}

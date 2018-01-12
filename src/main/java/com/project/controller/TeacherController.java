@@ -113,4 +113,10 @@ public class TeacherController {
     public String search(String termyear,String termtime,String week,HttpSession session){
         return JSON.toJSONString(teacherTimetableService.searchTeacherTimetable(termyear,termtime,week,session));
     }
+
+    @RequestMapping("/queryteachernum")
+    @ResponseBody
+    public String queryteachernum()throws Exception{
+        return JSON.toJSONString(teacherService.queryteachernum());
+    }
 }

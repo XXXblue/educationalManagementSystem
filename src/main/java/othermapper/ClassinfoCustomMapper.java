@@ -13,4 +13,5 @@ import java.util.List;
 public interface ClassinfoCustomMapper {
     public  List <ClassinfoCustom> queryClassinfo(int page,int limit);
     public Integer queryClassinfoNum();
+    public List<ClassinfoCustom> searchFreeClass(String ct,String ty,String tt,String cd ,String cdt,String th);
 }

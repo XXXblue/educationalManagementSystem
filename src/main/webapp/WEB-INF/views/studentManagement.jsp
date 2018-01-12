@@ -112,7 +112,7 @@
         <div class="layui-form-item" style="width: 400px">
             <label class="layui-form-label">入学年份:</label>
             <div class="layui-input-block">
-                <input name="studentcomeyear" id="studentcomeyear" lay-verify="required" autocomplete="off" placeholder="请输入学生姓名" class="layui-input">
+                <input name="studentcomeyear" id="studentcomeyear" lay-verify="required" autocomplete="off" placeholder="请输入学年份" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item" style="width: 400px">
@@ -266,6 +266,7 @@
         $('#add').on('click',function () {
             $('#change').html("新增学员");
             $('#studentnum').attr("disabled",false);
+            $("#denglumima").show();
             layer.open({
                 title:"新增学员",
                 area:['600px','700px'],
@@ -278,7 +279,6 @@
             content: $('#addform'),
                 success:function () {
                     form.on('submit(addsubmit)', function(data){
-                        layer.msg(JSON.stringify(data.field));
                         $.ajax({
                             url: '/addstudentinfo',
                             type: 'post',
@@ -318,6 +318,7 @@
         $('#edit').on('click',function () {
             $('#change').html("修改学员");
             $('#studentnum').attr("disabled",true);
+            $("#denglumima").hide();
             var checkStatus = table.checkStatus('studentInfoTable'); //test即为基础参数id对应的值
             if(checkStatus.data.length==0){
                 layer.msg("请选中一行进行编辑", {

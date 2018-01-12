@@ -10,8 +10,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import po.Classinfo;
+import pojoCustom.ClassinfoCustom;
 import service.ClassService;
 import util.MyResult;
+
+import java.util.List;
 
 /**
  * @Author: XBlue
@@ -49,6 +52,12 @@ public class ClassController {
     public String classInfoDel(String[] nums)throws Exception
     {
         return JSON.toJSONString(classService.delClassInfo(nums));
+    }
+
+    @RequestMapping("/searchFreeClass")
+    @ResponseBody
+    public String searchFreeClass(String ct, String ty, String tt, String cd, String cdt,String th)throws Exception{
+        return JSON.toJSONString(classService.searchFreeClass(ct,ty,tt,cd,cdt,th));
     }
 
 }

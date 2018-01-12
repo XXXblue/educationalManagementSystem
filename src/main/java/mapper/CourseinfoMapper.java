@@ -17,21 +17,15 @@ public interface CourseinfoMapper {
 
     int insertSelective(Courseinfo record);
 
-    List<Courseinfo> selectByExampleWithBLOBs(CourseinfoExample example);
-
     List<Courseinfo> selectByExample(CourseinfoExample example);
 
     Courseinfo selectByPrimaryKey(String coursenum);
 
     int updateByExampleSelective(@Param("record") Courseinfo record, @Param("example") CourseinfoExample example);
 
-    int updateByExampleWithBLOBs(@Param("record") Courseinfo record, @Param("example") CourseinfoExample example);
-
     int updateByExample(@Param("record") Courseinfo record, @Param("example") CourseinfoExample example);
 
     int updateByPrimaryKeySelective(Courseinfo record);
-
-    int updateByPrimaryKeyWithBLOBs(Courseinfo record);
 
     int updateByPrimaryKey(Courseinfo record);
 }

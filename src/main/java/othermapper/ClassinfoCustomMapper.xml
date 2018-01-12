@@ -10,4 +10,9 @@
     <select id="queryClassinfoNum"  resultType="Integer">
           SELECT COUNT(*) FROM classinfo,kslxsjzd WHERE classinfo.ClassType=kslxsjzd.id;
     </select>
+
+    <select id="searchFreeClass"  resultType="pojoCustom.ClassinfoCustom">
+        SELECT * FROM classinfo WHERE NOT EXISTS (SELECT * FROM courseinfo WHERE TermYear=#{1} AND TermTime=#{2} AND courseday = #{3} AND CourseDayTime=#{4}  AND CourseTeacherNum=#{5}AND
+        courseinfo.ClassNum=classinfo.ClassNum) AND classinfo.ClassType=#{0};
+    </select>
 </mapper>

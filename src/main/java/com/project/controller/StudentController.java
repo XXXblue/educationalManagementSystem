@@ -72,14 +72,6 @@ public class StudentController {
 
     @RequestMapping("/student/studentSelfInfo")
     public String studentSelfInfo(HttpSession session, Model model) {
-        /**
-         * @Author: xiaojianyu
-         * @Method: showPage
-         * @Description: 页面跳转
-         * @Date: 0:01 2017/8/1
-         * @Return: java.lang.String
-         * @Param: [page]
-         */
         Studentinfo studentinfo=studentService.studentSelfInfo(session);
         model.addAttribute("studentinfo",studentinfo);
         return "/student/studentSelfInfo";

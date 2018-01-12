@@ -7,6 +7,7 @@ import util.FormResult;
 import util.MyResult;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * @Author: XBlue
@@ -41,4 +42,6 @@ public interface TeacherService {
     public MyResult uploadTeacherPic(MultipartFile uploadFile);
 //  提交成绩
     public MyResult submitGrade(Courseinfo courseinfo);
+
+    public List<Teacherinfo>queryteachernum() throws Exception;
 }

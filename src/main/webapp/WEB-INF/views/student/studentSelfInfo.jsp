@@ -187,8 +187,11 @@
                                     layer.closeAll('page');
                                     window.location.href="/teacherinfoshow";
                                 }
-                                window.location.reload(true);
-                                parent.document.getElementById("pic").setAttribute('src',result.data);
+
+                                    window.location.reload(true);
+                                    parent.document.getElementById("pic").setAttribute('src',result.data);
+
+
                             }
                         });
                         return false;

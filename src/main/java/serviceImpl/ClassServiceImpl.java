@@ -101,4 +101,13 @@ public class ClassServiceImpl implements ClassService {
            throw new CustomException("删除异常");
        }
     }
+
+    public List<ClassinfoCustom> searchFreeClass(String ct, String ty, String tt, String cd, String cdt,String th) throws Exception {
+        try{
+            return classinfoCustomMapper.searchFreeClass(ct,ty,tt,cd,cdt,th);
+        }catch(Exception e){
+            logger.error("错误原因："+e.getMessage());
+            throw new CustomException("选空闲教室异常");
+        }
+    }
 }

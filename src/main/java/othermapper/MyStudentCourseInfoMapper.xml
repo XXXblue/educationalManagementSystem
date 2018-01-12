@@ -23,8 +23,6 @@
 
 
     <select id="showStuCourseInfoTable"   resultType="poView.StuCourseTableView">
-
-
        SELECT * FROM courseinfo,teacherinfo WHERE courseinfo.CourseNum IN
         (SELECT studentcourseinfo.CourseNum FROM studentcourseinfo WHERE studentcourseinfo.StudentNum=#{0})and courseinfo.TermYear=#{1}
         AND courseinfo.TermTime=#{2}AND courseinfo.CourseTeacherNum= Teacherinfo.TeacherNum and

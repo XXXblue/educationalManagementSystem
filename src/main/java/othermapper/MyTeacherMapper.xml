@@ -14,10 +14,10 @@
        select * from rolepermission where role in (SELECT TeacherRole FROM teacherinfo where TeacherNum=#{TeacherNum});
     </select>
 
-    <select id="teacherCourseInfoTable"  resultType="po.Courseinfo">
-        SELECT courseinfo.CourseName,courseinfo.ClassNum,courseinfo.CourseFree,courseinfo.CourseNumLimit,
+    <select id="teacherCourseInfoTable"  resultType="pojoCustom.CourseinfoCustom">
+        SELECT kcinfo.kcmc,courseinfo.ClassNum,courseinfo.CourseFree,courseinfo.CourseNumLimit,
         courseinfo.courseStatus,courseinfo.CourseDay,courseinfo.CourseDayTime,courseinfo.TermYear,courseinfo.TermTime,courseinfo.CourseNum,courseinfo.ifGrade
-         FROM courseinfo WHERE CourseTeacherNum=#{0} limit #{1},#{2};
+         FROM courseinfo INNER JOIN kcinfo ON kcinfo.kcnum=courseinfo.kcnum WHERE CourseTeacherNum=#{0} limit #{1},#{2};
     </select>
 
     <select id="teacherCourseInfoTotal"  resultType="Integer">

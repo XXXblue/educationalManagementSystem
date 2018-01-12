@@ -94,7 +94,7 @@
                 <input name="teachertitle" id="teachertitle" lay-verify="studentphonenum" autocomplete="off" placeholder="请输入教师教学领域" class="layui-input">
             </div>
         </div>
-        <div class="layui-form-item" style="width: 400px">
+        <div id="denglumima" class="layui-form-item" style="width: 400px" >
             <label class="layui-form-label">登录密码:</label>
             <div class="layui-input-block">
                 <input name="teacherpassword" id="teacherpassword" lay-verify="required" autocomplete="off" placeholder="请输入登录密码" class="layui-input">
@@ -192,6 +192,7 @@
         $('#add').on('click',function () {
             $('#change').html("新增教师");
             $('#teachernum').attr("disabled", false);
+            $("#denglumima").show();
             layer.open({
                 title: "新增教师",
                 area: ['600px', '700px'],
@@ -233,6 +234,7 @@
         $('#edit').on('click',function () {
             $('#change').html("修改教师信息");
             $('#teachernum').attr("disabled",true);
+            $("#denglumima").hide();
             var checkStatus = table.checkStatus('teacherInfoTable'); //test即为基础参数id对应的值
             if(checkStatus.data.length==0){
                 layer.msg("请选中一行进行编辑", {

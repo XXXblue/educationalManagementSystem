@@ -165,7 +165,7 @@
 
                         if(y==i){
 //                      行
-                            $(this).text(data['courseName']);
+                            $(this).text(data['kcmc']);
                             $(this).append("<br/>")
                             $(this).append(data['classNum']);
                             $(this).append("<br/>")
@@ -179,9 +179,6 @@
 
         $('#search').on('click',function () {
             form.on('submit(submit)', function(data){
-                layer.alert(JSON.stringify(data.field), {
-                    title: '最终的提交信息'
-                });
                 $.ajax({
                     url: '/searchstudentcourseinfo',
                     type: 'post',
@@ -190,12 +187,12 @@
                     success: function (result) {
                         if (result.status === 1) {
                             inittable();
-                            layer.msg(result.msg, {
+                            layer.msg('查詢成功', {
                                 time: 2000, //2s后自动关闭
                             });
                             var list=result.data;
                             for(var i=0;i<list.length;i++){
-                                loadclass(list[i]['courseDayTime']-1,list[i]['courseDay'],list[i]);
+                                loadclass(list[i]['coursedaytime']-1,list[i]['courseday'],list[i]);
                             }
                         }
                     }

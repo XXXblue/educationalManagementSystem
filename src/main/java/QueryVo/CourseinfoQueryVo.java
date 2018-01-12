@@ -2,6 +2,7 @@ package QueryVo;
 
 import po.Courseinfo;
 import poView.CourseInfoView;
+import pojoCustom.CourseinfoCustom;
 
 /**
  * @Author: XBlue
@@ -11,6 +12,15 @@ import poView.CourseInfoView;
  */
 public class CourseinfoQueryVo {
    private CourseInfoView courseInfoView;
+   private CourseinfoCustom courseinfoCustom;
+
+    public CourseinfoCustom getCourseinfoCustom() {
+        return courseinfoCustom;
+    }
+
+    public void setCourseinfoCustom(CourseinfoCustom courseinfoCustom) {
+        this.courseinfoCustom = courseinfoCustom;
+    }
 
     public CourseInfoView getCourseInfoView() {
         return courseInfoView;

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="othermapper.KcCustomMapper">
+
+    <select id="queryKcinfo"  resultType="pojoCustom.KcCustom">
+        SELECT kcnum,kcxf,kcjj,kcxs,kclx,kcmc,DeptName FROM kcinfo,deptinfo WHERE kcinfo.deptnum=deptinfo.DeptNum limit #{0},#{1} ;
+    </select>
+
+    <select id="queryKcinfoNum"  resultType="Integer">
+       SELECT COUNT(*) FROM kcinfo,deptinfo WHERE kcinfo.deptnum=deptinfo.DeptNum ;
+    </select>
+
+
+</mapper>

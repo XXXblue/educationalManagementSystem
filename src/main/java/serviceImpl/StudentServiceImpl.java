@@ -12,15 +12,13 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import othermapper.MyCourseMapper;
-import othermapper.MyStudentCourseInfoMapper;
-import othermapper.MyStudentInfoMapper;
-import othermapper.MyTeacherMapper;
+import othermapper.*;
 import po.*;
 
 import poView.ActiveRole;
 import poView.StuCourseTableView;
 import poView.StudentInfoView;
+import pojoCustom.CourseinfoCustom;
 import service.StudentService;
 import util.*;
 
@@ -51,6 +49,8 @@ public class StudentServiceImpl implements StudentService{
     private MyStudentInfoMapper myStudentInfoMapper;
     @Autowired
     private MyStudentCourseInfoMapper myStudentCourseInfoMapper;
+    @Autowired
+    private  CourseinfoCustomMapper courseinfoCustomMapper;
     private static String accessKeyId= PropertyUtil.getProperty("accessKeyId");
     private static String endpoint= PropertyUtil.getProperty("endpoint");
     private static String accessKeySecret= PropertyUtil.getProperty("accessKeySecret");
@@ -108,10 +108,7 @@ public class StudentServiceImpl implements StudentService{
     public MyResult updateStudentInfo(Studentinfo studentinfo) {
         MyResult myResult=new MyResult();
         try{
-            PasswordEncoder encoderMd5=new PasswordEncoder(salt,"MD5");
-            String encode=encoderMd5.encode(studentinfo.getStudentpassword());
-            studentinfo.setStudentpassword(encode);
-            studentinfoMapper.updateByPrimaryKey(studentinfo);
+            studentinfoMapper.updateByPrimaryKeySelective(studentinfo);
             myResult.setMsg("修改成功");
             myResult.setStatus(200);
             return myResult;
@@ -161,11 +158,10 @@ public class StudentServiceImpl implements StudentService{
     public MyResult searchstudentcourseinfo(String termyear, String termtime, String week, HttpSession session) {
 
        ActiveRole activeRole = (ActiveRole) session.getAttribute("activerole");
-       List<StuCourseTableView> list= myStudentCourseInfoMapper.showStuCourseInfoTable(activeRole.getUsernum(),termyear,termtime,week);
+       List<CourseinfoCustom> list= courseinfoCustomMapper.showStuCourseInfoTable(activeRole.getUsernum(),termyear,termtime,Integer.parseInt(week));
        MyResult myResult=new MyResult();
        myResult.setData(list);
        myResult.setStatus(1);
-       myResult.setMsg("查询成功");
         return myResult;
     }
 
@@ -228,7 +224,6 @@ public class StudentServiceImpl implements StudentService{
             }
 //            新增图片
             ossClient.setObjectAcl("xiaojianyu-file-server", fileName, CannedAccessControlList.PublicRead);
-            ossClient.shutdown();
         }
         try{
             myStudentInfoMapper.updateStudentInfoForSelf(studentinfo);
@@ -238,6 +233,8 @@ public class StudentServiceImpl implements StudentService{
         }catch(Exception e){
             myResult.setStatus(2);
             return myResult;
+        }finally {
+            ossClient.shutdown();
         }
 
     }
@@ -258,7 +255,6 @@ public class StudentServiceImpl implements StudentService{
             myResult.setMsg("上传到服务器成功");
             myResult.setStatus(1);
             myResult.setData(path);
-            ossClient.shutdown();
             return myResult;
         } catch (IOException e) {
             e.printStackTrace();
@@ -266,6 +262,8 @@ public class StudentServiceImpl implements StudentService{
             myResult.setStatus(2);
             myResult.setData(null);
             return myResult;
+        }finally {
+            ossClient.shutdown();
         }
     }
 }

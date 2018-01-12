@@ -314,73 +314,213 @@ public class KcinfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andMajornumIsNull() {
-            addCriterion("majornum is null");
+        public Criteria andDeptnumIsNull() {
+            addCriterion("deptnum is null");
             return (Criteria) this;
         }
 
-        public Criteria andMajornumIsNotNull() {
-            addCriterion("majornum is not null");
+        public Criteria andDeptnumIsNotNull() {
+            addCriterion("deptnum is not null");
             return (Criteria) this;
         }
 
-        public Criteria andMajornumEqualTo(String value) {
-            addCriterion("majornum =", value, "majornum");
+        public Criteria andDeptnumEqualTo(String value) {
+            addCriterion("deptnum =", value, "deptnum");
             return (Criteria) this;
         }
 
-        public Criteria andMajornumNotEqualTo(String value) {
-            addCriterion("majornum <>", value, "majornum");
+        public Criteria andDeptnumNotEqualTo(String value) {
+            addCriterion("deptnum <>", value, "deptnum");
             return (Criteria) this;
         }
 
-        public Criteria andMajornumGreaterThan(String value) {
-            addCriterion("majornum >", value, "majornum");
+        public Criteria andDeptnumGreaterThan(String value) {
+            addCriterion("deptnum >", value, "deptnum");
             return (Criteria) this;
         }
 
-        public Criteria andMajornumGreaterThanOrEqualTo(String value) {
-            addCriterion("majornum >=", value, "majornum");
+        public Criteria andDeptnumGreaterThanOrEqualTo(String value) {
+            addCriterion("deptnum >=", value, "deptnum");
             return (Criteria) this;
         }
 
-        public Criteria andMajornumLessThan(String value) {
-            addCriterion("majornum <", value, "majornum");
+        public Criteria andDeptnumLessThan(String value) {
+            addCriterion("deptnum <", value, "deptnum");
             return (Criteria) this;
         }
 
-        public Criteria andMajornumLessThanOrEqualTo(String value) {
-            addCriterion("majornum <=", value, "majornum");
+        public Criteria andDeptnumLessThanOrEqualTo(String value) {
+            addCriterion("deptnum <=", value, "deptnum");
             return (Criteria) this;
         }
 
-        public Criteria andMajornumLike(String value) {
-            addCriterion("majornum like", value, "majornum");
+        public Criteria andDeptnumLike(String value) {
+            addCriterion("deptnum like", value, "deptnum");
             return (Criteria) this;
         }
 
-        public Criteria andMajornumNotLike(String value) {
-            addCriterion("majornum not like", value, "majornum");
+        public Criteria andDeptnumNotLike(String value) {
+            addCriterion("deptnum not like", value, "deptnum");
             return (Criteria) this;
         }
 
-        public Criteria andMajornumIn(List<String> values) {
-            addCriterion("majornum in", values, "majornum");
+        public Criteria andDeptnumIn(List<String> values) {
+            addCriterion("deptnum in", values, "deptnum");
             return (Criteria) this;
         }
 
-        public Criteria andMajornumNotIn(List<String> values) {
-            addCriterion("majornum not in", values, "majornum");
+        public Criteria andDeptnumNotIn(List<String> values) {
+            addCriterion("deptnum not in", values, "deptnum");
             return (Criteria) this;
         }
 
-        public Criteria andMajornumBetween(String value1, String value2) {
-            addCriterion("majornum between", value1, value2, "majornum");
+        public Criteria andDeptnumBetween(String value1, String value2) {
+            addCriterion("deptnum between", value1, value2, "deptnum");
             return (Criteria) this;
         }
 
-        public Criteria andMajornumNotBetween(String value1, String value2) {
-            addCriterion("majornum not between", value1, value2, "majornum");
+        public Criteria andDeptnumNotBetween(String value1, String value2) {
+            addCriterion("deptnum not between", value1, value2, "deptnum");
+            return (Criteria) this;
+        }
+
+        public Criteria andKclxIsNull() {
+            addCriterion("kclx is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andKclxIsNotNull() {
+            addCriterion("kclx is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andKclxEqualTo(String value) {
+            addCriterion("kclx =", value, "kclx");
+            return (Criteria) this;
+        }
+
+        public Criteria andKclxNotEqualTo(String value) {
+            addCriterion("kclx <>", value, "kclx");
+            return (Criteria) this;
+        }
+
+        public Criteria andKclxGreaterThan(String value) {
+            addCriterion("kclx >", value, "kclx");
+            return (Criteria) this;
+        }
+
+        public Criteria andKclxGreaterThanOrEqualTo(String value) {
+            addCriterion("kclx >=", value, "kclx");
+            return (Criteria) this;
+        }
+
+        public Criteria andKclxLessThan(String value) {
+            addCriterion("kclx <", value, "kclx");
+            return (Criteria) this;
+        }
+
+        public Criteria andKclxLessThanOrEqualTo(String value) {
+            addCriterion("kclx <=", value, "kclx");
+            return (Criteria) this;
+        }
+
+        public Criteria andKclxLike(String value) {
+            addCriterion("kclx like", value, "kclx");
+            return (Criteria) this;
+        }
+
+        public Criteria andKclxNotLike(String value) {
+            addCriterion("kclx not like", value, "kclx");
+            return (Criteria) this;
+        }
+
+        public Criteria andKclxIn(List<String> values) {
+            addCriterion("kclx in", values, "kclx");
+            return (Criteria) this;
+        }
+
+        public Criteria andKclxNotIn(List<String> values) {
+            addCriterion("kclx not in", values, "kclx");
+            return (Criteria) this;
+        }
+
+        public Criteria andKclxBetween(String value1, String value2) {
+            addCriterion("kclx between", value1, value2, "kclx");
+            return (Criteria) this;
+        }
+
+        public Criteria andKclxNotBetween(String value1, String value2) {
+            addCriterion("kclx not between", value1, value2, "kclx");
+            return (Criteria) this;
+        }
+
+        public Criteria andKcmcIsNull() {
+            addCriterion("kcmc is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andKcmcIsNotNull() {
+            addCriterion("kcmc is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andKcmcEqualTo(String value) {
+            addCriterion("kcmc =", value, "kcmc");
+            return (Criteria) this;
+        }
+
+        public Criteria andKcmcNotEqualTo(String value) {
+            addCriterion("kcmc <>", value, "kcmc");
+            return (Criteria) this;
+        }
+
+        public Criteria andKcmcGreaterThan(String value) {
+            addCriterion("kcmc >", value, "kcmc");
+            return (Criteria) this;
+        }
+
+        public Criteria andKcmcGreaterThanOrEqualTo(String value) {
+            addCriterion("kcmc >=", value, "kcmc");
+            return (Criteria) this;
+        }
+
+        public Criteria andKcmcLessThan(String value) {
+            addCriterion("kcmc <", value, "kcmc");
+            return (Criteria) this;
+        }
+
+        public Criteria andKcmcLessThanOrEqualTo(String value) {
+            addCriterion("kcmc <=", value, "kcmc");
+            return (Criteria) this;
+        }
+
+        public Criteria andKcmcLike(String value) {
+            addCriterion("kcmc like", value, "kcmc");
+            return (Criteria) this;
+        }
+
+        public Criteria andKcmcNotLike(String value) {
+            addCriterion("kcmc not like", value, "kcmc");
+            return (Criteria) this;
+        }
+
+        public Criteria andKcmcIn(List<String> values) {
+            addCriterion("kcmc in", values, "kcmc");
+            return (Criteria) this;
+        }
+
+        public Criteria andKcmcNotIn(List<String> values) {
+            addCriterion("kcmc not in", values, "kcmc");
+            return (Criteria) this;
+        }
+
+        public Criteria andKcmcBetween(String value1, String value2) {
+            addCriterion("kcmc between", value1, value2, "kcmc");
+            return (Criteria) this;
+        }
+
+        public Criteria andKcmcNotBetween(String value1, String value2) {
+            addCriterion("kcmc not between", value1, value2, "kcmc");
             return (Criteria) this;
         }
     }

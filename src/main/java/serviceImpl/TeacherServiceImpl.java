@@ -5,7 +5,10 @@ import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.model.CannedAccessControlList;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import exception.CustomException;
 import mapper.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,6 +55,7 @@ String salt = "be5e0323a9195ade5f56695ed9f2eb6b036f3e6417115d0cbe2fb9d74d8740406
     private ApplygradeMapper applygradeMapper;
     @Autowired
     private CourseinfoMapper courseinfoMapper;
+    private static Logger logger = LoggerFactory.getLogger(TeacherServiceImpl .class);
     private static String accessKeyId= PropertyUtil.getProperty("accessKeyId");
     private static String endpoint= PropertyUtil.getProperty("endpoint");
     private static String accessKeySecret= PropertyUtil.getProperty("accessKeySecret");
@@ -306,5 +310,16 @@ String salt = "be5e0323a9195ade5f56695ed9f2eb6b036f3e6417115d0cbe2fb9d74d8740406
         courseinfoMapper.updateByPrimaryKeySelective(courseinfo1);
         myResult.setStatus(2);
         return myResult;
+    }
+
+    public List<Teacherinfo> queryteachernum() throws Exception{
+       try{
+           TeacherinfoExample teacherinfoExample=new TeacherinfoExample();
+           return teacherinfoMapper.selectByExample(teacherinfoExample);
+       }catch(Exception e){
+            logger.error("错误信息："+e);
+            throw new CustomException("展示教师sel出错");
+       }
+
     }
 }

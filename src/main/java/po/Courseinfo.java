@@ -1,15 +1,9 @@
 package po;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import java.util.Date;
 
 public class Courseinfo {
     private String coursenum;
-
-    private String coursename;
-
-    private Integer coursecredit;
 
     private String classnum;
 
@@ -18,24 +12,20 @@ public class Courseinfo {
     private Integer coursenumlimit;
 
     private Integer coursefree;
-    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+
     private Date createtime;
-    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+
     private Date updatetime;
 
     private String termyear;
 
-    private Integer courselong;
+    private String coursestartweek;
 
-    private Integer coursestartweek;
+    private String courseendweek;
 
-    private Integer courseendweek;
+    private String courseday;
 
-    private Integer courseday;
-
-    private Integer coursedaytime;
-
-    private String majornum;
+    private String coursedaytime;
 
     private String termtime;
 
@@ -47,7 +37,7 @@ public class Courseinfo {
 
     private String coursestatus;
 
-    private String coursedesc;
+    private String kcnum;
 
     public String getCoursenum() {
         return coursenum;
@@ -55,22 +45,6 @@ public class Courseinfo {
 
     public void setCoursenum(String coursenum) {
         this.coursenum = coursenum == null ? null : coursenum.trim();
-    }
-
-    public String getCoursename() {
-        return coursename;
-    }
-
-    public void setCoursename(String coursename) {
-        this.coursename = coursename == null ? null : coursename.trim();
-    }
-
-    public Integer getCoursecredit() {
-        return coursecredit;
-    }
-
-    public void setCoursecredit(Integer coursecredit) {
-        this.coursecredit = coursecredit;
     }
 
     public String getClassnum() {
@@ -129,52 +103,36 @@ public class Courseinfo {
         this.termyear = termyear == null ? null : termyear.trim();
     }
 
-    public Integer getCourselong() {
-        return courselong;
-    }
-
-    public void setCourselong(Integer courselong) {
-        this.courselong = courselong;
-    }
-
-    public Integer getCoursestartweek() {
+    public String getCoursestartweek() {
         return coursestartweek;
     }
 
-    public void setCoursestartweek(Integer coursestartweek) {
-        this.coursestartweek = coursestartweek;
+    public void setCoursestartweek(String coursestartweek) {
+        this.coursestartweek = coursestartweek == null ? null : coursestartweek.trim();
     }
 
-    public Integer getCourseendweek() {
+    public String getCourseendweek() {
         return courseendweek;
     }
 
-    public void setCourseendweek(Integer courseendweek) {
-        this.courseendweek = courseendweek;
+    public void setCourseendweek(String courseendweek) {
+        this.courseendweek = courseendweek == null ? null : courseendweek.trim();
     }
 
-    public Integer getCourseday() {
+    public String getCourseday() {
         return courseday;
     }
 
-    public void setCourseday(Integer courseday) {
-        this.courseday = courseday;
+    public void setCourseday(String courseday) {
+        this.courseday = courseday == null ? null : courseday.trim();
     }
 
-    public Integer getCoursedaytime() {
+    public String getCoursedaytime() {
         return coursedaytime;
     }
 
-    public void setCoursedaytime(Integer coursedaytime) {
-        this.coursedaytime = coursedaytime;
-    }
-
-    public String getMajornum() {
-        return majornum;
-    }
-
-    public void setMajornum(String majornum) {
-        this.majornum = majornum == null ? null : majornum.trim();
+    public void setCoursedaytime(String coursedaytime) {
+        this.coursedaytime = coursedaytime == null ? null : coursedaytime.trim();
     }
 
     public String getTermtime() {
@@ -217,11 +175,11 @@ public class Courseinfo {
         this.coursestatus = coursestatus == null ? null : coursestatus.trim();
     }
 
-    public String getCoursedesc() {
-        return coursedesc;
+    public String getKcnum() {
+        return kcnum;
     }
 
-    public void setCoursedesc(String coursedesc) {
-        this.coursedesc = coursedesc == null ? null : coursedesc.trim();
+    public void setKcnum(String kcnum) {
+        this.kcnum = kcnum == null ? null : kcnum.trim();
     }
 }

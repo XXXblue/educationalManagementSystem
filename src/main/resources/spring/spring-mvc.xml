@@ -25,7 +25,7 @@
     <mvc:resources location="/static/css/" mapping="/student/css/**"/>
     <mvc:resources location="/static/css/" mapping="/teacher/css/**"/>
 
-    <!-- 配置注解驱动 可以将request参数与绑定到controller参数上 -->
+    <!-- 处理器适配器，处理器引射器 -->
     <mvc:annotation-driven/>
 
     <!-- 支持上传文件 -->
