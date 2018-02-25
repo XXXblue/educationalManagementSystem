@@ -1,0 +1,1 @@
+用maven的命令运行 clean tomcat7:run 就是这个；
